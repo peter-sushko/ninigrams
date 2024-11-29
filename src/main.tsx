@@ -1,33 +1,21 @@
-// Learn more at developers.reddit.com/docs
-import { Devvit, useState } from '@devvit/public-api';
+import {Devvit} from '@devvit/public-api'
 
-Devvit.configure({
-  redditAPI: true,
-});
+const colors = [
+  "#FFFFFF",
+  "#000000",
+  "#EB5757",
+  "#F2994A",
+  "#F2C94C",
+  "#27AE60",
+  "#2F80ED",
+  "#9B51E0"
+];
 
-// Add a menu item to the subreddit menu for instantiating the new experience post
-Devvit.addMenuItem({
-  label: 'Peters-test-2',
-  location: 'subreddit',
-  forUserType: 'moderator',
-  onPress: async (_event, context) => {
-    const { reddit, ui } = context;
-    const subreddit = await reddit.getCurrentSubreddit();
-    await reddit.submitPost({
-      title: 'Peters devvit post',
-      subredditName: subreddit.name,
-      // The preview appears while the post loads
-      preview: (
-        <vstack height="100%" width="100%" alignment="middle center">
-          <text size="large">Loading ...</text>
-        </vstack>
-      ),
-    });
-    ui.showToast({ text: 'Created post!' });
-  },
-});
+const resolution = 8;
+const size = 32;
+const blankCanvas = new Array(resolution * resolution).fill(0);
+const defaultColor = 1;
 
-// Add a post type definition
 Devvit.addCustomPostType({
   name: 'Name',
   render: context => {
@@ -62,23 +50,51 @@ Devvit.addCustomPostType({
       </hstack>
     );
 
-    return (
-      <vstack height="100%" width="100%" gap="medium" alignment="center middle">
-        <image
-          url="logo.png"
-          description="logo"
-          imageHeight={256}
-          imageWidth={256}
-          height="48px"
-          width="48px"
-        />
-        <text size="large">{`Click counter: ${counter}`}</text>
-        <button appearance="primary" onPress={() => setCounter((counter) => counter + 1)}>
-          sleep sloop2
-        </button>
+    const pixels = data.map((pixel, index) => (
+      <hstack
+        onPress={() => {
+          const newData = data;
+          newData[index] = activeColor;
+          setData(newData);
+        }}
+        height={`${size}px`}
+        width={`${size}px`}
+        backgroundColor={colors[pixel]}
+      />
+    ));
+
+    const gridSize = `${resolution * size}px`;
+
+    function splitArray<T>(array: T[], segmentLength: number): T[][] {
+      const result: T[][] = [];
+      for (let i = 0; i < array.length; i += segmentLength) {
+        result.push(array.slice(i, i + segmentLength));
+      }
+      return result;
+    }
+    
+    const Canvas = () => (
+      <vstack
+        cornerRadius="small"
+        border="thin"
+        height={gridSize}
+        width={gridSize}
+      >
+        {splitArray(pixels, resolution).map((row) => (
+          <hstack>{row}</hstack>
+        ))}
       </vstack>
     );
-  },
-});
+    
+    return (
+      <blocks>
+        <vstack gap="small" width="100%" height="100%" alignment="center middle">
+          <Canvas />
+          <ColorSelector />
+        </vstack>
+      </blocks>
+    )
+  }
+})
 
-export default Devvit;
+export default Devvit
