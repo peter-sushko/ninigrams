@@ -29,10 +29,38 @@ Devvit.addMenuItem({
 
 // Add a post type definition
 Devvit.addCustomPostType({
-  name: 'Experience Post',
-  height: 'regular',
-  render: (_context) => {
-    const [counter, setCounter] = useState(0);
+  name: 'Name',
+  render: context => {
+    const { useState } = context;
+    const [activeColor, setActiveColor] = useState(defaultColor);
+    const [data, setData] = useState(blankCanvas);
+
+    const ColorSelector = () => (
+      <hstack width="100%" alignment="center">
+        {/* nested hstack to negate grow */}
+        <hstack border="thin" grow={false} cornerRadius="small">
+          {colors.map((color, index) => (
+            <hstack
+              height={`${size}px`}
+              width={`${size}px`}
+              backgroundColor={color}
+              onPress={() => setActiveColor(index)}
+              alignment="middle center"
+            >
+              {activeColor === index && (
+                <text
+                  color={index === 1 ? "white" : "black"}
+                  weight="bold"
+                  size="xxlarge"
+                >
+                  ✓
+                </text>
+              )}
+            </hstack>
+          ))}
+        </hstack>
+      </hstack>
+    );
 
     return (
       <vstack height="100%" width="100%" gap="medium" alignment="center middle">
