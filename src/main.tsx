@@ -1,23 +1,19 @@
 import {Devvit} from '@devvit/public-api'
 
 const colors = [
-  "#FFFFFF",
-  "#000000",
-  "#EB5757",
-  "#F2994A",
-  "#F2C94C",
-  "#27AE60",
-  "#2F80ED",
-  "#9B51E0"
+  "#FFFFFF", // white
+  "#000000", // blacks
+  "#B0B0B0"  // darker grey
 ];
 
-const resolution = 8;
-const size = 32;
-const blankCanvas = new Array(resolution * resolution).fill(0);
-const defaultColor = 1;
+const width = 15;
+const height = 11;
+const size = 22;
+const blankCanvas = new Array(width * height).fill(2); // Default to darker grey (index 2)
+const defaultColor = 2; // Set default color to darker grey
 
 Devvit.addCustomPostType({
-  name: 'Name',
+  name: 'Name', 
   render: context => {
     const { useState } = context;
     const [activeColor, setActiveColor] = useState(defaultColor);
@@ -25,10 +21,10 @@ Devvit.addCustomPostType({
 
     const ColorSelector = () => (
       <hstack width="100%" alignment="center">
-        {/* nested hstack to negate grow */}
-        <hstack border="thin" grow={false} cornerRadius="small">
+        <hstack border="thin" borderColor="blue" grow={false} cornerRadius="small">
           {colors.map((color, index) => (
             <hstack
+              key={`color-${index}`}
               height={`${size}px`}
               width={`${size}px`}
               backgroundColor={color}
@@ -50,20 +46,27 @@ Devvit.addCustomPostType({
       </hstack>
     );
 
-    const pixels = data.map((pixel, index) => (
-      <hstack
-        onPress={() => {
-          const newData = data;
-          newData[index] = activeColor;
-          setData(newData);
-        }}
-        height={`${size}px`}
-        width={`${size}px`}
-        backgroundColor={colors[pixel]}
-      />
-    ));
+    const pixels = data.map((pixel, index) => {
+      return (
+        <hstack
+          key={`pixel-${index}`}
+          onPress={() => {
+            if (data[index] !== activeColor) {
+              const newData = [...data];
+              newData[index] = activeColor;
+              setData(newData);
+            }
+          }}
+          height={`${size}px`}
+          width={`${size}px`}
+          backgroundColor={colors[pixel]}
+          border="thin"
+        />
+      );
+    });
 
-    const gridSize = `${resolution * size}px`;
+    const gridWidth = `${width * size}px`;
+    const gridHeight = `${height * size}px`;
 
     function splitArray<T>(array: T[], segmentLength: number): T[][] {
       const result: T[][] = [];
@@ -73,22 +76,37 @@ Devvit.addCustomPostType({
       return result;
     }
     
-    const Canvas = () => (
-      <vstack
-        cornerRadius="small"
-        border="thin"
-        height={gridSize}
-        width={gridSize}
-      >
-        {splitArray(pixels, resolution).map((row) => (
-          <hstack>{row}</hstack>
+    const NumberRow = ({ length }: { length: number }) => (
+      <hstack>
+        {Array.from({ length }, (_, i) => (
+          <text key={`col-number-${i}`} size="medium" width={`${size}px`} alignment="center">
+            {i + 1}
+          </text>
         ))}
-      </vstack>
+      </hstack>
     );
-    
+
+    const Canvas = () => (
+      <hstack>
+        <vstack
+          cornerRadius="small"
+          border="thin" // Changed to thin for the outside border
+          height={gridHeight}
+          width={gridWidth}
+        >
+          <NumberRow length={width} />
+          {splitArray(pixels, width).map((row, rowIndex) => (
+            <hstack key={`row-${rowIndex}`}>
+              {row}
+            </hstack>
+          ))}
+        </vstack>
+      </hstack>
+    );
+  
     return (
       <blocks>
-        <vstack gap="small" width="100%" height="100%" alignment="center middle">
+        <vstack gap="small" width="100%" height="100%" alignment="middle center">
           <Canvas />
           <ColorSelector />
         </vstack>
