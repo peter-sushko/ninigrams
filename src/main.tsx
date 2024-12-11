@@ -192,7 +192,8 @@ Devvit.addCustomPostType({
           if (isClueRow) {
             const clueIndex = colIndex - clueCols; // index of clue in clueColData
             const clueArray = puzzle.clueColData[clueIndex]; // array of clues in curr col
-            const clueValue = clueArray?.[rowIndex] ?? ""; // clue value (default to empty)
+            // Align clues to the bottom of the column sequences at the top of grid
+            const clueValue = clueArray?.[clueArray.length - clueRows + rowIndex] ?? ""; // clue value (default to empty)
             return (
               <text
                 key={`clueRow-${rowIndex}-${colIndex}`}
@@ -208,7 +209,8 @@ Devvit.addCustomPostType({
           if (isClueCol) {
             const clueIndex = rowIndex - clueRows; // index of clue in clueRowData
             const clueArray = puzzle.clueRowData[clueIndex]; // array of clues in curr row
-            const clueValue = clueArray?.[colIndex] ?? ""; // clue value (default to empty)
+            // Align clues to the right of the row sequences to the left of grid
+            const clueValue = clueArray?.[clueArray.length - clueCols + colIndex] ?? ""; // clue value (default to empty)
             return (
               <text
                 key={`clueCol-${rowIndex}-${colIndex}`}
