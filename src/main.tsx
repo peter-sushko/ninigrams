@@ -92,7 +92,7 @@ const playableRows = puzzle.clueRowData.length; // standard grid assumes 15
 const playableCols = puzzle.clueColData.length; // standard grid assumes 15
 const width = clueCols + playableCols;
 const height = clueRows + playableRows;
-const pixelSize = 14; // size of each cell
+const pixelSize = 22; // Increased from 16 to 24 pixels
 
 const blankCanvas = new Array(width * height).fill(2); // Default to darker grey (index 2)
 const defaultColor = 2; // Set default color to darker grey

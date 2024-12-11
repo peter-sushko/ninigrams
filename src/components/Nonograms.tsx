@@ -1,7 +1,7 @@
-import React from 'react';
-import { NonogramsGame } from './NonogramsGame';
-import { Board } from './Board';
-import { ToolSelector } from './ToolSelector';
+// import React from 'react';
+import { NonogramsGame } from './NonogramsGame.js';
+import { Board } from './Board.js';
+import { ToolSelector } from './toolSelector.js'; // Changed casing to match actual filename
 import { Devvit } from '@devvit/public-api';
 
 export const Nonograms = (context: any): JSX.Element => {

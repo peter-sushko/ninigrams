@@ -1,6 +1,6 @@
-import React from 'react';
-import { NonogramsGame } from './NonogramsGame';
-import { ToolColor } from './toolColor';
+// import React from 'react';
+import { NonogramsGame } from './NonogramsGame.js';
+import { ToolColor } from './toolColor.js';
 import { Devvit } from '@devvit/public-api';
 
 export const ToolSelector = ({ game }: { game: NonogramsGame }) => {

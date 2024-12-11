@@ -1,6 +1,6 @@
-import React from 'react';
-import { NonogramsGame } from './NonogramsGame';
-import CellView from './Cell';
+// import React from 'react';
+import { NonogramsGame } from './NonogramsGame.js';
+import CellView from './Cell.js';
 import { Devvit } from '@devvit/public-api';
 
 export const Board = ({ game }: { game: NonogramsGame }) => {
@@ -11,7 +11,7 @@ export const Board = ({ game }: { game: NonogramsGame }) => {
     for (let col = 0; col < game.boardWidth; ++col) {
       const cell = game.getCell(col, row);
       cells.push(
-        <CellView key={`${col}-${row}`} game={game} x={col} y={row} cell={cell} />
+        <CellView game={game} x={col} y={row} cell={cell} /> // Removed key prop since it's not in the CellView interface
       );
     }
     rows.push(
