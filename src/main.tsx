@@ -99,6 +99,7 @@ const defaultColor = 2; // Set default color to darker grey
 
 Devvit.addCustomPostType({
   name: 'Name', 
+  height: 'tall',
   render: context => {
     const { useState } = context;
     const [activeColor, setActiveColor] = useState(defaultColor);
