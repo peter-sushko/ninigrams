@@ -1,63 +1,5 @@
 import {Devvit} from '@devvit/public-api'
 
-// // Delete data below & import from .json file instead (used for playground)
-// const data = {
-//   name: "Man in Hat",
-//   clueRowData: [
-//     [2, 5],
-//     [2, 7],
-//     [2, 7],
-//     [10],
-//     [14],
-//     [2, 1],
-//     [2, 2, 3],
-//     [1, 1, 1, 1],
-//     [1, 1],
-//     [1, 2, 1],
-//     [1, 2, 1],
-//     [1, 1, 3],
-//     [2, 1, 1, 1, 1],
-//     [4, 3, 1, 1],
-//     [6, 2, 1],
-//   ],
-//   clueColData: [
-//     [1, 1],
-//     [1, 2],
-//     [8, 3],
-//     [7, 2, 3],
-//     [1, 2, 1, 2],
-//     [4, 1, 1, 1],
-//     [5, 2, 1],
-//     [5, 2, 1],
-//     [5, 2, 1],
-//     [5, 2, 1, 1],
-//     [5, 1, 1, 2],
-//     [9],
-//     [1, 4],
-//     [1, 2],
-//     [2],
-//   ],
-//   maxClueRows: 4,
-//   maxClueCols: 5,
-//   solution: [
-//     [0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0],
-//     [0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-//     [0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-//     [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-//     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-//     [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-//     [0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0],
-//     [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0],
-//     [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-//     [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
-//     [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
-//     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1],
-//     [0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1],
-//     [0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0],
-//     [1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0],
-//   ],
-// };
-
 const colors = [
   "#E0E0E0", // light grey
   "#333333", // dark grey (black)
@@ -84,7 +26,7 @@ const loadPuzzle = (data: any) => {
   };
 };
 
-import data from "./seahorse.json" // uncomment out :P
+import data from "./seahorse.json" 
 const puzzle = loadPuzzle(data)
 const clueRows = puzzle.maxClueRows; // maximum rows reserved for clues
 const clueCols = puzzle.maxClueCols; // maximum cols reserved for clues
@@ -171,15 +113,21 @@ Devvit.addCustomPostType({
             // Align clues to the bottom of the column sequences at the top of grid
             const clueValue = clueArray?.[clueArray.length - clueRows + rowIndex] ?? ""; // clue value (default to empty)
             return (
-              <text
+              <hstack
                 key={`clueRow-${rowIndex}-${colIndex}`}
                 height={`${pixelSize}px`}
                 width={`${pixelSize}px`}
                 alignment="center"
-                color="#000000" // Change text color to black
+                border="thin" // Add border to the clue cell
+                backgroundColor="PureGray-400"
               >
-                {clueValue}
-              </text>
+                <text
+                  alignment="center"
+                  color="#000000" // Change text color to black
+                >
+                  {clueValue}
+                </text>
+              </hstack>
             );
           }
 
@@ -189,15 +137,21 @@ Devvit.addCustomPostType({
             // Align clues to the right of the row sequences to the left of grid
             const clueValue = clueArray?.[clueArray.length - clueCols + colIndex] ?? ""; // clue value (default to empty)
             return (
-              <text
+              <hstack
                 key={`clueCol-${rowIndex}-${colIndex}`}
                 height={`${pixelSize}px`}
                 width={`${pixelSize}px`}
                 alignment="center"
-                color="#000000" // Change text color to black
+                border="thin" // Add border to the clue cell
+                backgroundColor="PureGray-400"
               >
-                {clueValue}
-              </text>
+                <text
+                  alignment="center"
+                  color="#000000" // Change text color to black
+                >
+                  {clueValue}
+                </text>
+              </hstack>
             );
           }
 
