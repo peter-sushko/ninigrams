@@ -113,10 +113,41 @@ Devvit.addCustomPostType({
   render: context => {
     const { useState } = context;
     const [data, setData] = useState(blankCanvas);
+    const [submissionResult, setSubmissionResult] = useState<string>('');
+
+    const checkSolution = () => {
+      // Convert the 1D array to 2D array, skipping clue cells
+      const currentBoard = [];
+      for (let i = clueRows; i < height; i++) {
+        const row = [];
+        for (let j = clueCols; j < width; j++) {
+          const cellValue = data[i * width + j];
+          // Map colors to solution values:
+          // grey (0) -> -1
+          // black (1) -> 1
+          // white (2) -> 0
+          const mappedValue = cellValue === 0 ? -1 : cellValue === 1 ? 1 : 0;
+          row.push(mappedValue);
+        }
+        currentBoard.push(row);
+      }
+
+      // Compare with solution
+      const isCorrect = currentBoard.every((row, i) =>
+        row.every((cell, j) => {
+          // Convert solution 0s and 1s to match our mapping (-1, 1, 0)
+          const solutionValue = puzzle.solution[i][j] === 0 ? 0 : 1;
+          return cell === solutionValue;
+        })
+      );
+
+      setSubmissionResult(isCorrect ? 'winner' : 'you have a mistake');
+    };
 
     const Canvas = () => {
       const clearGrid = () => {
-        setData([...blankCanvas]); // Reset to initial state
+        setData([...blankCanvas]);
+        setSubmissionResult(''); // Clear the result message when grid is cleared
       }
       const grid = splitArray(data, width).map((row, rowIndex) => {
         const renderedRow = row.map((_, colIndex) => {
@@ -214,13 +245,14 @@ Devvit.addCustomPostType({
               CLEAR
             </button>
             <button 
-              onPress={() => {}} // No action on click
+              onPress={checkSolution} 
               size="small"
               width="75px"
             >
               SUBMIT
             </button>
           </hstack>
+          {submissionResult && <text>{submissionResult}</text>}
         </vstack>
       );
     };
