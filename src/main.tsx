@@ -59,9 +59,9 @@ import {Devvit} from '@devvit/public-api'
 // };
 
 const colors = [
-  "#FFFFFF", // white
-  "#333333", // dark grey (changed from pure black)
-  "#E0E0E0"  // light grey
+  "#E0E0E0", // light grey
+  "#333333", // dark grey (black)
+  "#FFFFFF"  // white
 ];
 
 // Load puzzle data from JSON file
@@ -94,85 +94,25 @@ const width = clueCols + playableCols;
 const height = clueRows + playableRows;
 const pixelSize = 22; // Increased from 16 to 24 pixels
 
-const blankCanvas = new Array(width * height).fill(2); // Default to darker grey (index 2)
-const defaultColor = 2; // Set default color to darker grey
+const blankCanvas = new Array(width * height).fill(0); // Default to light grey (index 0)
+const defaultColor = 0; // Set default color to light grey
+
+// Function to split an array into chunks of a specified size
+const splitArray = <T,>(array: T[], chunkSize: number): T[][] => {
+  const result: T[][] = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    result.push(array.slice(i, i + chunkSize));
+  }
+  return result;
+};
 
 Devvit.addCustomPostType({
   name: 'Name', 
   height: 'regular',
-  width: 'regular',
+  // width: 'regular',
   render: context => {
     const { useState } = context;
-    const [activeColor, setActiveColor] = useState(defaultColor);
     const [data, setData] = useState(blankCanvas);
-
-    const ColorSelector = () => (
-      <hstack width="100%" alignment="center">
-        <hstack border="thin" borderColor="blue" grow={false} cornerRadius="small">
-          {colors.map((color, index) => (
-            <hstack
-              key={`color-${index}`}
-              height={`${pixelSize}px`}
-              width={`${pixelSize}px`}
-              backgroundColor={color}
-              onPress={() => setActiveColor(index)}
-              alignment="middle center"
-            >
-              {activeColor === index && (
-                <text
-                  color={index === 1 ? "white" : "black"}
-                  weight="bold"
-                  size="xxlarge"
-                >
-                  ✓
-                </text>
-              )}
-            </hstack>
-          ))}
-        </hstack>
-      </hstack>
-    );
-
-    const pixels = data.map((pixel, index) => {
-      return (
-        <hstack
-          key={`pixel-${index}`}
-          onPress={() => {
-            if (data[index] !== activeColor) {
-              const newData = [...data];
-              newData[index] = activeColor;
-              setData(newData);
-            }
-          }}
-          height={`${pixelSize}px`}
-          width={`${pixelSize}px`}
-          backgroundColor={colors[pixel]}
-          border="thin"
-          borderColor="#CCCCCC"
-        />
-      );
-    });
-
-    const gridWidth = `${width * pixelSize}px`;
-    const gridHeight = `${height * pixelSize}px`;
-
-    function splitArray<T>(array: T[], segmentLength: number): T[][] {
-      const result: T[][] = [];
-      for (let i = 0; i < array.length; i += segmentLength) {
-        result.push(array.slice(i, i + segmentLength));
-      }
-      return result;
-    }
-    
-    const NumberRow = ({ length }: { length: number }) => (
-      <hstack>
-        {Array.from({ length }, (_, i) => (
-          <text key={`col-number-${i}`} size="medium" width={`${pixelSize}px`} alignment="center">
-            {i + 1}
-          </text>
-        ))}
-      </hstack>
-    );
 
     const Canvas = () => {
       const clearGrid = () => {
@@ -237,7 +177,8 @@ Devvit.addCustomPostType({
               onPress={() => { // To execute upon clicking on cell
                 const newData = [...data]; // Copy data array
                 const index = rowIndex * width + colIndex; 
-                newData[index] = activeColor; // Update color
+                // Cycle through colors: grey (0) -> black (1) -> white (2) -> grey (0)
+                newData[index] = (newData[index] + 1) % colors.length;
                 setData(newData);
               }}
               height={`${pixelSize}px`}
@@ -255,31 +196,39 @@ Devvit.addCustomPostType({
           </hstack>
         );
       });
-        
+
       return (
-      <vstack
-        width="100%"
-        height="100%"
-        alignment="middle center"
-        backgroundColor="Periwinkle-300"
-      >
-        {grid}
-        <button 
-            onPress={clearGrid} 
-            size="small"
-            width="75px"
+        <vstack
+          width="100%"
+          height="100%"
+          alignment="middle center"
+          backgroundColor="Periwinkle-300"
+        >
+          {grid}
+          <hstack gap="small">
+            <button 
+              onPress={clearGrid} 
+              size="small"
+              width="75px"
             >
-            CLEAR
-          </button>
+              CLEAR
+            </button>
+            <button 
+              onPress={() => {}} // No action on click
+              size="small"
+              width="75px"
+            >
+              SUBMIT
+            </button>
+          </hstack>
         </vstack>
       );
     };
-  
+
     return (
       <blocks>
         <vstack gap="small" width="100%" height="100%" alignment="middle center">
           <Canvas />
-          <ColorSelector />
         </vstack>
       </blocks>
     );
