@@ -173,6 +173,9 @@ Devvit.addCustomPostType({
     );
 
     const Canvas = () => {
+      const clearGrid = () => {
+        setData([...blankCanvas]); // Reset to initial state
+      }
       const grid = splitArray(data, width).map((row, rowIndex) => {
         const renderedRow = row.map((_, colIndex) => {
           const isClueRow = rowIndex < clueRows; // current row is clue seq
@@ -200,6 +203,7 @@ Devvit.addCustomPostType({
                 height={`${pixelSize}px`}
                 width={`${pixelSize}px`}
                 alignment="center"
+                color="#000000" // Change text color to black
               >
                 {clueValue}
               </text>
@@ -217,6 +221,7 @@ Devvit.addCustomPostType({
                 height={`${pixelSize}px`}
                 width={`${pixelSize}px`}
                 alignment="center"
+                color="#000000" // Change text color to black
               >
                 {clueValue}
               </text>
@@ -248,7 +253,23 @@ Devvit.addCustomPostType({
         );
       });
         
-      return <vstack>{grid}</vstack>;
+      return (
+      <vstack
+        width="100%"
+        height="100%"
+        alignment="middle center"
+        backgroundColor="Periwinkle-300"
+      >
+        {grid}
+        <button 
+            onPress={clearGrid} 
+            size="small"
+            width="75px"
+            >
+            CLEAR
+          </button>
+        </vstack>
+      );
     };
   
     return (
