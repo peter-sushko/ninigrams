@@ -1,67 +1,67 @@
 import {Devvit} from '@devvit/public-api'
 
-// Delete data below & import from .json file instead (used for playground)
-const data = {
-  name: "Man in Hat",
-  clueRowData: [
-    [2, 5],
-    [2, 7],
-    [2, 7],
-    [10],
-    [14],
-    [2, 1],
-    [2, 2, 3],
-    [1, 1, 1, 1],
-    [1, 1],
-    [1, 2, 1],
-    [1, 2, 1],
-    [1, 1, 3],
-    [2, 1, 1, 1, 1],
-    [4, 3, 1, 1],
-    [6, 2, 1],
-  ],
-  clueColData: [
-    [1, 1],
-    [1, 2],
-    [8, 3],
-    [7, 2, 3],
-    [1, 2, 1, 2],
-    [4, 1, 1, 1],
-    [5, 2, 1],
-    [5, 2, 1],
-    [5, 2, 1],
-    [5, 2, 1, 1],
-    [5, 1, 1, 2],
-    [9],
-    [1, 4],
-    [1, 2],
-    [2],
-  ],
-  maxClueRows: 4,
-  maxClueCols: 5,
-  solution: [
-    [0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0],
-    [0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-    [0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1],
-    [0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1],
-    [0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0],
-    [1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0],
-  ],
-};
+// // Delete data below & import from .json file instead (used for playground)
+// const data = {
+//   name: "Man in Hat",
+//   clueRowData: [
+//     [2, 5],
+//     [2, 7],
+//     [2, 7],
+//     [10],
+//     [14],
+//     [2, 1],
+//     [2, 2, 3],
+//     [1, 1, 1, 1],
+//     [1, 1],
+//     [1, 2, 1],
+//     [1, 2, 1],
+//     [1, 1, 3],
+//     [2, 1, 1, 1, 1],
+//     [4, 3, 1, 1],
+//     [6, 2, 1],
+//   ],
+//   clueColData: [
+//     [1, 1],
+//     [1, 2],
+//     [8, 3],
+//     [7, 2, 3],
+//     [1, 2, 1, 2],
+//     [4, 1, 1, 1],
+//     [5, 2, 1],
+//     [5, 2, 1],
+//     [5, 2, 1],
+//     [5, 2, 1, 1],
+//     [5, 1, 1, 2],
+//     [9],
+//     [1, 4],
+//     [1, 2],
+//     [2],
+//   ],
+//   maxClueRows: 4,
+//   maxClueCols: 5,
+//   solution: [
+//     [0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0],
+//     [0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+//     [0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+//     [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+//     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+//     [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+//     [0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0],
+//     [0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0],
+//     [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+//     [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
+//     [0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0],
+//     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1],
+//     [0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1],
+//     [0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0],
+//     [1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0],
+//   ],
+// };
 
 const colors = [
   "#FFFFFF", // white
-  "#000000", // blacks
-  "#B0B0B0"  // darker grey
+  "#333333", // dark grey (changed from pure black)
+  "#E0E0E0"  // light grey
 ];
 
 // Load puzzle data from JSON file
@@ -84,7 +84,7 @@ const loadPuzzle = (data: any) => {
   };
 };
 
-// import data from "./man-in-hat.json" // uncomment out :P
+import data from "./seahorse.json" // uncomment out :P
 const puzzle = loadPuzzle(data)
 const clueRows = puzzle.maxClueRows; // maximum rows reserved for clues
 const clueCols = puzzle.maxClueCols; // maximum cols reserved for clues
@@ -99,7 +99,8 @@ const defaultColor = 2; // Set default color to darker grey
 
 Devvit.addCustomPostType({
   name: 'Name', 
-  height: 'tall',
+  height: 'regular',
+  width: 'regular',
   render: context => {
     const { useState } = context;
     const [activeColor, setActiveColor] = useState(defaultColor);
@@ -147,6 +148,7 @@ Devvit.addCustomPostType({
           width={`${pixelSize}px`}
           backgroundColor={colors[pixel]}
           border="thin"
+          borderColor="#CCCCCC"
         />
       );
     });
@@ -242,6 +244,7 @@ Devvit.addCustomPostType({
               width={`${pixelSize}px`}
               backgroundColor={colors[data[rowIndex * width + colIndex]]}
               border="thin"
+              borderColor="#CCCCCC"
             ></hstack>
           );
         });
