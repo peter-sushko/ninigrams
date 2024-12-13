@@ -26,11 +26,11 @@ const loadPuzzle = (data: any) => {
   };
 };
 
-import data from "./seahorse.json"
+import data from "./man-in-hat.json"
 const puzzle = loadPuzzle(data)
 const clueRows = puzzle.maxClueRows;
 const clueCols = puzzle.maxClueCols;
-const playableRows = puzzle.clueRowData.length;
+const playableRows = puzzle.clueRowData.length; 
 const playableCols = puzzle.clueColData.length;
 const width = clueCols + playableCols;
 const height = clueRows + playableRows;
@@ -53,7 +53,7 @@ type PageProps = {
 
 Devvit.addCustomPostType({
   name: 'Name', 
-  height: 'regular',
+  height: 'tall',
   render: context => {
     const { useState } = context;
     const [data, setData] = useState(blankCanvas);
@@ -80,14 +80,24 @@ Devvit.addCustomPostType({
 
     const checkSolution = () => {
       const currentBoard = [];
+      let hasGreyCell = false;
+
       for (let i = clueRows; i < height; i++) {
         const row = [];
         for (let j = clueCols; j < width; j++) {
           const cellValue = data[i * width + j];
+          if (cellValue === 0) { // Grey cell
+            hasGreyCell = true;
+          }
           const mappedValue = cellValue === 0 ? -1 : cellValue === 1 ? 1 : 0;
           row.push(mappedValue);
         }
         currentBoard.push(row);
+      }
+
+      if (hasGreyCell) {
+        setSubmissionResult("All grid cells must be black or white before submitting");
+        return;
       }
 
       const isCorrect = currentBoard.every((row, i) =>
@@ -132,7 +142,7 @@ Devvit.addCustomPostType({
                 width={`${pixelSize}px`}
                 alignment="center"
                 border="thin"
-                backgroundColor="PureGray-400"
+                backgroundColor="PureGray-350"
               >
                 <text
                   alignment="center"
@@ -155,7 +165,7 @@ Devvit.addCustomPostType({
                 width={`${pixelSize}px`}
                 alignment="center"
                 border="thin"
-                backgroundColor="PureGray-400"
+                backgroundColor="PureGray-350"
               >
                 <text
                   alignment="center"
@@ -209,6 +219,7 @@ Devvit.addCustomPostType({
           >
             
             {grid}
+            <spacer size="small" />
             <hstack gap="small">
               <button 
                 onPress={clearGrid} 
@@ -221,11 +232,14 @@ Devvit.addCustomPostType({
                 onPress={checkSolution} 
                 size="small"
                 width="75px"
+                appearance="success"
               >
                 SUBMIT
               </button>
             </hstack>
-            {submissionResult && <text>{submissionResult}</text>}
+            <vstack height="30px" alignment="middle center">
+              {submissionResult && <text>{submissionResult}</text>}
+            </vstack>
           </vstack>
         </zstack>
       );
