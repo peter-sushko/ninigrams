@@ -67,15 +67,23 @@ Devvit.addCustomPostType({
         width="100%"
         height="100%"
         alignment="middle center"
-        backgroundColor="Periwinkle-300"
-        gap="medium"
+        backgroundColor="LightBlue-200"
+        gap="small"
       >
-        <text size="xlarge">Welcome to Ninigrams!👋</text>
+        <image
+        url="reddit_logo.jpg" 
+            imageWidth={47}
+            imageHeight={47}
+        />
+        <text color="LightBlue-950" size="xlarge" weight="bold" alignment="center">Ninigrams</text>
+        <text color="LightBlue-950" wrap width="61" alignment="center" size="medium">
+        Fill the grid by following the number clues! Each number represents how many black tiles to place consecutively in that row or column. Leave at least one white tile between sequences of black tiles. No grey tiles should remain.
+        </text>
         <button 
           onPress={() => setPage('game')}
           size="medium"
         >
-          Play!
+          Solve Puzzle
         </button>
       </vstack>
     );
