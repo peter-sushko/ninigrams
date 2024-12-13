@@ -48,14 +48,36 @@ const splitArray = <T,>(array: T[], chunkSize: number): T[][] => {
   return result;
 };
 
+type PageProps = {
+  setPage: (page: 'welcome' | 'game') => void;
+};
+
 Devvit.addCustomPostType({
   name: 'Name', 
   height: 'regular',
-  // width: 'regular',
   render: context => {
     const { useState } = context;
     const [data, setData] = useState(blankCanvas);
     const [submissionResult, setSubmissionResult] = useState<string>('');
+    const [currentPage, setCurrentPage] = useState<'welcome' | 'game'>('welcome');
+
+    const WelcomeScreen = ({ setPage }: PageProps) => (
+      <vstack
+        width="100%"
+        height="100%"
+        alignment="middle center"
+        backgroundColor="Periwinkle-300"
+        gap="medium"
+      >
+        <text size="xlarge">Welcome to Ninigrams!</text>
+        <button 
+          onPress={() => setPage('game')}
+          size="medium"
+        >
+          Play!
+        </button>
+      </vstack>
+    );
 
     const checkSolution = () => {
       // Convert the 1D array to 2D array, skipping clue cells
@@ -219,7 +241,10 @@ Devvit.addCustomPostType({
     return (
       <blocks>
         <vstack gap="small" width="100%" height="100%" alignment="middle center">
-          <Canvas />
+          {currentPage === 'welcome' 
+            ? <WelcomeScreen setPage={setCurrentPage} />
+            : <Canvas />
+          }
         </vstack>
       </blocks>
     );
