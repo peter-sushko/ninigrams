@@ -198,6 +198,11 @@ Devvit.addCustomPostType({
           height="100%"
           alignment="middle center"
         >
+          <image
+            url="night_sakura.jpg" // Reference image in the assets folder
+            imageWidth={100}
+            imageHeight={100}
+          />
           {grid}
           <hstack gap="small">
             <button 
