@@ -189,6 +189,11 @@ Devvit.addCustomPostType({
           alignment="middle center"
           backgroundColor="Periwinkle-300"
         >
+          <image
+            url="sakura_test.JPG" // Reference image in the assets folder
+            imageWidth={100}
+            imageHeight={100}
+          />
           {grid}
           <hstack gap="small">
             <button 
