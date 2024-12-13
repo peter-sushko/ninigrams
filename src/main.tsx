@@ -193,35 +193,41 @@ Devvit.addCustomPostType({
       });
 
       return (
-        <vstack
-          width="100%"
-          height="100%"
-          alignment="middle center"
-        >
+        <zstack width="100%" height="100%">
           <image
-            url="night_sakura.jpg" // Reference image in the assets folder
-            imageWidth={100}
-            imageHeight={100}
+            url="sakura_river.gif" // Reference image in the assets folder
+            imageWidth={350}
+            imageHeight={200}
+            height="100%"
+            width="100%"
+            resizeMode="cover"
           />
-          {grid}
-          <hstack gap="small">
-            <button 
-              onPress={clearGrid} 
-              size="small"
-              width="75px"
-            >
-              CLEAR
-            </button>
-            <button 
-              onPress={checkSolution} 
-              size="small"
-              width="75px"
-            >
-              SUBMIT
-            </button>
-          </hstack>
-          {submissionResult && <text>{submissionResult}</text>}
-        </vstack>
+          <vstack
+            width="100%"
+            height="100%"
+            alignment="middle center"
+          >
+            
+            {grid}
+            <hstack gap="small">
+              <button 
+                onPress={clearGrid} 
+                size="small"
+                width="75px"
+              >
+                CLEAR
+              </button>
+              <button 
+                onPress={checkSolution} 
+                size="small"
+                width="75px"
+              >
+                SUBMIT
+              </button>
+            </hstack>
+            {submissionResult && <text>{submissionResult}</text>}
+          </vstack>
+        </zstack>
       );
     };
 
