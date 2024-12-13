@@ -190,7 +190,7 @@ Devvit.addCustomPostType({
           backgroundColor="Periwinkle-300"
         >
           <image
-            url="sakura_test.JPG" // Reference image in the assets folder
+            url="sakura_test.jpg" // Reference image in the assets folder
             imageWidth={100}
             imageHeight={100}
           />
