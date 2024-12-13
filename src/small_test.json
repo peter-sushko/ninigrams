@@ -1,0 +1,17 @@
+{
+    "name": "small_test",
+    "clueRowData":[
+        [2],
+        [1]
+    ],
+    "clueColData":[
+        [1],
+        [2]
+    ],
+    "maxClueRows": 1,
+    "maxClueCols": 1,
+    "solution":[
+        [1,1],
+        [0,1]
+    ]
+}
