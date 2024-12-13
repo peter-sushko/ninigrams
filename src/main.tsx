@@ -60,6 +60,7 @@ Devvit.addCustomPostType({
     const [data, setData] = useState(blankCanvas);
     const [submissionResult, setSubmissionResult] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<'welcome' | 'game'>('welcome');
+    const [hintResults, setHintResults] = useState<{ rows: boolean[], cols: boolean[] } | null>(null);
 
     const WelcomeScreen = ({ setPage }: PageProps) => (
       <vstack
@@ -69,7 +70,7 @@ Devvit.addCustomPostType({
         backgroundColor="Periwinkle-300"
         gap="medium"
       >
-        <text size="xlarge">Welcome to Ninigrams!</text>
+        <text size="xlarge">Welcome to Ninigrams!👋</text>
         <button 
           onPress={() => setPage('game')}
           size="medium"
@@ -97,7 +98,7 @@ Devvit.addCustomPostType({
       }
 
       if (hasGreyCell) {
-        setSubmissionResult("All grid cells must be black or white before submitting");
+        setSubmissionResult("All grid cells must be black or white!");
         return;
       }
 
@@ -115,7 +116,78 @@ Devvit.addCustomPostType({
       const clearGrid = () => {
         setData([...blankCanvas]);
         setSubmissionResult('');
+        setHintResults(null); // Clear hint results on grid clear
       }
+
+      const calculateHints = () => {
+        const rowHints = Array(height).fill(false);
+        const colHints = Array(width).fill(false);
+
+        for (let rowIndex = clueRows; rowIndex < height; rowIndex++) {
+          rowHints[rowIndex] = checkRowMatch(rowIndex);
+        }
+
+        for (let colIndex = clueCols; colIndex < width; colIndex++) {
+          colHints[colIndex] = checkColMatch(colIndex);
+        }
+
+        setHintResults({ rows: rowHints, cols: colHints });
+      }
+
+      const checkRowMatch = (rowIndex: number): boolean => {
+        for (let colIndex = clueCols; colIndex < width; colIndex++) {
+          const cellValue = data[rowIndex * width + colIndex];
+          if (cellValue === 0) { // Grey cell
+            return false;
+          }
+          const solutionValue = puzzle.solution[rowIndex - clueRows][colIndex - clueCols];
+          if ((cellValue === 1 ? 1 : 0) !== solutionValue) {
+            return false;
+          }
+        }
+        return true;
+      };
+
+      const checkColMatch = (colIndex: number): boolean => {
+        for (let rowIndex = clueRows; rowIndex < height; rowIndex++) {
+          const cellValue = data[rowIndex * width + colIndex];
+          if (cellValue === 0) { // Grey cell
+            return false;
+          }
+          const solutionValue = puzzle.solution[rowIndex - clueRows][colIndex - clueCols];
+          if ((cellValue === 1 ? 1 : 0) !== solutionValue) {
+            return false;
+          }
+        }
+        return true;
+      };
+
+      // Pre-allocate space for hint row with an extra cell at the start
+      const hintRow = (
+        <hstack key="hint-row">
+          <hstack
+            key="hint-empty"
+            height={`${pixelSize}px`}
+            width={`${pixelSize}px`}
+            alignment="center"
+          ></hstack>
+          {Array.from({ length: width }).map((_, colIndex) => (
+            <hstack
+              key={`hint-${colIndex}`}
+              height={`${pixelSize}px`}
+              width={`${pixelSize}px`}
+              alignment="center"
+            >
+              <text
+                alignment="center"
+                color="#000000"
+              >
+                {hintResults && colIndex >= clueCols ? (hintResults.cols[colIndex] ? "✅" : "❌") : ""}
+              </text>
+            </hstack>
+          ))}
+        </hstack>
+      );
 
       const grid = splitArray(data, width).map((row, rowIndex) => {
         const renderedRow = row.map((_, colIndex) => {
@@ -198,6 +270,19 @@ Devvit.addCustomPostType({
 
         return (
           <hstack key={`row-${rowIndex}`}>
+            <hstack
+              key={`hint-left-${rowIndex}`}
+              height={`${pixelSize}px`}
+              width={`${pixelSize}px`}
+              alignment="center"
+            >
+              <text
+                alignment="center"
+                color="#000000"
+              >
+                {hintResults && rowIndex >= clueRows ? (hintResults.rows[rowIndex] ? "✅" : "❌") : ""}
+              </text>
+            </hstack>
             {renderedRow}
           </hstack>
         );
@@ -218,6 +303,7 @@ Devvit.addCustomPostType({
             height="100%"
             alignment="middle center"
           >
+            {hintRow} {/* Always render hint row */}
             {grid}
             <spacer size="small" />
             <hstack gap="small">
@@ -235,6 +321,13 @@ Devvit.addCustomPostType({
                 appearance="success"
               >
                 SUBMIT
+              </button>
+              <button 
+                onPress={calculateHints} 
+                size="small"
+                width="75px"
+              >
+                HINT
               </button>
             </hstack>
             <vstack height="30px" alignment="middle center">
