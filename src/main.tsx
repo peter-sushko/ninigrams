@@ -86,7 +86,11 @@ const loadPuzzle = (data: any) => {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import data from "./giraffe.json" 
+=======
+// import data from "./man-in-hat.json" // uncomment out :P
+>>>>>>> Stashed changes
 =======
 // import data from "./man-in-hat.json" // uncomment out :P
 >>>>>>> Stashed changes
@@ -100,6 +104,7 @@ const playableRows = puzzle.clueRowData.length; // standard grid assumes 15
 const playableCols = puzzle.clueColData.length; // standard grid assumes 15
 const width = clueCols + playableCols;
 const height = clueRows + playableRows;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 const pixelSize = 22; // Increased from 16 to 24 pixels
@@ -120,6 +125,8 @@ type PageProps = {
   setPage: (page: 'welcome' | 'game') => void;
 };
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 const pixelSize = 14; // size of each cell
@@ -260,6 +267,9 @@ Devvit.addCustomPostType({
 
     const Canvas = () => {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -284,10 +294,16 @@ Devvit.addCustomPostType({
             const clueArray = puzzle.clueColData[clueIndex]; // array of clues in curr col
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             // Align clues to the bottom of the column sequences at the top of grid
             const clueValue = clueArray?.[clueArray.length - clueRows + rowIndex] ?? ""; // clue value (default to empty)
             return (
               <hstack
+=======
+            const clueValue = clueArray?.[rowIndex] ?? ""; // clue value (default to empty)
+            return (
+              <text
+>>>>>>> Stashed changes
 =======
             const clueValue = clueArray?.[rowIndex] ?? ""; // clue value (default to empty)
             return (
@@ -304,6 +320,7 @@ Devvit.addCustomPostType({
                 alignment="center"
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 border="thin" // Add border to the clue cell
                 backgroundColor="PureGray-400"
               >
@@ -314,6 +331,11 @@ Devvit.addCustomPostType({
                   {clueValue}
                 </text>
               </hstack>
+=======
+              >
+                {clueValue}
+              </text>
+>>>>>>> Stashed changes
 =======
               >
                 {clueValue}
@@ -332,10 +354,16 @@ Devvit.addCustomPostType({
             const clueArray = puzzle.clueRowData[clueIndex]; // array of clues in curr row
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             // Align clues to the right of the row sequences to the left of grid
             const clueValue = clueArray?.[clueArray.length - clueCols + colIndex] ?? ""; // clue value (default to empty)
             return (
               <hstack
+=======
+            const clueValue = clueArray?.[colIndex] ?? ""; // clue value (default to empty)
+            return (
+              <text
+>>>>>>> Stashed changes
 =======
             const clueValue = clueArray?.[colIndex] ?? ""; // clue value (default to empty)
             return (
@@ -352,6 +380,7 @@ Devvit.addCustomPostType({
                 alignment="center"
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 border="thin" // Add border to the clue cell
                 backgroundColor="PureGray-400"
               >
@@ -362,6 +391,11 @@ Devvit.addCustomPostType({
                   {clueValue}
                 </text>
               </hstack>
+=======
+              >
+                {clueValue}
+              </text>
+>>>>>>> Stashed changes
 =======
               >
                 {clueValue}
@@ -384,8 +418,12 @@ Devvit.addCustomPostType({
                 const index = rowIndex * width + colIndex; 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 // Cycle through colors: grey (0) -> black (1) -> white (2) -> grey (0)
                 newData[index] = (newData[index] + 1) % colors.length;
+=======
+                newData[index] = activeColor; // Update color
+>>>>>>> Stashed changes
 =======
                 newData[index] = activeColor; // Update color
 >>>>>>> Stashed changes
@@ -400,7 +438,10 @@ Devvit.addCustomPostType({
               border="thin"
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               borderColor="#CCCCCC"
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -415,6 +456,7 @@ Devvit.addCustomPostType({
           </hstack>
         );
       });
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
@@ -453,6 +495,8 @@ Devvit.addCustomPostType({
     };
 
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         
