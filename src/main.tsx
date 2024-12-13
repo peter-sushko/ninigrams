@@ -26,7 +26,7 @@ const loadPuzzle = (data: any) => {
   };
 };
 
-import data from "./man-in-hat.json"
+import data from "./giraffe.json"
 const puzzle = loadPuzzle(data)
 const clueRows = puzzle.maxClueRows;
 const clueCols = puzzle.maxClueCols;
@@ -35,6 +35,7 @@ const playableCols = puzzle.clueColData.length;
 const width = clueCols + playableCols;
 const height = clueRows + playableRows;
 const pixelSize = 22;
+const postTypeHeight = width > 10 ? 'tall' : 'regular'; // Precompute the height
 
 const blankCanvas = new Array(width * height).fill(0);
 const defaultColor = 0;
@@ -53,7 +54,7 @@ type PageProps = {
 
 Devvit.addCustomPostType({
   name: 'Name', 
-  height: 'tall',
+  height: postTypeHeight,
   render: context => {
     const { useState } = context;
     const [data, setData] = useState(blankCanvas);
