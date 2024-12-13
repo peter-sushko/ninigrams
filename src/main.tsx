@@ -217,7 +217,6 @@ Devvit.addCustomPostType({
             height="100%"
             alignment="middle center"
           >
-            
             {grid}
             <spacer size="small" />
             <hstack gap="small">
