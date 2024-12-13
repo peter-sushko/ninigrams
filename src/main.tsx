@@ -26,7 +26,7 @@ const loadPuzzle = (data: any) => {
   };
 };
 
-import data from "./seahorse.json"
+import data from "./small_test.json"
 const puzzle = loadPuzzle(data)
 const clueRows = puzzle.maxClueRows;
 const clueCols = puzzle.maxClueCols;
@@ -207,8 +207,8 @@ Devvit.addCustomPostType({
             height="100%"
             alignment="middle center"
           >
-            
             {grid}
+            <spacer size="small" />
             <hstack gap="small">
               <button 
                 onPress={clearGrid} 
@@ -221,6 +221,7 @@ Devvit.addCustomPostType({
                 onPress={checkSolution} 
                 size="small"
                 width="75px"
+                appearance="success"
               >
                 SUBMIT
               </button>
