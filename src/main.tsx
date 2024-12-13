@@ -26,7 +26,7 @@ const loadPuzzle = (data: any) => {
   };
 };
 
-import data from "./seahorse.json" 
+import data from "./giraffe.json" 
 const puzzle = loadPuzzle(data)
 const clueRows = puzzle.maxClueRows; // maximum rows reserved for clues
 const clueCols = puzzle.maxClueCols; // maximum cols reserved for clues

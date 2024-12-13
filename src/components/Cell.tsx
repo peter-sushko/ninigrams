@@ -2,7 +2,7 @@
 import { Cell } from './cellType.js';
 import { NonogramsGame } from './NonogramsGame.js';
 import { Devvit } from '@devvit/public-api';
-import { useState } from 'react';
+// import { useState } from 'react';
 
 const CellView = ({
   game,
@@ -16,7 +16,6 @@ const CellView = ({
   cell: Cell;
 }) => {
   const bgColor = cell.color;
-  const [showWinner, setShowWinner] = useState(false);
 
   return (
     <zstack onPress={() => {
@@ -29,30 +28,6 @@ const CellView = ({
         padding={'medium'}
         cornerRadius={'small'}
       ></hstack>
-      <button 
-        onClick={() => setShowWinner(true)}
-        style={{
-          padding: '8px 16px',
-          margin: '4px',
-          backgroundColor: '#4CAF50',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}
-      >
-        Winner
-      </button>
-      {showWinner && (
-        <div style={{ 
-          marginTop: '10px',
-          fontSize: '18px',
-          color: '#4CAF50',
-          fontWeight: 'bold'
-        }}>
-          You Won!
-        </div>
-      )}
     </zstack>
   );
 };
