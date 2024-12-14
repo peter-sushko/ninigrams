@@ -49,7 +49,7 @@ const splitArray = <T,>(array: T[], chunkSize: number): T[][] => {
 };
 
 type PageProps = {
-  setPage: (page: 'welcome' | 'game') => void;
+  setPage: (page: 'welcome' | 'game' | 'tutorial') => void;
 };
 
 Devvit.addCustomPostType({
@@ -59,7 +59,7 @@ Devvit.addCustomPostType({
     const { useState } = context;
     const [data, setData] = useState(blankCanvas);
     const [submissionResult, setSubmissionResult] = useState<string>('');
-    const [currentPage, setCurrentPage] = useState<'welcome' | 'game'>('welcome');
+    const [currentPage, setCurrentPage] = useState<'welcome' | 'game' | 'tutorial'>('welcome');
     const [hintResults, setHintResults] = useState<{ rows: boolean[], cols: boolean[] } | null>(null);
 
     const WelcomeScreen = ({ setPage }: PageProps) => (
@@ -91,11 +91,14 @@ Devvit.addCustomPostType({
             height="180px"
           >
             <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Ninigrams</text>
-            <text color="LightBlue-950" wrap width="100" alignment="center" size="large">
+            <text color="LightBlue-950" wrap width="100%" alignment="center" size="large">
               Fill the grid by following number clues!
             </text>
             <hstack gap="medium" alignment="middle center">
-              <button size="medium">
+              <button 
+                onPress={() => setPage('tutorial')}
+                size="medium"
+              >
                 How to Play
               </button>
               <button 
@@ -103,6 +106,62 @@ Devvit.addCustomPostType({
                 size="medium"
               >
                 Start Puzzle
+              </button>
+            </hstack>
+          </vstack>
+        </vstack>
+      </zstack>
+    );
+
+    const TutorialScreen = ({ setPage }: PageProps) => (
+      <zstack
+        width="100%"
+        height="100%"
+      >
+        <image
+          url="sakura_river.jpg"
+          imageWidth={350}
+          imageHeight={200}
+          height="100%"
+          width="100%"
+          resizeMode="cover"
+        />
+        <vstack
+          width="100%"
+          height="100%"
+          alignment="middle center"
+          gap="medium"
+        >
+          <vstack
+            backgroundColor="rgba(220, 220, 220, 0.92)"
+            padding="large"
+            cornerRadius="medium"
+            gap="medium"
+            borderWidth="thick"
+            borderColor="rgba(128, 128, 128, 1)"
+            height="300px"
+            width="400px"
+          >
+            <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Tutorial</text>
+            <text color="LightBlue-950" wrap width="350px" alignment="center" size="medium">
+              1. Each row and column has numbers that tell you how many consecutive black squares should be in that line{"\n"}
+              2. Click a square to cycle through colors: grey → black → white{"\n"}
+              3. Use the numbers as clues to complete the picture!{"\n"}
+              4. Use HINT to check your progress{"\n"}
+              5. Use CLEAR to reset the grid
+            </text>
+            <hstack gap="medium" alignment="middle center">
+              <button 
+                onPress={() => {}} // Do nothing when Continue is pressed
+                size="medium"
+              >
+                Continue
+              </button>
+              <button 
+                onPress={() => setPage('welcome')}
+                size="medium"
+              >
+                Back to Menu
               </button>
             </hstack>
           </vstack>
@@ -376,6 +435,8 @@ Devvit.addCustomPostType({
         <vstack gap="small" width="100%" height="100%" alignment="middle center">
           {currentPage === 'welcome' 
             ? <WelcomeScreen setPage={setCurrentPage} />
+            : currentPage === 'tutorial'
+            ? <TutorialScreen setPage={setCurrentPage} />
             : <Canvas />
           }
         </vstack>
