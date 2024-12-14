@@ -63,29 +63,51 @@ Devvit.addCustomPostType({
     const [hintResults, setHintResults] = useState<{ rows: boolean[], cols: boolean[] } | null>(null);
 
     const WelcomeScreen = ({ setPage }: PageProps) => (
-      <vstack
+      <zstack
         width="100%"
         height="100%"
-        alignment="middle center"
-        backgroundColor="rgb(144,220,230)"
-        gap="medium"
       >
         <image
-        url="reddit_logo.jpg" 
-            imageWidth={67}
-            imageHeight={67}
+          url="sakura_river.jpg"
+          imageWidth={350}
+          imageHeight={200}
+          height="100%"
+          width="100%"
+          resizeMode="cover"
         />
-        <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Ninigrams</text>
-        <text color="LightBlue-950" wrap width="63" alignment="center" size="large">
-        Fill the grid by following the number clues! Each number represents how many black tiles to place consecutively in that row or column. Order matters. Leave at least one white tile between sequences of black tiles. No grey tiles should remain.
-        </text>
-        <button 
-          onPress={() => setPage('game')}
-          size="medium"
+        <vstack
+          width="100%"
+          height="100%"
+          alignment="middle center"
+          gap="medium"
         >
-          Start Puzzle
-        </button>
-      </vstack>
+          <vstack
+            backgroundColor="rgba(220, 220, 220, 0.92)"
+            padding="large"
+            cornerRadius="medium"
+            gap="medium"
+            borderWidth = "thick"
+            borderColor = "rgba(128, 128, 128, 1)"
+            height="180px"
+          >
+            <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Ninigrams</text>
+            <text color="LightBlue-950" wrap width="100" alignment="center" size="large">
+              Fill the grid by following number clues!
+            </text>
+            <hstack gap="medium" alignment="middle center">
+              <button size="medium">
+                How to Play
+              </button>
+              <button 
+                onPress={() => setPage('game')}
+                size="medium"
+              >
+                Start Puzzle
+              </button>
+            </hstack>
+          </vstack>
+        </vstack>
+      </zstack>
     );
 
     const checkSolution = () => {
