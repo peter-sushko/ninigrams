@@ -106,7 +106,7 @@ Devvit.addCustomPostType({
       }
 
       if (hasGreyCell) {
-        setSubmissionResult("All grid cells must be black or white!");
+        setSubmissionResult("No grey tiles should remain!");
         return;
       }
 
@@ -117,7 +117,7 @@ Devvit.addCustomPostType({
         })
       );
 
-      setSubmissionResult(isCorrect ? 'winner' : 'you have a mistake');
+      setSubmissionResult(isCorrect ? 'Congratulations, you solved the puzzle!🎉' : 'Not quite there yet!');
     };
 
     const Canvas = () => {
@@ -339,7 +339,10 @@ Devvit.addCustomPostType({
               </button>
             </hstack>
             <vstack height="30px" alignment="middle center">
-              {submissionResult && <text>{submissionResult}</text>}
+              {submissionResult && <text color="LightBlue-950" 
+          size="large" 
+          alignment="center"
+          >{submissionResult}</text>}
             </vstack>
           </vstack>
         </zstack>
