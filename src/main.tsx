@@ -67,23 +67,23 @@ Devvit.addCustomPostType({
         width="100%"
         height="100%"
         alignment="middle center"
-        backgroundColor="LightBlue-200"
-        gap="small"
+        backgroundColor="rgb(144,220,230)"
+        gap="medium"
       >
         <image
         url="reddit_logo.jpg" 
-            imageWidth={47}
-            imageHeight={47}
+            imageWidth={67}
+            imageHeight={67}
         />
-        <text color="LightBlue-950" size="xlarge" weight="bold" alignment="center">Ninigrams</text>
-        <text color="LightBlue-950" wrap width="61" alignment="center" size="medium">
-        Fill the grid by following the number clues! Each number represents how many black tiles to place consecutively in that row or column. Leave at least one white tile between sequences of black tiles. No grey tiles should remain.
+        <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Ninigrams</text>
+        <text color="LightBlue-950" wrap width="63" alignment="center" size="large">
+        Fill the grid by following the number clues! Each number represents how many black tiles to place consecutively in that row or column. Order matters. Leave at least one white tile between sequences of black tiles. No grey tiles should remain.
         </text>
         <button 
           onPress={() => setPage('game')}
           size="medium"
         >
-          Solve Puzzle
+          Start Puzzle
         </button>
       </vstack>
     );
