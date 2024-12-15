@@ -26,7 +26,7 @@ const loadPuzzle = (data: any) => {
   };
 };
 
-import data from "./giraffe.json"
+import data from "./man-in-hat.json"
 const puzzle = loadPuzzle(data)
 const clueRows = puzzle.maxClueRows;
 const clueCols = puzzle.maxClueCols;
