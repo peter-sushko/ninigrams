@@ -102,7 +102,7 @@ const calculateDisabledCellsExceptColumn3 = () => {
 
 const tutorialSteps: TutorialStep[] = [
   {
-    instruction: "Let's solve this puzzle together!\n",
+    instruction: "Let's solve this puzzle together. Hit Continue!\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => 
       (Math.floor(i / tutorialPlayableCols) + tutorialClueRows) * tutorialWidth + 
       (i % tutorialPlayableCols) + tutorialClueCols
@@ -110,7 +110,7 @@ const tutorialSteps: TutorialStep[] = [
     highlightCells: [],
   },
   {
-    instruction: "Lets start with the second row. The clue says it should have 5 black cells in a row. Place them!",
+    instruction: "Let's begin with the second row. Place 5 black cells in a row!",
     disabledList: calculateDisabledCells(), // Disable all rows except row 1
     highlightCells: [
       // All cells in row 2 (third row)
@@ -122,7 +122,7 @@ const tutorialSteps: TutorialStep[] = [
     ],
   },
   {
-    instruction: "Now look at the clue for column 3. This column also has 5 black cells in a row. Place them too!",
+    instruction: "Next, let's look at column three. This line should also have 5 black cells. Place them!",
     highlightCells: [
       // Middle column (col 2) for rows 0,2,3,4 (excluding row 1)
       (tutorialClueRows * tutorialWidth) + tutorialClueCols + 2, // Row 0
@@ -134,7 +134,7 @@ const tutorialSteps: TutorialStep[] = [
     disabledList: calculateDisabledCellsExceptColumn3(), // Disable everything except column 3
   },
   {
-    instruction: "Perfect! You're getting the hang of it. Let's try another column.",
+    instruction: "You're getting the hang of it! Let's try another column.",
     highlightCells: [/* indices for next step */],
     expectedState: [/* expected grid state */],
     disabledList: [], // Enable all cells
@@ -355,9 +355,12 @@ Devvit.addCustomPostType({
 
         return (
           <vstack gap="small">
-            <text color="LightBlue-950" wrap width="350px" alignment="center" size="medium">
-              {tutorialSteps[tutorialStep].instruction}
-            </text>
+            <hstack>
+              <spacer width="12px" />
+              <text color="LightBlue-950" wrap width="350px" alignment="center" size="medium">
+                {tutorialSteps[tutorialStep].instruction}
+              </text>
+            </hstack>
             <vstack alignment="middle center">
               {grid}
             </vstack>
@@ -411,13 +414,16 @@ Devvit.addCustomPostType({
               
               {showIntroText ? (
                 <vstack gap="small">
-                  <text color="LightBlue-950" wrap width="350px" alignment="center" size="medium">
-                    1. Uncover the hidden pattern by solving the puzzle!{"\n"}
-                    2. The solution contains only black and white cells.{"\n"}
-                    3. Click a cell to change its color.{"\n"}
-                    4. Each row and column have clues that tell you how many consecutive black squares should be in that line.{"\n"}
-                    5. Black sequences must be separated by at least one white cell.
-                  </text>
+                  <hstack>
+                    <spacer width="20px" />
+                    <text color="LightBlue-950" wrap width="350px" alignment="start" size="medium">
+                      1. Solve the puzzle to reveal the hidden pattern!{"\n"}
+                      2. The solution contains only black and white cells.{"\n"}
+                      3. Click a cell to change its color.{"\n"}
+                      4. Number clues show how many consecutive black tiles go in each row and column.{"\n"}
+                      5. Separate black tile sequences with at least one white cell.
+                    </text>
+                  </hstack>
                   <hstack gap="medium" alignment="middle center">
                     <button 
                       onPress={() => {
@@ -473,7 +479,7 @@ Devvit.addCustomPostType({
                     }}
                     size="medium"
                   >
-                    Okay
+                    Continue
                   </button>
                 </vstack>
               </vstack>
