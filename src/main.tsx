@@ -157,6 +157,13 @@ Devvit.addCustomPostType({
       // Create a simplified grid component just for the tutorial
       const TutorialGrid = () => {
         const [tutorialGridState, setTutorialGridState] = useState(blankTutorialCanvas);
+
+        // Function to disable specified cell
+        const disableCell = (index: number, gridState: number[], setGridState: (newState: number[]) => void) => {
+          const updatedState = [...gridState];
+          updatedState[index] = -1; // Mark cell as disabled using -1
+          setGridState(updatedState);
+        };
         
         const grid = splitArray(tutorialGridState, tutorialWidth).map((row, rowIndex) => {
           const renderedRow = row.map((_, colIndex) => {
@@ -211,14 +218,17 @@ Devvit.addCustomPostType({
 
             const index = rowIndex * tutorialWidth + colIndex;
             const isHighlighted = tutorialSteps[tutorialStep].highlightCells?.includes(index) ?? false;
-            
+            const isDisabled = tutorialGridState[index] === -1;
+
             return (
               <hstack
                 key={`pixel-${rowIndex}-${colIndex}`}
                 onPress={() => {
-                  const newData = [...tutorialGridState];
-                  newData[index] = (newData[index] + 1) % colors.length;
-                  setTutorialGridState(newData);
+                  if (!isDisabled) {
+                    const newData = [...tutorialGridState];
+                    newData[index] = (newData[index] + 1) % colors.length;
+                    setTutorialGridState(newData);
+                  }
                 }}
                 height="22px"
                 width="22px"
@@ -228,6 +238,10 @@ Devvit.addCustomPostType({
               ></hstack>
             );
           });
+
+          // Disable the bottom-right cell (for testing purposes)
+          const bottomRightIndex = tutorialWidth * tutorialHeight - 1;
+          disableCell(bottomRightIndex, tutorialGridState, setTutorialGridState);
 
           return (
             <hstack key={`row-${rowIndex}`}>
