@@ -33,13 +33,12 @@ const puzzle = loadPuzzle(data)
 const umbrellaPuzzle = loadPuzzle(umbrellaData)
 
 // Calculate tutorial dimensions correctly from umbrellaPuzzle data
-const tutorialClueRows = 2;
-const tutorialClueCols = 1;
+const tutorialClueRows = umbrellaPuzzle.maxClueRows; //make this a variable
+const tutorialClueCols = umbrellaPuzzle.maxClueCols;
 const tutorialPlayableRows = 5; 
 const tutorialPlayableCols = 5;
 const tutorialWidth = tutorialClueCols + tutorialPlayableCols;
 const tutorialHeight = tutorialClueRows + tutorialPlayableRows;
-const tutorialPixelSize = 22;
 const blankTutorialCanvas = new Array(tutorialWidth * tutorialHeight).fill(0);
 
 const clueRows = puzzle.maxClueRows;
@@ -48,11 +47,9 @@ const playableRows = puzzle.clueRowData.length;
 const playableCols = puzzle.clueColData.length;
 const width = clueCols + playableCols;
 const height = clueRows + playableRows;
-const pixelSize = 22;
 const postTypeHeight = width > 10 ? 'tall' : 'regular'; // Precompute the height
 
 const blankCanvas = new Array(width * height).fill(0);
-const defaultColor = 0;
 
 const splitArray = <T,>(array: T[], chunkSize: number): T[][] => {
   const result: T[][] = [];
