@@ -1,6 +1,6 @@
 import {Devvit} from '@devvit/public-api'
 
-import data from "./man-in-hat.json"
+import data from "./giraffe.json"
 import umbrellaData from "./umbrella.json"
 
 const colors = [
@@ -102,7 +102,7 @@ const calculateDisabledCellsExceptColumn3 = () => {
 
 const tutorialSteps: TutorialStep[] = [
   {
-    instruction: "Let's solve this tutorial puzzle together!\n",
+    instruction: "Let's solve this puzzle together!\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => 
       (Math.floor(i / tutorialPlayableCols) + tutorialClueRows) * tutorialWidth + 
       (i % tutorialPlayableCols) + tutorialClueCols
@@ -122,7 +122,7 @@ const tutorialSteps: TutorialStep[] = [
     ],
   },
   {
-    instruction: "Now look at the column clue for column 3. This column also has 5 black cells in a row. Place them!",
+    instruction: "Now look at the clue for column 3. This column also has 5 black cells in a row. Place them too!",
     highlightCells: [
       // Middle column (col 2) for rows 0,2,3,4 (excluding row 1)
       (tutorialClueRows * tutorialWidth) + tutorialClueCols + 2, // Row 0
@@ -354,7 +354,7 @@ Devvit.addCustomPostType({
         });
 
         return (
-          <vstack gap="medium">
+          <vstack gap="small">
             <text color="LightBlue-950" wrap width="350px" alignment="center" size="medium">
               {tutorialSteps[tutorialStep].instruction}
             </text>
