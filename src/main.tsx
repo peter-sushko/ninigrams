@@ -696,7 +696,7 @@ Devvit.addCustomPostType({
                 alignment="center"
                 color="#000000"
               >
-                {hintResults && rowIndex >= clueRowsToUse ? (hintResults.rows[rowIndex] ? "✅" : "❌") : ""}
+                {hintResults && rowIndex >= clueRowsToUse ? (hintResults.rows[rowIndex] ? "☑️" : "❌") : ""}
               </text>
             </hstack>
             {renderedRow}
@@ -737,7 +737,7 @@ Devvit.addCustomPostType({
                     alignment="center"
                     color="#000000"
                   >
-                    {hintResults && colIndex >= clueColsToUse ? (hintResults.cols[colIndex] ? "✅" : "❌") : ""}
+                    {hintResults && colIndex >= clueColsToUse ? (hintResults.cols[colIndex] ? "☑️" : "❌") : ""}
                   </text>
                 </hstack>
               ))}
@@ -764,14 +764,14 @@ Devvit.addCustomPostType({
               <button 
                 onPress={clearGrid} 
                 size="small"
-                width="75px"
+                width="63px"
               >
                 CLEAR
               </button>
               <button 
                 onPress={checkSolution} 
                 size="small"
-                width="75px"
+                width="69px"
                 appearance="success"
               >
                 SUBMIT
@@ -779,7 +779,7 @@ Devvit.addCustomPostType({
               <button 
                 onPress={calculateHints} 
                 size="small"
-                width="75px"
+                width="55px"
               >
                 HINT
               </button>
