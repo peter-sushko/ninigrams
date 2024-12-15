@@ -102,7 +102,15 @@ const calculateDisabledCellsExceptColumn3 = () => {
 
 const tutorialSteps: TutorialStep[] = [
   {
-    instruction: "Let's solve this simple umbrella puzzle together!",
+    instruction: "Let's solve this tutorial puzzle together!\n",
+    disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => 
+      (Math.floor(i / tutorialPlayableCols) + tutorialClueRows) * tutorialWidth + 
+      (i % tutorialPlayableCols) + tutorialClueCols
+    ),
+    highlightCells: [],
+  },
+  {
+    instruction: "Lets start with the second row. The clue says it should have 5 black cells in a row. Place them!",
     disabledList: calculateDisabledCells(), // Disable all rows except row 1
     highlightCells: [
       // All cells in row 2 (third row)
@@ -114,7 +122,7 @@ const tutorialSteps: TutorialStep[] = [
     ],
   },
   {
-    instruction: "Great!!",
+    instruction: "Now look at the column clue for column 3. This column also has 5 black cells in a row. Place them!",
     highlightCells: [
       // Middle column (col 2) for rows 0,2,3,4 (excluding row 1)
       (tutorialClueRows * tutorialWidth) + tutorialClueCols + 2, // Row 0
@@ -210,29 +218,26 @@ Devvit.addCustomPostType({
         // Check if the current state matches the expected state for step 1
         const checkStep1Completion = (newState: number[]) => {
           if (tutorialStep === 0) {
-            // Check only the playable area (5x5 grid)
+            // No completion check for step 0
+            return;
+          } else if (tutorialStep === 1) {
+            // Check for 5 black cells in row 1 (second row)
             let isCorrect = true;
-            for (let row = 0; row < tutorialPlayableRows; row++) {
-              for (let col = 0; col < tutorialPlayableCols; col++) {
-                const gridIndex = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
-                const expectedIndex = row * tutorialPlayableCols + col;
-                const expectedValue = row === 1 ? 1 : -1;  // Row 1 (index 1) should be all black
-                const actualValue = newState[gridIndex];
-                
-                if ((expectedValue === -1 && actualValue !== 0) || 
-                    (expectedValue === 1 && actualValue !== 1)) {
-                  isCorrect = false;
-                  break;
-                }
+            const row = 1; // Second row (index 1)
+            
+            for (let col = 0; col < tutorialPlayableCols; col++) {
+              const gridIndex = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+              if (newState[gridIndex] !== 1) { // Check if cell is black (1)
+                isCorrect = false;
+                break;
               }
-              if (!isCorrect) break;
             }
             
             if (isCorrect) {
               setSuccessText("Good job!");
               setShowSuccessMessage(true);
             }
-          } else if (tutorialStep === 1) {
+          } else if (tutorialStep === 2) {
             // Check for the specific pattern in step 2
             const expectedPattern = [
               [-1,-1,1,-1,-1],  // Row 0
@@ -336,7 +341,7 @@ Devvit.addCustomPostType({
                 backgroundColor={colors[tutorialGridState[index]]}
                 border={isHighlighted ? "thick" : "thin"}
                 borderColor={isHighlighted ? "#FFFF00" : "#CCCCCC"}
-                opacity={isDisabled || showSuccessMessage ? 0.5 : 1}
+                style={{ opacity: isDisabled || showSuccessMessage ? 0.5 : 1 }}
               ></hstack>
             );
           });
@@ -356,6 +361,22 @@ Devvit.addCustomPostType({
             <vstack alignment="middle center">
               {grid}
             </vstack>
+            <hstack gap="medium" alignment="middle center">
+              {tutorialStep === 0 && (
+                <button 
+                  onPress={() => setTutorialStep(tutorialStep + 1)}
+                  size="medium"
+                >
+                  Continue
+                </button>
+              )}
+              <button 
+                onPress={() => setPage('welcome')}
+                size="medium"
+              >
+                Back to Menu
+              </button>
+            </hstack>
           </vstack>
         );
       };
@@ -378,14 +399,13 @@ Devvit.addCustomPostType({
           >
             <vstack
               backgroundColor="rgba(220, 220, 220, 0.92)"
-              padding="medium"
-              paddingTop="small"
+              padding="small"
               cornerRadius="medium"
               gap="small"
-              height="90%"
+              height="95%"
               width="400px"
             >
-              <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">
+              <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center" style={{ marginTop: "-10px" }}>
                 Tutorial
               </text>
               
@@ -398,31 +418,22 @@ Devvit.addCustomPostType({
                     4. Each row and column have clues that tell you how many consecutive black squares should be in that line.{"\n"}
                     5. Black sequences must be separated by at least one white cell.
                   </text>
+                  <hstack gap="medium" alignment="middle center">
+                    <button 
+                      onPress={() => {
+                        if (!showSuccessMessage) {
+                          setShowIntroText(false);
+                        }
+                      }}
+                      size="medium"
+                    >
+                      Continue
+                    </button>
+                  </hstack>
                 </vstack>
               ) : (
                 <TutorialGrid />
               )}
-              
-              <hstack gap="medium" alignment="middle center">
-                {showIntroText && (
-                  <button 
-                    onPress={() => {
-                      if (!showSuccessMessage) {
-                        setShowIntroText(false);
-                      }
-                    }}
-                    size="medium"
-                  >
-                    Continue
-                  </button>
-                )}
-                <button 
-                  onPress={() => !showSuccessMessage && setPage('welcome')}
-                  size="medium"
-                >
-                  Back to Menu
-                </button>
-              </hstack>
             </vstack>
           </vstack>
           {showSuccessMessage && (
