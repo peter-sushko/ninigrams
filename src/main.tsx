@@ -68,21 +68,68 @@ type TutorialStep = {
   instruction: string;
   highlightCells?: number[];  // Array of cell indices to highlight
   expectedState?: number[];   // Expected grid state after this step
+  disabledList?: number[];   // Array of cell indices to disable
+};
+
+// Calculate the indices for all cells except row 1
+const calculateDisabledCells = () => {
+  const disabled: number[] = [];
+  for (let row = 0; row < tutorialPlayableRows; row++) {
+    if (row !== 1) { // Skip row 1 (second row)
+      for (let col = 0; col < tutorialPlayableCols; col++) {
+        const index = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+        disabled.push(index);
+      }
+    }
+  }
+  return disabled;
+};
+
+// Calculate the indices for all cells except column 3
+const calculateDisabledCellsExceptColumn3 = () => {
+  const disabled: number[] = [];
+  for (let row = 0; row < tutorialPlayableRows; row++) {
+    for (let col = 0; col < tutorialPlayableCols; col++) {
+      // Skip column 3 (index 2 after clue columns)
+      if (col !== 2) {
+        const index = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+        disabled.push(index);
+      }
+    }
+  }
+  return disabled;
 };
 
 const tutorialSteps: TutorialStep[] = [
   {
-    instruction: "Let's solve this simple umbrella puzzle together! First, look at row 2 - it has a '3'. This means there must be exactly 3 connected black squares in this row.",
+    instruction: "Let's solve this simple umbrella puzzle together!",
+    disabledList: calculateDisabledCells(), // Disable all rows except row 1
+    highlightCells: [
+      // All cells in row 2 (third row)
+      ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols,
+      ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols + 1,
+      ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols + 2,
+      ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols + 3,
+      ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols + 4,
+    ],
   },
   {
-    instruction: "Since row 2 has a width of 3, all squares must be filled in black. Click each square to make them black.",
-    highlightCells: [/* indices for row 2 */],
+    instruction: "Great!!",
+    highlightCells: [
+      // Middle column (col 2) for rows 0,2,3,4 (excluding row 1)
+      (tutorialClueRows * tutorialWidth) + tutorialClueCols + 2, // Row 0
+      ((tutorialClueRows + 2) * tutorialWidth) + tutorialClueCols + 2, // Row 2
+      ((tutorialClueRows + 3) * tutorialWidth) + tutorialClueCols + 2, // Row 3
+      ((tutorialClueRows + 4) * tutorialWidth) + tutorialClueCols + 2, // Row 4
+    ],
     expectedState: [/* expected grid state */],
+    disabledList: calculateDisabledCellsExceptColumn3(), // Disable everything except column 3
   },
   {
-    instruction: "Great! Now look at column 2. It has a '3', and we already filled one square from the previous step. The other two must connect to it.",
-    highlightCells: [/* indices for column 2 */],
+    instruction: "Perfect! You're getting the hang of it. Let's try another column.",
+    highlightCells: [/* indices for next step */],
     expectedState: [/* expected grid state */],
+    disabledList: [], // Enable all cells
   },
   // Add more steps as needed
 ];
@@ -153,15 +200,71 @@ Devvit.addCustomPostType({
     const TutorialScreen = ({ setPage }: PageProps) => {
       const [showIntroText, setShowIntroText] = useState(true);
       const [tutorialStep, setTutorialStep] = useState(0);
+      const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+      const [successText, setSuccessText] = useState("");
       
       // Create a simplified grid component just for the tutorial
       const TutorialGrid = () => {
         const [tutorialGridState, setTutorialGridState] = useState(blankTutorialCanvas);
 
-        // Disable the bottom-right cell (for testing purposes)
-        const bottomRightIndex = tutorialWidth * tutorialHeight - 1;
-        const disabledList = [bottomRightIndex]; // list of cells to disable
-        
+        // Check if the current state matches the expected state for step 1
+        const checkStep1Completion = (newState: number[]) => {
+          if (tutorialStep === 0) {
+            // Check only the playable area (5x5 grid)
+            let isCorrect = true;
+            for (let row = 0; row < tutorialPlayableRows; row++) {
+              for (let col = 0; col < tutorialPlayableCols; col++) {
+                const gridIndex = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+                const expectedIndex = row * tutorialPlayableCols + col;
+                const expectedValue = row === 1 ? 1 : -1;  // Row 1 (index 1) should be all black
+                const actualValue = newState[gridIndex];
+                
+                if ((expectedValue === -1 && actualValue !== 0) || 
+                    (expectedValue === 1 && actualValue !== 1)) {
+                  isCorrect = false;
+                  break;
+                }
+              }
+              if (!isCorrect) break;
+            }
+            
+            if (isCorrect) {
+              setSuccessText("Good job!");
+              setShowSuccessMessage(true);
+            }
+          } else if (tutorialStep === 1) {
+            // Check for the specific pattern in step 2
+            const expectedPattern = [
+              [-1,-1,1,-1,-1],  // Row 0
+              [1,1,1,1,1],      // Row 1 (from previous step)
+              [-1,-1,1,-1,-1],  // Row 2
+              [-1,-1,1,-1,-1],  // Row 3
+              [-1,-1,1,-1,-1]   // Row 4
+            ];
+            
+            let isCorrect = true;
+            for (let row = 0; row < tutorialPlayableRows; row++) {
+              for (let col = 0; col < tutorialPlayableCols; col++) {
+                const gridIndex = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+                const expectedValue = expectedPattern[row][col];
+                const actualValue = newState[gridIndex];
+                
+                if ((expectedValue === -1 && actualValue !== 0) || 
+                    (expectedValue === 1 && actualValue !== 1)) {
+                  isCorrect = false;
+                  break;
+                }
+              }
+              if (!isCorrect) break;
+            }
+            
+            if (isCorrect) {
+              setSuccessText("Well done!");
+              setShowSuccessMessage(true);
+            }
+          }
+        };
+
         const grid = splitArray(tutorialGridState, tutorialWidth).map((row, rowIndex) => {
           const renderedRow = row.map((_, colIndex) => {
             const isClueRow = rowIndex < tutorialClueRows;
@@ -214,24 +317,26 @@ Devvit.addCustomPostType({
             }
 
             const index = rowIndex * tutorialWidth + colIndex;
-            const isDisabled = disabledList.includes(index);
+            const isDisabled = tutorialSteps[tutorialStep].disabledList?.includes(index) ?? false;
             const isHighlighted = tutorialSteps[tutorialStep].highlightCells?.includes(index) ?? false;
 
             return (
               <hstack
                 key={`pixel-${rowIndex}-${colIndex}`}
                 onPress={() => {
-                  if (!isDisabled) {
+                  if (!isDisabled && !showSuccessMessage) {
                     const newData = [...tutorialGridState];
                     newData[index] = (newData[index] + 1) % colors.length;
                     setTutorialGridState(newData);
+                    checkStep1Completion(newData);
                   }
                 }}
                 height="22px"
                 width="22px"
                 backgroundColor={colors[tutorialGridState[index]]}
                 border={isHighlighted ? "thick" : "thin"}
-                borderColor={isHighlighted ? "#FF0000" : "#CCCCCC"}
+                borderColor={isHighlighted ? "#FFFF00" : "#CCCCCC"}
+                opacity={isDisabled || showSuccessMessage ? 0.5 : 1}
               ></hstack>
             );
           });
@@ -287,11 +392,11 @@ Devvit.addCustomPostType({
               {showIntroText ? (
                 <vstack gap="small">
                   <text color="LightBlue-950" wrap width="350px" alignment="center" size="medium">
-                    1. Each row and column has numbers that tell you how many consecutive black squares should be in that line{"\n"}
-                    2. Click a square to cycle through colors: grey → black → white{"\n"}
-                    3. Use the numbers as clues to complete the picture!{"\n"}
-                    4. Use HINT to check your progress{"\n"}
-                    5. Use CLEAR to reset the grid
+                    1. Uncover the hidden pattern by solving the puzzle!{"\n"}
+                    2. The solution contains only black and white cells.{"\n"}
+                    3. Click a cell to change its color.{"\n"}
+                    4. Each row and column have clues that tell you how many consecutive black squares should be in that line.{"\n"}
+                    5. Black sequences must be separated by at least one white cell.
                   </text>
                 </vstack>
               ) : (
@@ -299,22 +404,20 @@ Devvit.addCustomPostType({
               )}
               
               <hstack gap="medium" alignment="middle center">
+                {showIntroText && (
+                  <button 
+                    onPress={() => {
+                      if (!showSuccessMessage) {
+                        setShowIntroText(false);
+                      }
+                    }}
+                    size="medium"
+                  >
+                    Continue
+                  </button>
+                )}
                 <button 
-                  onPress={() => {
-                    if (showIntroText) {
-                      setShowIntroText(false);
-                    } else if (tutorialStep < tutorialSteps.length - 1) {
-                      setTutorialStep(tutorialStep + 1);
-                    } else {
-                      setPage('welcome');
-                    }
-                  }}
-                  size="medium"
-                >
-                  Continue
-                </button>
-                <button 
-                  onPress={() => setPage('welcome')}
+                  onPress={() => !showSuccessMessage && setPage('welcome')}
                   size="medium"
                 >
                   Back to Menu
@@ -322,6 +425,49 @@ Devvit.addCustomPostType({
               </hstack>
             </vstack>
           </vstack>
+          {showSuccessMessage && (
+            <zstack
+              width="100%"
+              height="100%"
+              alignment="middle center"
+            >
+              <vstack
+                alignment="middle center"
+                width="360px"
+                height="100px"
+                backgroundColor="rgba(220, 220, 220, 1)"
+              >
+                <vstack
+                  backgroundColor="rgba(220, 220, 220, 1)"
+                  padding="medium"
+                  cornerRadius="medium"
+                  gap="medium"
+                  width="360px"
+                  height="100px"
+                  alignment="middle center"
+                  border="thick"
+                  borderColor="rgba(180, 180, 180, 1)"
+                >
+                  <text color="LightBlue-950" size="large" weight="bold">
+                    {successText}
+                  </text>
+                  <button
+                    onPress={() => {
+                      setShowSuccessMessage(false);
+                      if (tutorialStep < tutorialSteps.length - 1) {
+                        setTutorialStep(tutorialStep + 1);
+                      } else {
+                        setPage('welcome');
+                      }
+                    }}
+                    size="medium"
+                  >
+                    Okay
+                  </button>
+                </vstack>
+              </vstack>
+            </zstack>
+          )}
         </zstack>
       );
     };
@@ -630,7 +776,11 @@ Devvit.addCustomPostType({
           </vstack>
 
           {showOverlay && (
-            <zstack alignment="top end" width="100%" height="100%">
+            <zstack
+              width="100%"
+              height="100%"
+              alignment="middle center"
+            >
               <vstack
                 alignment="middle center"
                 width="100%" 
