@@ -61,6 +61,8 @@ Devvit.addCustomPostType({
     const [submissionResult, setSubmissionResult] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<'welcome' | 'game' | 'tutorial'>('welcome');
     const [hintResults, setHintResults] = useState<{ rows: boolean[], cols: boolean[] } | null>(null);
+    const [showOverlay, setShowOverlay] = useState(false); // State to control solved screen
+    const toggleOverlay = () => setShowOverlay(!showOverlay); // Function to toggle overlay
 
     const WelcomeScreen = ({ setPage }: PageProps) => (
       <zstack
@@ -198,7 +200,11 @@ Devvit.addCustomPostType({
         })
       );
 
-      setSubmissionResult(isCorrect ? 'Congratulations, you solved the puzzle!🎉' : 'Not quite there yet!');
+      if (isCorrect) {
+        setShowOverlay(true); // Show overlay when solved
+      } else {
+        setSubmissionResult('Not quite there yet!');
+      }    
     };
 
     const Canvas = () => {
@@ -426,6 +432,29 @@ Devvit.addCustomPostType({
           >{submissionResult}</text>}
             </vstack>
           </vstack>
+
+          {showOverlay && (
+            <zstack alignment="top end" width="100%" height="100%">
+              <vstack
+                alignment="middle center"
+                width="100%" 
+                height="100%" 
+                backgroundColor="rgba(128, 128, 128, 0.8)" // Transparent grey background
+              >
+                <text color="White" size="xxlarge" weight="bold" alignment="center">
+                  Congratulations, you solved the puzzle 🌸 
+                </text>
+              </vstack>
+          
+              <hstack padding="medium">
+                <button
+                  icon="close"
+                  onPress={toggleOverlay}
+                  size="small"
+                />
+              </hstack>
+            </zstack>
+          )} 
         </zstack>
       );
     };
