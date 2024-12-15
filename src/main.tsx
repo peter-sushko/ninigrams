@@ -796,7 +796,7 @@ Devvit.addCustomPostType({
             <zstack
               width="100%"
               height="100%"
-              alignment="middle center"
+              alignment="top end"
             >
               <vstack
                 alignment="middle center"
@@ -805,7 +805,7 @@ Devvit.addCustomPostType({
                 backgroundColor="rgba(128, 128, 128, 0.8)" // Transparent grey background
               >
                 <text color="White" size="xxlarge" weight="bold" alignment="center">
-                  Congratulations, you solved the puzzle 🌸 
+                🌸 Congratulations! You solved the puzzle 🌸 
                 </text>
               </vstack>
           
