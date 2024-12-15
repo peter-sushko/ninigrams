@@ -403,6 +403,22 @@ Devvit.addCustomPostType({
             <spacer size="small" />
             <hstack gap="small">
               <button 
+                icon="home"
+                onPress={() => setCurrentPage('welcome')}
+                size="small"
+                width="35px"
+              >
+                {/* HOME */}
+              </button>
+              <button 
+                icon="help"
+                onPress={() => setCurrentPage('tutorial')}
+                size="small"
+                width="35px"
+              >
+                {/* HELP */}
+              </button>
+              <button 
                 onPress={clearGrid} 
                 size="small"
                 width="75px"
