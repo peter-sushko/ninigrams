@@ -161,7 +161,7 @@ Devvit.addCustomPostType({
         // Function to disable specified cell
         const disableCell = (index: number, gridState: number[], setGridState: (newState: number[]) => void) => {
           const updatedState = [...gridState];
-          updatedState[index] = -1; // Mark cell as disabled using -1
+          updatedState[index] = 0; // Mark cell as disabled
           setGridState(updatedState);
         };
         
