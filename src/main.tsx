@@ -1,6 +1,6 @@
 import {Devvit} from '@devvit/public-api'
 
-import data from "./man-in-hat.json"
+import data from "./umbrella.json"
 import umbrellaData from "./umbrella.json"
 
 const colors = [
@@ -67,7 +67,7 @@ type PageProps = {
 type TutorialStep = {
   instruction: string;
   highlightCells?: number[];  // Array of cell indices to highlight
-  expectedState?: number[];   // Expected grid state after this step
+  // expectedState?: number[];   // Expected grid state after this step
   disabledList?: number[];   // Array of cell indices to disable
 };
 
@@ -85,20 +85,41 @@ const calculateDisabledCells = () => {
   return disabled;
 };
 
-// Calculate the indices for all cells except column 3
-const calculateDisabledCellsExceptColumn3 = () => {
+// Add this new function near the other calculate functions
+const calculateDisabledCellsExceptHighlighted = (highlightedCells: number[]) => {
   const disabled: number[] = [];
   for (let row = 0; row < tutorialPlayableRows; row++) {
     for (let col = 0; col < tutorialPlayableCols; col++) {
-      // Skip column 3 (index 2 after clue columns)
-      if (col !== 2) {
-        const index = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+      const index = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+      if (!highlightedCells.includes(index)) {
         disabled.push(index);
       }
     }
   }
   return disabled;
 };
+
+// First, let's create a helper function to calculate cell indices
+const calculateCellIndex = (row: number, col: number) => 
+  (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+
+// Then modify the tutorial step
+const column3Highlights = [
+  calculateCellIndex(0, 2), // Row 0
+  calculateCellIndex(2, 2), // Row 2
+  calculateCellIndex(3, 2), // Row 3
+  calculateCellIndex(4, 2), // Row 4
+];
+
+// First create constants for the remaining cells highlights
+const remainingRowsHighlights = [
+  calculateCellIndex(0, 1),
+  calculateCellIndex(0, 3),
+  calculateCellIndex(2, 1),
+  calculateCellIndex(2, 3),
+  calculateCellIndex(3, 1),
+  calculateCellIndex(3, 3)
+];
 
 const tutorialSteps: TutorialStep[] = [
   {
@@ -110,7 +131,7 @@ const tutorialSteps: TutorialStep[] = [
     highlightCells: [],
   },
   {
-    instruction: "Let's begin with the second row. Place 5 black cells in a row!",
+    instruction: "Let's begin with the second row. The clue for this row is 5, which means this row contains 5 black cells. Place them!",
     disabledList: calculateDisabledCells(), // Disable all rows except row 1
     highlightCells: [
       // All cells in row 2 (third row)
@@ -122,29 +143,69 @@ const tutorialSteps: TutorialStep[] = [
     ],
   },
   {
-    instruction: "Next, let's look at column three. This line should also have 5 black cells. Place them!",
-    highlightCells: [
-      // Middle column (col 2) for rows 0,2,3,4 (excluding row 1)
-      (tutorialClueRows * tutorialWidth) + tutorialClueCols + 2, // Row 0
-      ((tutorialClueRows + 2) * tutorialWidth) + tutorialClueCols + 2, // Row 2
-      ((tutorialClueRows + 3) * tutorialWidth) + tutorialClueCols + 2, // Row 3
-      ((tutorialClueRows + 4) * tutorialWidth) + tutorialClueCols + 2, // Row 4
-    ],
-    expectedState: [/* expected grid state */],
-    disabledList: calculateDisabledCellsExceptColumn3(), // Disable everything except column 3
+    instruction: "Next, let's look at column three. This line should also have 5 black cells.",
+    highlightCells: column3Highlights,
+    disabledList: function() {
+      return calculateDisabledCellsExceptHighlighted(column3Highlights);
+    }(),
   },
   {
-    instruction: "You're getting the hang of it! Let's try another column.",
-    highlightCells: [/* indices for next step */],
-    expectedState: [/* expected grid state */],
-    disabledList: [], // Enable all cells
+    instruction: "Now look at the first column. The clue shows 1 which means only one black cell and the rest should be white. Finish this column.",
+    highlightCells: [
+      // First column (col 0) for all rows
+      (tutorialClueRows * tutorialWidth) + tutorialClueCols, // Row 0
+      ((tutorialClueRows + 2) * tutorialWidth) + tutorialClueCols, // Row 2
+      ((tutorialClueRows + 3) * tutorialWidth) + tutorialClueCols, // Row 3
+      ((tutorialClueRows + 4) * tutorialWidth) + tutorialClueCols, // Row 4
+    ],
+    disabledList: function() {
+      const highlights = [
+        (tutorialClueRows * tutorialWidth) + tutorialClueCols,
+        ((tutorialClueRows + 2) * tutorialWidth) + tutorialClueCols,
+        ((tutorialClueRows + 3) * tutorialWidth) + tutorialClueCols,
+        ((tutorialClueRows + 4) * tutorialWidth) + tutorialClueCols,
+      ];
+      return calculateDisabledCellsExceptHighlighted(highlights);
+    }(),
   },
-  // Add more steps as needed
+  {
+    instruction: "The same applies for the last column too!",
+    highlightCells: [
+      // Last column (col 4) for all rows
+      (tutorialClueRows * tutorialWidth) + tutorialClueCols + 4, // Row 0
+      ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols + 4, // Row 1
+      ((tutorialClueRows + 2) * tutorialWidth) + tutorialClueCols + 4, // Row 2
+      ((tutorialClueRows + 3) * tutorialWidth) + tutorialClueCols + 4, // Row 3
+      ((tutorialClueRows + 4) * tutorialWidth) + tutorialClueCols + 4, // Row 4
+    ],
+    disabledList: function() {
+      const highlights = [
+        (tutorialClueRows * tutorialWidth) + tutorialClueCols + 4,
+        ((tutorialClueRows + 2) * tutorialWidth) + tutorialClueCols + 4,
+        ((tutorialClueRows + 3) * tutorialWidth) + tutorialClueCols + 4,
+        ((tutorialClueRows + 4) * tutorialWidth) + tutorialClueCols + 4,
+      ];
+      return calculateDisabledCellsExceptHighlighted(highlights);
+    }(),
+  },
+  {
+    instruction: "Fill in remaining cells in rows 1, 3 and 4!{\n}",
+    highlightCells: remainingRowsHighlights,
+    disabledList: function() {
+      return calculateDisabledCellsExceptHighlighted(remainingRowsHighlights);
+    }(),
+  },
+  {
+    instruction: "Now finish the puzzle by yourself!\n",
+    highlightCells: [],
+    disabledList: [], // Enable all cells for final step
+  },
 ];
 
 Devvit.addCustomPostType({
   name: 'Name', 
   height: postTypeHeight,
+  // height: 'tall',
   render: context => {
     const { useState } = context;
     const [data, setData] = useState(blankCanvas);
@@ -178,7 +239,7 @@ Devvit.addCustomPostType({
             padding="large"
             cornerRadius="medium"
             gap="medium"
-            borderWidth="thick"
+            // borderWidth="thick"
             borderColor="rgba(128, 128, 128, 1)"
             height="180px"
           >
@@ -187,14 +248,14 @@ Devvit.addCustomPostType({
                 url="flower_logo_no_bg.png"
                 imageWidth={40} // Adjust width as needed
                 imageHeight={40} // Adjust height as needed
-                alignment="center"
+                // alignment="center"
               />
               <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Ninigrams</text>
               <image
                 url="flower_logo_no_bg.png"
                 imageWidth={40} // Adjust width as needed
                 imageHeight={40} // Adjust height as needed
-                alignment="center"
+                // alignment="center"
               />
             </hstack>
             <text color="LightBlue-950" wrap width="100%" alignment="center" size="large">
@@ -248,7 +309,7 @@ Devvit.addCustomPostType({
             }
             
             if (isCorrect) {
-              setSuccessText("Good job!");
+              setSuccessText("Good job! Large numbers are a good starting point.");
               setShowSuccessMessage(true);
             }
           } else if (tutorialStep === 2) {
@@ -279,6 +340,123 @@ Devvit.addCustomPostType({
             
             if (isCorrect) {
               setSuccessText("Well done!");
+              setShowSuccessMessage(true);
+            }
+          } else if (tutorialStep === 3) {
+            // Only check first column in step 3
+            const expectedPattern = [
+              [0,-1,1,-1,0],  // Row 0
+              [1,1,1,1,1],    // Row 1
+              [0,-1,1,-1,0],  // Row 2
+              [0,-1,1,-1,0],  // Row 3
+              [0,-1,1,-1,0]   // Row 4
+            ];
+            
+            let isCorrect = true;
+            for (let row = 0; row < tutorialPlayableRows; row++) {
+              const gridIndex = (row + tutorialClueRows) * tutorialWidth + tutorialClueCols;
+              const expectedValue = expectedPattern[row][0]; // First column
+              const actualValue = newState[gridIndex];
+              
+              if ((expectedValue === 0 && actualValue !== 2) || 
+                  (expectedValue === 1 && actualValue !== 1)) {
+                isCorrect = false;
+                break;
+              }
+            }
+            
+            if (isCorrect) {
+              setTutorialStep(tutorialStep + 1); // Advance to next step without message
+            }
+          } else if (tutorialStep === 4) {
+            // Check full pattern in step 4
+            const expectedPattern = [
+              [0,-1,1,-1,0],  // Row 0
+              [1,1,1,1,1],    // Row 1
+              [0,-1,1,-1,0],  // Row 2
+              [0,-1,1,-1,0],  // Row 3
+              [0,-1,1,-1,0]   // Row 4
+            ];
+            
+            let isCorrect = true;
+            for (let row = 0; row < tutorialPlayableRows; row++) {
+              for (let col = 0; col < tutorialPlayableCols; col++) {
+                const gridIndex = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+                const expectedValue = expectedPattern[row][col];
+                const actualValue = newState[gridIndex];
+                
+                if ((expectedValue === -1 && actualValue !== 0) || 
+                    (expectedValue === 1 && actualValue !== 1) ||
+                    (expectedValue === 0 && actualValue !== 2)) {
+                  isCorrect = false;
+                  break;
+                }
+              }
+              if (!isCorrect) break;
+            }
+            
+            if (isCorrect) {
+              setSuccessText("Great! Placing white cells is important too.");
+              setShowSuccessMessage(true);
+            }
+          } else if (tutorialStep === 5) {
+            // Check for the pattern after filling remaining cells
+            const expectedPattern = [
+              [0,1,1,1,0],    // Row 0
+              [1,1,1,1,1],    // Row 1
+              [0,0,1,0,0],    // Row 2
+              [0,0,1,0,0],    // Row 3
+              [0,-1,1,-1,0]   // Row 4 (still incomplete)
+            ];
+            
+            let isCorrect = true;
+            for (let row = 0; row < tutorialPlayableRows; row++) {
+              for (let col = 0; col < tutorialPlayableCols; col++) {
+                const gridIndex = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+                const expectedValue = expectedPattern[row][col];
+                const actualValue = newState[gridIndex];
+                
+                if ((expectedValue === -1 && actualValue !== 0) || 
+                    (expectedValue === 1 && actualValue !== 1) ||
+                    (expectedValue === 0 && actualValue !== 2)) {
+                  isCorrect = false;
+                  break;
+                }
+              }
+              if (!isCorrect) break;
+            }
+            
+            if (isCorrect) {
+              setTutorialStep(tutorialStep + 1); // Move to final step without message
+            }
+          } else if (tutorialStep === 6) {
+            // Check for final complete pattern
+            const expectedPattern = [
+              [0,1,1,1,0],    // Row 0
+              [1,1,1,1,1],    // Row 1
+              [0,0,1,0,0],    // Row 2
+              [0,0,1,0,0],    // Row 3
+              [0,1,1,0,0]     // Row 4 (complete)
+            ];
+            
+            let isCorrect = true;
+            for (let row = 0; row < tutorialPlayableRows; row++) {
+              for (let col = 0; col < tutorialPlayableCols; col++) {
+                const gridIndex = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+                const expectedValue = expectedPattern[row][col];
+                const actualValue = newState[gridIndex];
+                
+                if ((expectedValue === 1 && actualValue !== 1) ||
+                    (expectedValue === 0 && actualValue !== 2)) {
+                  isCorrect = false;
+                  break;
+                }
+              }
+              if (!isCorrect) break;
+            }
+            
+            if (isCorrect) {
+              setSuccessText("Congratulations! You've completed the tutorial!");
               setShowSuccessMessage(true);
             }
           }
@@ -355,7 +533,7 @@ Devvit.addCustomPostType({
                 backgroundColor={colors[tutorialGridState[index]]}
                 border={isHighlighted ? "thick" : "thin"}
                 borderColor={isHighlighted ? "#FFFF00" : "#CCCCCC"}
-                style={{ opacity: isDisabled || showSuccessMessage ? 0.5 : 1 }}
+                // style={{ opacity: isDisabled || showSuccessMessage ? 0.5 : 1 }} // this one game the error.
               ></hstack>
             );
           });
@@ -422,7 +600,7 @@ Devvit.addCustomPostType({
               height="95%"
               width="400px"
             >
-              <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center" style={{ marginTop: "-10px" }}>
+              <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">
                 Tutorial
               </text>
               
@@ -756,7 +934,10 @@ Devvit.addCustomPostType({
                 </hstack>
               ))}
             </hstack>
-            {grid}
+            // grid generation is here
+            <vstack maxHeight="100%" maxWidth="100%" alignment="middle center">
+              {grid}
+            </vstack>
             <spacer size="small" />
             <hstack gap="small">
               <button 
@@ -771,9 +952,8 @@ Devvit.addCustomPostType({
                 onPress={clearGrid} 
                 size="small"
                 width="60px"
-                // height="30px"
               >
-              CLEAR
+                CLEAR
               </button>
               <button 
                 onPress={checkSolution} 
