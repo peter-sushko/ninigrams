@@ -1,6 +1,6 @@
 import {Devvit} from '@devvit/public-api'
 
-import data from "./giraffe.json"
+import data from "./man-in-hat.json"
 import umbrellaData from "./umbrella.json"
 
 const colors = [
@@ -178,11 +178,25 @@ Devvit.addCustomPostType({
             padding="large"
             cornerRadius="medium"
             gap="medium"
-            borderWidth = "thick"
-            borderColor = "rgba(128, 128, 128, 1)"
+            borderWidth="thick"
+            borderColor="rgba(128, 128, 128, 1)"
             height="180px"
           >
-            <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Ninigrams</text>
+            <hstack alignment="middle center" gap="small">
+              <image
+                url="flower_logo_no_bg.png"
+                imageWidth={40} // Adjust width as needed
+                imageHeight={40} // Adjust height as needed
+                alignment="center"
+              />
+              <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Ninigrams</text>
+              <image
+                url="flower_logo_no_bg.png"
+                imageWidth={40} // Adjust width as needed
+                imageHeight={40} // Adjust height as needed
+                alignment="center"
+              />
+            </hstack>
             <text color="LightBlue-950" wrap width="100%" alignment="center" size="large">
               Fill the grid by following number clues!
             </text>
@@ -754,19 +768,12 @@ Devvit.addCustomPostType({
                 {/* HOME */}
               </button>
               <button 
-                icon="help"
-                onPress={() => setCurrentPage('tutorial')}
-                size="small"
-                width="35px"
-              >
-                {/* HELP */}
-              </button>
-              <button 
                 onPress={clearGrid} 
                 size="small"
-                width="63px"
+                width="60px"
+                // height="30px"
               >
-                CLEAR
+              CLEAR
               </button>
               <button 
                 onPress={checkSolution} 
@@ -779,7 +786,7 @@ Devvit.addCustomPostType({
               <button 
                 onPress={calculateHints} 
                 size="small"
-                width="55px"
+                width="50px"
               >
                 HINT
               </button>
