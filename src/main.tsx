@@ -157,7 +157,7 @@ const tutorialSteps: TutorialStep[] = [
     highlightCells: [],
   },
   {
-    instruction: "Let's begin with the second row. The clue for this row is 5: place five black cells in this row.",
+    instruction: "Let's begin with the second row. The clue is 5: place five black cells in this row.",
     disabledList: calculateDisabledCells(),
     highlightCells: [
       ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols,
@@ -636,7 +636,7 @@ Devvit.addCustomPostType({
               padding="small"
               cornerRadius="medium"
               gap="small"
-              height="95%"
+              height="65%"
               width="100%"
               maxWidth="350px"
             >
@@ -688,8 +688,9 @@ Devvit.addCustomPostType({
             >
               <vstack
                 alignment="middle center"
-                width="360px"
-                height="100px"
+                width="320px"
+                height="120px"
+                cornerRadius="medium"
                 backgroundColor="rgba(220, 220, 220, 1)"
               >
                 <vstack
@@ -697,19 +698,20 @@ Devvit.addCustomPostType({
                   padding="medium"
                   cornerRadius="medium"
                   gap="medium"
-                  width="360px"
-                  height="100px"
+                  width="320px"
+                  height="120px"
                   alignment="middle center"
                   border="thick"
                   borderColor="rgba(180, 180, 180, 1)"
                 >
+                  {/* <spacer size="xsmall" /> */}
                   <text 
                     color="LightBlue-950" 
                     size="large" 
                     wrap
                     width="288px"
                     maxWidth="350px"
-                    alignment="center middle"
+                    alignment="top center"
                   >
                     {successText}
                   </text>
