@@ -1,6 +1,6 @@
 import {Devvit} from '@devvit/public-api'
 
-import data from "./umbrella.json"
+import data from "./giraffe.json"
 import umbrellaData from "./umbrella.json"
 
 Devvit.configure({
@@ -9,13 +9,13 @@ Devvit.configure({
 
 // Adds a new menu item to the subreddit allowing to create a new post
 Devvit.addMenuItem({
-  label: 'Ninigram #1',
+  label: '4 Mobile version text wrap size 100%',
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     const post = await reddit.submitPost({
-      title: 'Ninigram #1',
+      title: '4 100% Mobile version text wrap size',
       subredditName: subreddit.name,
       // The preview appears while the post loads
       preview: (
@@ -157,10 +157,9 @@ const tutorialSteps: TutorialStep[] = [
     highlightCells: [],
   },
   {
-    instruction: "Let's begin with the second row. The clue for this row is 5, which means this row contains 5 black cells. Place them!",
-    disabledList: calculateDisabledCells(), // Disable all rows except row 1
+    instruction: "Let's begin with the second row. The clue for this row is 5: place five black cells in this row.",
+    disabledList: calculateDisabledCells(),
     highlightCells: [
-      // All cells in row 2 (third row)
       ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols,
       ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols + 1,
       ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols + 2,
@@ -169,14 +168,14 @@ const tutorialSteps: TutorialStep[] = [
     ],
   },
   {
-    instruction: "Next, let's look at column three. This line should also have 5 black cells.",
+    instruction: "Next, let's look at the middle column. This line should also have 5 black cells.",
     highlightCells: column3Highlights,
     disabledList: function() {
       return calculateDisabledCellsExceptHighlighted(column3Highlights);
     }(),
   },
   {
-    instruction: "Now look at the first column. The clue shows 1 which means only one black cell and the rest should be white. Finish this column.",
+    instruction: "The first column's clue is 1: ensure there’s only one black cell and the rest are white.",
     highlightCells: [
       // First column (col 0) for all rows
       (tutorialClueRows * tutorialWidth) + tutorialClueCols, // Row 0
@@ -195,11 +194,11 @@ const tutorialSteps: TutorialStep[] = [
     }(),
   },
   {
-    instruction: "The same applies for the last column too!",
+    instruction: "The same applies for the last column too: add white cells to follow the clue.",
     highlightCells: [
       // Last column (col 4) for all rows
       (tutorialClueRows * tutorialWidth) + tutorialClueCols + 4, // Row 0
-      ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols + 4, // Row 1
+      // ((tutorialClueRows + 1) * tutorialWidth) + tutorialClueCols + 4, // Row 1
       ((tutorialClueRows + 2) * tutorialWidth) + tutorialClueCols + 4, // Row 2
       ((tutorialClueRows + 3) * tutorialWidth) + tutorialClueCols + 4, // Row 3
       ((tutorialClueRows + 4) * tutorialWidth) + tutorialClueCols + 4, // Row 4
@@ -215,14 +214,14 @@ const tutorialSteps: TutorialStep[] = [
     }(),
   },
   {
-    instruction: "Fill in remaining cells in rows 1, 3 and 4!{\n}",
+    instruction: "Fill in remaining cells in rows 1, 3 and 4 using the row clues.",
     highlightCells: remainingRowsHighlights,
     disabledList: function() {
       return calculateDisabledCellsExceptHighlighted(remainingRowsHighlights);
     }(),
   },
   {
-    instruction: "Now finish the puzzle by yourself!\n",
+    instruction: "Almost there! Now finish the puzzle on your own by placing the remaining cells.",
     highlightCells: [],
     disabledList: [], // Enable all cells for final step
   },
@@ -230,8 +229,8 @@ const tutorialSteps: TutorialStep[] = [
 
 Devvit.addCustomPostType({
   name: 'Ninigram #1', 
-  height: postTypeHeight,
-  // height: 'tall',
+  height: 'tall',
+  // height: 'regular',
   render: context => {
     const { useState } = context;
     const [data, setData] = useState(blankCanvas);
@@ -284,7 +283,14 @@ Devvit.addCustomPostType({
                 // alignment="center"
               />
             </hstack>
-            <text color="LightBlue-950" wrap width="100%" alignment="center" size="large">
+            <text 
+              color="LightBlue-950" 
+              wrap 
+              width="100%" 
+              maxWidth="350px" 
+              alignment="center" 
+              size="large"
+            >
               Fill the grid by following number clues!
             </text>
             <hstack gap="medium" alignment="middle center">
@@ -335,7 +341,7 @@ Devvit.addCustomPostType({
             }
             
             if (isCorrect) {
-              setSuccessText("Good job! Large numbers are a good starting point.");
+              setSuccessText("Good job! Large numbers are a good start.");
               setShowSuccessMessage(true);
             }
           } else if (tutorialStep === 2) {
@@ -422,7 +428,7 @@ Devvit.addCustomPostType({
             }
             
             if (isCorrect) {
-              setSuccessText("Great! Placing white cells is important too.");
+              setSuccessText("Great! White cells are key in ninigrams.");
               setShowSuccessMessage(true);
             }
           } else if (tutorialStep === 5) {
@@ -482,7 +488,7 @@ Devvit.addCustomPostType({
             }
             
             if (isCorrect) {
-              setSuccessText("Congratulations! You've completed the tutorial!");
+              setSuccessText("Congratulations! You finished the tutorial!");
               setShowSuccessMessage(true);
             }
           }
@@ -574,8 +580,15 @@ Devvit.addCustomPostType({
         return (
           <vstack gap="small">
             <hstack>
-              <spacer width="12px" />
-              <text color="LightBlue-950" wrap width="350px" alignment="center" size="medium">
+              <spacer width="20px" />
+              <text 
+                color="LightBlue-950" 
+                wrap 
+                width="288px"
+                maxWidth="350px"
+                alignment="center middle" 
+                size="medium"
+              >
                 {tutorialSteps[tutorialStep].instruction}
               </text>
             </hstack>
@@ -624,17 +637,24 @@ Devvit.addCustomPostType({
               cornerRadius="medium"
               gap="small"
               height="95%"
-              width="400px"
+              width="100%"
+              maxWidth="350px"
             >
-              <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">
+              <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center middle">
                 Tutorial
               </text>
               
               {showIntroText ? (
                 <vstack gap="small">
                   <hstack>
-                    <spacer width="20px" />
-                    <text color="LightBlue-950" wrap width="350px" alignment="start" size="medium">
+                    <text 
+                      color="LightBlue-950" 
+                      wrap 
+                      width="320px"
+                      maxWidth="350px"
+                      alignment="start middle" 
+                      size="medium"
+                    >
                       1. Solve the puzzle to reveal the hidden pattern!{"\n"}
                       2. The solution contains only black and white cells.{"\n"}
                       3. Click a cell to change its color.{"\n"}
@@ -683,7 +703,14 @@ Devvit.addCustomPostType({
                   border="thick"
                   borderColor="rgba(180, 180, 180, 1)"
                 >
-                  <text color="LightBlue-950" size="large" weight="bold">
+                  <text 
+                    color="LightBlue-950" 
+                    size="large" 
+                    wrap
+                    width="288px"
+                    maxWidth="350px"
+                    alignment="center middle"
+                  >
                     {successText}
                   </text>
                   <button
@@ -998,10 +1025,16 @@ Devvit.addCustomPostType({
               </button>
             </hstack>
             <vstack height="30px" alignment="middle center">
-              {submissionResult && <text color="LightBlue-950" 
-          size="large" 
-          alignment="center"
-          >{submissionResult}</text>}
+              {submissionResult && <text 
+                color="LightBlue-950" 
+                size="large" 
+                wrap
+                width="288px"
+                maxWidth="350px"
+                alignment="center"
+              >
+                {submissionResult}
+              </text>}
             </vstack>
           </vstack>
 
@@ -1015,10 +1048,18 @@ Devvit.addCustomPostType({
                 alignment="middle center"
                 width="100%" 
                 height="100%" 
-                backgroundColor="rgba(128, 128, 128, 0.8)" // Transparent grey background
+                backgroundColor="rgba(128, 128, 128, 0.8)"
               >
-                <text color="White" size="xxlarge" weight="bold" alignment="center">
-                🌸 Congratulations! You solved the puzzle 🌸 
+                <text 
+                  color="White" 
+                  size="xxlarge" 
+                  weight="bold" 
+                  alignment="center"
+                  wrap
+                  width="288px"
+                  maxWidth="350px"
+                >
+                  🌸 Congratulations! You solved the puzzle 🌸 
                 </text>
               </vstack>
           
