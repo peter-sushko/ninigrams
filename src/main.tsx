@@ -3,6 +3,32 @@ import {Devvit} from '@devvit/public-api'
 import data from "./umbrella.json"
 import umbrellaData from "./umbrella.json"
 
+Devvit.configure({
+  redditAPI: true,
+});
+
+// Adds a new menu item to the subreddit allowing to create a new post
+Devvit.addMenuItem({
+  label: 'Ninigram #1',
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    const post = await reddit.submitPost({
+      title: 'Ninigram #1',
+      subredditName: subreddit.name,
+      // The preview appears while the post loads
+      preview: (
+        <vstack height="100%" width="100%" alignment="middle center">
+          <text size="large">Loading ...</text>
+        </vstack>
+      ),
+    });
+    ui.showToast({ text: 'Created post!' });
+    ui.navigateTo(post);
+  },
+});
+
 const colors = [
   "#E0E0E0", // light grey
   "#333333", // dark grey (black)
@@ -203,7 +229,7 @@ const tutorialSteps: TutorialStep[] = [
 ];
 
 Devvit.addCustomPostType({
-  name: 'Name', 
+  name: 'Ninigram #1', 
   height: postTypeHeight,
   // height: 'tall',
   render: context => {
