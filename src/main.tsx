@@ -1,6 +1,6 @@
 import {Devvit} from '@devvit/public-api'
 
-import data from "./giraffe.json"
+import data from "../puzzles/puppy.json"
 import umbrellaData from "./umbrella.json"
 
 Devvit.configure({
@@ -9,13 +9,13 @@ Devvit.configure({
 
 // Adds a new menu item to the subreddit allowing to create a new post
 Devvit.addMenuItem({
-  label: '4 Mobile version text wrap size 100%',
+  label: 'Ninigram #5',
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     const post = await reddit.submitPost({
-      title: '4 100% Mobile version text wrap size',
+      title: 'Ninigram #5',
       subredditName: subreddit.name,
       // The preview appears while the post loads
       preview: (
