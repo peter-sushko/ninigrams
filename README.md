@@ -41,5 +41,5 @@ Future features include:
 
 ### Credits  
 - **Developers**: Nina Koh & Peter Sushko 
-- **Puzzles**: Adapted from nonograms.org  
+- **Puzzles**: Adapted from [nonograms.org](https://www.nonograms.org/)  
 - **Non Ishida**: Special recognition to Non Ishida, the inventor of nonograms, whose creation has inspired players like us around the world. 
