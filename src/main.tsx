@@ -1,6 +1,6 @@
 import {Devvit} from '@devvit/public-api'
 
-import data from "../puzzles/puppy.json"
+import data from "../puzzles/seahorse.json"
 import umbrellaData from "./umbrella.json"
 
 Devvit.configure({
