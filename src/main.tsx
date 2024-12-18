@@ -168,14 +168,14 @@ const tutorialSteps: TutorialStep[] = [
     ],
   },
   {
-    instruction: "Next, let's look at the middle column. This line should also have 5 black cells.",
+    instruction: "Next, let's look at the middle column. This line should also have five black cells.",
     highlightCells: column3Highlights,
     disabledList: function() {
       return calculateDisabledCellsExceptHighlighted(column3Highlights);
     }(),
   },
   {
-    instruction: "The first column's clue is 1: ensure there’s only one black cell and the rest are white.",
+    instruction: "The first column's clue is 1: ensure there’s only one black cell, and the rest are white.",
     highlightCells: [
       // First column (col 0) for all rows
       (tutorialClueRows * tutorialWidth) + tutorialClueCols, // Row 0
@@ -194,7 +194,7 @@ const tutorialSteps: TutorialStep[] = [
     }(),
   },
   {
-    instruction: "The same applies for the last column too: add white cells to follow the clue.",
+    instruction: "The same applies for the last column: add white cells to follow the clue.",
     highlightCells: [
       // Last column (col 4) for all rows
       (tutorialClueRows * tutorialWidth) + tutorialClueCols + 4, // Row 0
@@ -214,7 +214,7 @@ const tutorialSteps: TutorialStep[] = [
     }(),
   },
   {
-    instruction: "Fill in remaining cells in rows 1, 3 and 4 using the row clues.",
+    instruction: "Fill in the remaining cells in rows one, three and four using the row clues.",
     highlightCells: remainingRowsHighlights,
     disabledList: function() {
       return calculateDisabledCellsExceptHighlighted(remainingRowsHighlights);
@@ -428,7 +428,7 @@ Devvit.addCustomPostType({
             }
             
             if (isCorrect) {
-              setSuccessText("Great! White cells are key in ninigrams.");
+              setSuccessText("Great! White cells are key in Ninigrams.");
               setShowSuccessMessage(true);
             }
           } else if (tutorialStep === 5) {
