@@ -68,8 +68,8 @@ def generate_nonogram_data(grid, name):
         "name": name,
         "clueRowData": clue_row_data,
         "clueColData": clue_col_data,
-        "maxClueRows": max_clue_rows,
-        "maxClueCols": max_clue_cols,
+        "maxClueRows": max_clue_cols,
+        "maxClueCols": max_clue_rows,
         "solution": grid.tolist()
     }
 
