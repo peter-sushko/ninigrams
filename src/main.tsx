@@ -7,6 +7,7 @@ import puppyData from "../puzzles/puppy.json"
 import tractorData from "../puzzles/tractor.json"
 import giraffeData from "../puzzles/giraffe.json"
 import seahorseData from "../puzzles/seahorse.json"
+import sailboatData from "../puzzles/sailboat.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -29,8 +30,36 @@ const puzzleMap = {
   2: puppyData,
   3: tractorData,
   4: giraffeData,
-  5: seahorseData
+  5: seahorseData,
+  6: sailboatData
 } as const;
+
+Devvit.addMenuItem({
+  label: `Ninigram #6: Sailboat`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #6: Sailboat`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #6...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(6));
+      ui.showToast({ text: `Created Ninigram #6!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #6: ${error}` });
+    }
+  },
+});
 
 // Add both menu items for Tractor and Giraffe
 Devvit.addMenuItem({
