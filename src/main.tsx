@@ -14,6 +14,7 @@ import xmasTreeData from "../puzzles/xmas-tree.json"
 import musicNoteData from "../puzzles/music_note.json"
 import pandaData from "../puzzles/panda.json"
 import mushroomData from "../puzzles/mushroom.json"
+import chimkinData from "../puzzles/chimkin.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -43,8 +44,37 @@ const puzzleMap = {
   9: xmasTreeData,
   10: musicNoteData,
   11: pandaData,
-  12: mushroomData
+  12: mushroomData,
+  13: chimkinData
 } as const;
+
+
+Devvit.addMenuItem({
+  label: `Ninigram #13: Cluck Norris (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #13: Cluck Norris (Hard)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #13...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(13));
+      ui.showToast({ text: `Created Ninigram #13!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #13: ${error}` });
+    }
+  },
+});
 
 Devvit.addMenuItem({
   label: `Ninigram #6: Land ahoy!`,
