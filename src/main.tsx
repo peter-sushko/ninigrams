@@ -15,6 +15,7 @@ import musicNoteData from "../puzzles/music_note.json"
 import pandaData from "../puzzles/panda.json"
 import mushroomData from "../puzzles/mushroom.json"
 import chimkinData from "../puzzles/chimkin.json"
+import bumblebeeData from "../puzzles/bumblebee.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -45,7 +46,8 @@ const puzzleMap = {
   10: musicNoteData,
   11: pandaData,
   12: mushroomData,
-  13: chimkinData
+  13: chimkinData,
+  14: bumblebeeData
 } as const;
 
 
@@ -77,6 +79,33 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
+  label: `Ninigram #14: Oh Honey! (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #14: Oh Honey! (Hard)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #14...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(14));
+      ui.showToast({ text: `Created Ninigram #14!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #14: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
   label: `Ninigram #6: Land ahoy!`,
   location: 'subreddit',
   onPress: async (_event, context) => {
@@ -103,7 +132,6 @@ Devvit.addMenuItem({
   },
 });
 
-// Add both menu items for Tractor and Giraffe
 Devvit.addMenuItem({
   label: `Ninigram #3: Field Duty`,
   location: 'subreddit',
