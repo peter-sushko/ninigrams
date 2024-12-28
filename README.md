@@ -23,7 +23,7 @@ This project was submitted to the Reddit Games and Puzzles Hackathon on December
 ### How We Built It  
 - Created a shared GitHub repository to collaborate on the codebase in `main.tsx`.  
 - Coded the game using TypeScript and integrated Reddit’s Devvit platform through its public API. 
-- Used puzzles from nonograms.org and rendered them into a custom JSON format.  
+- Created illustrations ourselves and rendered them into a custom JSON format.  
 - Launched Ninigrams on our subreddit, [r/ninigrams](https://www.reddit.com/r/ninigrams).  
 - Uploaded a submission video to [Youtube](https://youtu.be/gJL2Ccg1wi8?si=QcdXvpYidvHXDaGK) to showcase our project.  
 
@@ -41,5 +41,4 @@ Future features include:
 
 ### Credits  
 - **Developers**: Nina Koh & Peter Sushko 
-- **Puzzles**: Adapted from [nonograms.org](https://www.nonograms.org/)  
 - **Non Ishida**: Special recognition to Non Ishida, the inventor of nonograms, whose creation has inspired players like us around the world. 
