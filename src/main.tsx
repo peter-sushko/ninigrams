@@ -60,7 +60,7 @@ const puzzleMap = {
 
 
 Devvit.addMenuItem({
-  label: `Ninigram #13: Cluck Norris (Hard)`,
+  label: `Ninigram #13: Cluck Norris (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -68,7 +68,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #13: Cluck Norris (Hard)`,
+        title: `Ninigram #13: Cluck Norris (Medium)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
@@ -384,7 +384,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #11: Black & White & Cute`,
+  label: `Ninigram #11: Black & White & Cute (Hard)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -392,7 +392,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #11: Black & White & Cute`,
+        title: `Ninigram #11: Black & White & Cute (Hard)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
