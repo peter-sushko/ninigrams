@@ -16,6 +16,10 @@ import pandaData from "../puzzles/panda.json"
 import mushroomData from "../puzzles/mushroom.json"
 import chimkinData from "../puzzles/chimkin.json"
 import bumblebeeData from "../puzzles/bumblebee.json"
+import heartData from "../puzzles/heart.json"
+import octopusData from "../puzzles/octopus.json"
+import skullData from "../puzzles/skull.json"
+import chickData from "../puzzles/chick.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -47,7 +51,11 @@ const puzzleMap = {
   11: pandaData,
   12: mushroomData,
   13: chimkinData,
-  14: bumblebeeData
+  14: bumblebeeData,
+  15: heartData,
+  16: octopusData,
+  17: skullData,
+  18: chickData
 } as const;
 
 
@@ -429,6 +437,114 @@ Devvit.addMenuItem({
   },
 });
 
+Devvit.addMenuItem({
+  label: `Ninigram #15: Less than 3 (Easy)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #15: Less than 3 (Easy)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #15...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(15));
+      ui.showToast({ text: `Created Ninigram #15!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #15: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #16: Ocean's Eight (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #16: Ocean's Eight (Hard)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #16...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(16));
+      ui.showToast({ text: `Created Ninigram #16!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #16: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #17: Bad to the Bone (Easy)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #17: Bad to the Bone (Easy)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #17...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(17));
+      ui.showToast({ text: `Created Ninigram #17!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #17: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #18: Spring Chicken (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #18: Spring Chicken (Medium)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #18...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(18));
+      ui.showToast({ text: `Created Ninigram #18!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #18: ${error}` });
+    }
+  },
+});
+
 const colors = [
   "#E0E0E0", // light grey
   "#333333", // dark grey (black)
@@ -636,6 +752,72 @@ const getPuzzleNumber = async (context: CustomPostRenderContext) => {
   }
 };
 
+
+const calculateGridLines = (clueRows: number, playableRows: number, effectiveWidth: number) => {
+  const lines = [];
+
+  // Border after clue rows
+  lines.push({
+    spacerHeight: (clueRows * 22 - 1) + "px",
+    width: effectiveWidth * 22 + "px"
+  });
+  
+  // Lines every 5 cells in playable area
+  const numberOfDividers = Math.floor((playableRows - 1) / 5);
+  for (let i = 0; i < numberOfDividers; i++) {
+    const spacerHeight = i === 0 
+      ? (5 * 22 - 2) + "px"  // First line
+      : (5 * 22 - i * 2) + "px";  // Subsequent lines
+      
+    lines.push({
+      spacerHeight,
+      width: effectiveWidth * 22 + "px"
+    });
+  }
+  
+  // Bottom border (using grow spacer, so no height needed)
+  lines.push({
+    spacerHeight: "grow",
+    width: effectiveWidth * 22 + "px"
+  });
+  
+  return lines;
+};
+
+const calculateVerticalGridLines = (clueCols: number, playableCols: number, effectiveHeight: number) => {
+  const lines = [];
+  
+  // Border after clue columns
+  lines.push({
+    spacerWidth: (clueCols * 22 - 1) + "px",
+    height: effectiveHeight * 22 + "px"
+  });
+  
+  // Lines every 5 cells in playable area
+  const numberOfDividers = Math.floor((playableCols - 1) / 5);
+  for (let i = 0; i < numberOfDividers; i++) {
+    // If you want the same “-2 px on subsequent lines” logic:
+    const spacerWidth = i === 0
+      ? (5 * 22 - 2) + "px" // first line
+      : (5 * 22 - i * 2) + "px"; // subsequent lines
+
+    lines.push({
+      spacerWidth,
+      height: effectiveHeight * 22 + "px"
+    });
+  }
+  
+  // Right border (using grow spacer, so no width needed)
+  lines.push({
+    spacerWidth: "grow",
+    height: effectiveHeight * 22 + "px"
+  });
+  
+  return lines;
+};
+
+
+
 Devvit.addCustomPostType({
   name: 'Ninigram', 
   height: 'tall',
@@ -685,6 +867,7 @@ Devvit.addCustomPostType({
       >
         <image
           url="sakura_river.jpg"
+          // url="test_background.webp" // for testing
           imageWidth={350}
           imageHeight={200}
           height="100%"
@@ -1393,6 +1576,7 @@ Devvit.addCustomPostType({
       return (
         <zstack width="100%" height="100%">
           <image
+            // url="test_background.webp"
             url="sakura_river.gif"
             imageWidth={350}
             imageHeight={200}
@@ -1428,10 +1612,66 @@ Devvit.addCustomPostType({
                 </hstack>
               ))}
             </hstack>
-            // grid generation is here
-            <vstack maxHeight="100%" maxWidth="100%" alignment="middle center">
-              {grid}
-            </vstack>
+            <hstack alignment="center">
+              <zstack alignment="center">
+                <vstack maxHeight="100%" maxWidth="100%" alignment="center">
+                  {grid}
+                </vstack>
+                <hstack alignment="center">
+                  <spacer width="22px" minWidth="22px"/>
+                  <zstack>
+                    <vstack 
+                      width={`${effectiveWidth * 22}px`}
+                      height={`${effectiveHeight * 22}px`}
+                      alignment="center"
+                    >
+                      {calculateGridLines(clueRows, playableRows, effectiveWidth).map((line, index) => (
+                        <>
+                          {line.spacerHeight !== "grow" ? (
+                            <spacer height={line.spacerHeight as any} />
+                          ) : (
+                            <spacer grow />
+                          )}
+                          <hstack alignment="center">
+                            <hstack 
+                              width={`${effectiveWidth * 22}px`}
+                              height="2px"
+                              backgroundColor="rgba(178, 178, 178, 1)"
+                            >
+                              <spacer />
+                            </hstack>
+                          </hstack>
+                        </>
+                      ))}
+                    </vstack>
+                    <hstack
+                        width={`${effectiveWidth * 22}px`}
+                        height={`${effectiveHeight * 22}px`}
+                      >
+                        {calculateVerticalGridLines(clueCols, playableCols, effectiveHeight).map((line, index) => (
+                          <>
+                            {line.spacerWidth !== "grow" ? (
+                              <spacer width={line.spacerWidth as any} 
+                              height="1px"
+                              />
+                            ) : (
+                              <spacer grow 
+                              height="1px"/>
+                            )}
+                            <vstack
+                              width="2px"
+                              height={`${effectiveHeight * 22}px`}
+                              backgroundColor="rgba(178, 178, 178, 1)"
+                            >
+                            </vstack>
+                          </>
+                        ))}
+                      </hstack>
+                  </zstack>
+                </hstack>
+              </zstack>
+            </hstack>
+
             <spacer size="small" />
             <hstack gap="small">
               <button 
