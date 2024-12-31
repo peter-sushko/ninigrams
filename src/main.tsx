@@ -20,6 +20,7 @@ import heartData from "../puzzles/heart.json"
 import octopusData from "../puzzles/octopus.json"
 import skullData from "../puzzles/skull.json"
 import chickData from "../puzzles/chick.json"
+import doggyData from "../puzzles/doggy.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -55,7 +56,8 @@ const puzzleMap = {
   15: heartData,
   16: octopusData,
   17: skullData,
-  18: chickData
+  18: chickData,
+  19: doggyData
 } as const;
 
 
@@ -541,6 +543,33 @@ Devvit.addMenuItem({
       ui.navigateTo(post);
     } catch (error) {
       ui.showToast({ text: `Failed to create Ninigram #18: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #19: There goes my homework again... (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #19: There goes my homework again...  (Medium)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #19...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(19));
+      ui.showToast({ text: `Created Ninigram #19!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #19: ${error}` });
     }
   },
 });
