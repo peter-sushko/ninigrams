@@ -21,6 +21,15 @@ import octopusData from "../puzzles/octopus.json"
 import skullData from "../puzzles/skull.json"
 import chickData from "../puzzles/chick.json"
 import doggyData from "../puzzles/doggy.json"
+import crocData from "../puzzles/croc.json"
+import appleData from "../puzzles/apple.json"
+import bikeData from "../puzzles/bike.json"
+import catData from "../puzzles/cat.json"
+import checkerData from "../puzzles/checker.json"
+import cherryData from "../puzzles/cherry.json"
+import chillerData from "../puzzles/chiller.json"
+import duckData from "../puzzles/duck.json"
+import thunderData from "../puzzles/thunder.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -57,7 +66,16 @@ const puzzleMap = {
   16: octopusData,
   17: skullData,
   18: chickData,
-  19: doggyData
+  19: doggyData,
+  20: crocData,
+  21: appleData,
+  22: bikeData,
+  23: catData,
+  24: checkerData,
+  25: cherryData,
+  26: chillerData,
+  27: duckData,
+  28: thunderData
 } as const;
 
 
@@ -143,7 +161,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #3: Field Duty`,
+  label: `Ninigram #3 (Remake): Field Duty (Hard)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -151,7 +169,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #3: Field Duty`,
+        title: `Ninigram #3 (Remake): Field Duty (Hard)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
@@ -278,7 +296,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #7: Claw enforcement`,
+  label: `Ninigram #7 (Remake): Claw enforcement (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -286,7 +304,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #7: Claw enforcement`,
+        title: `Ninigram #7 (Remake): Claw enforcement (Medium)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
@@ -386,7 +404,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #11: Black & White & Cute (Hard)`,
+  label: `Ninigram #11 (Remake): Black & White & Cute (Hard)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -394,7 +412,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #11: Black & White & Cute (Hard)`,
+        title: `Ninigram #11 (Remake): Black & White & Cute (Hard)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
@@ -570,6 +588,201 @@ Devvit.addMenuItem({
       ui.navigateTo(post);
     } catch (error) {
       ui.showToast({ text: `Failed to create Ninigram #19: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #20: See You Later! (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #20: See You Later! (Medium)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #20...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(20));
+      ui.showToast({ text: `Created Ninigram #20!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #20: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #21: Keeps the doctor away (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #21: Keeps the doctor away (Medium)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #21...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(21));
+      ui.showToast({ text: `Created Ninigram #21!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #21: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #22: Two Wheels Good (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #22: Two Wheels Good (Hard)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #22...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(22));
+      ui.showToast({ text: `Created Ninigram #22!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #22: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #23: Purrfect Puzzle (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #23: Purrfect Puzzle (Medium)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #23...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(23));
+      ui.showToast({ text: `Created Ninigram #23!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #23: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #24: Finish Line (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #24: Finish Line (Medium)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #24...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(24));
+      ui.showToast({ text: `Created Ninigram #24!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #24: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #25: Life is Cherry Sweet (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #25: Life is Cherry Sweet (Hard)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #25...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(25));
+      ui.showToast({ text: `Created Ninigram #25!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #25: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #26: Slay Bear (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #26: Slay Bear (Medium)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #26...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(26));
+      ui.showToast({ text: `Created Ninigram #26!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #26: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #27: Duck Duck Go! (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #27: Duck Duck Go! (Hard)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #27...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(27));
+      ui.showToast({ text: `Created Ninigram #27!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #27: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #28: Thunder Struck! (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #28: Thunder Struck! (Medium)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #28...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(28));
+      ui.showToast({ text: `Created Ninigram #28!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #28: ${error}` });
     }
   },
 });
@@ -1446,6 +1659,10 @@ Devvit.addCustomPostType({
       onGridUpdate = () => {}, 
       gridState = null
     }: CanvasProps) => {
+      const { useState } = context;
+      // Add state for tracking if hints are enabled
+      const [hintsEnabled, setHintsEnabled] = useState(false);
+      
       // Calculate dimensions based on whether we're in tutorial mode or main puzzle
       const isTutorial = Boolean(gridState);
       const effectiveWidth = isTutorial ? tutorialWidth : (width || puzzle.maxClueCols + puzzle.clueColData.length);
@@ -1464,26 +1681,39 @@ Devvit.addCustomPostType({
         }
         setSubmissionResult('');
         setHintResults(null);
+        setHintsEnabled(false);
       }
 
       const calculateHints = () => {
+        // Toggle hints instead of just calculating them
+        if (hintsEnabled) {
+          setHintsEnabled(false);
+          setHintResults(null);
+          return;
+        }
+
+        setHintsEnabled(true);
+        updateHints();
+      }
+
+      const updateHints = (gridData = currentData) => {
         const rowHints = Array(effectiveHeight).fill(false);
         const colHints = Array(effectiveWidth).fill(false);
 
         for (let rowIndex = clueRowsToUse; rowIndex < effectiveHeight; rowIndex++) {
-          rowHints[rowIndex] = checkRowMatch(rowIndex);
+          rowHints[rowIndex] = checkRowMatch(rowIndex, gridData);
         }
 
         for (let colIndex = clueColsToUse; colIndex < effectiveWidth; colIndex++) {
-          colHints[colIndex] = checkColMatch(colIndex);
+          colHints[colIndex] = checkColMatch(colIndex, gridData);
         }
 
         setHintResults({ rows: rowHints, cols: colHints });
       }
 
-      const checkRowMatch = (rowIndex: number): boolean => {
+      const checkRowMatch = (rowIndex: number, gridData = currentData): boolean => {
         for (let colIndex = clueColsToUse; colIndex < effectiveWidth; colIndex++) {
-          const cellValue = currentData[rowIndex * effectiveWidth + colIndex];
+          const cellValue = gridData[rowIndex * effectiveWidth + colIndex];
           if (cellValue === 0) { // Grey cell
             return false;
           }
@@ -1495,9 +1725,9 @@ Devvit.addCustomPostType({
         return true;
       };
 
-      const checkColMatch = (colIndex: number): boolean => {
+      const checkColMatch = (colIndex: number, gridData = currentData): boolean => {
         for (let rowIndex = clueRowsToUse; rowIndex < effectiveHeight; rowIndex++) {
-          const cellValue = currentData[rowIndex * effectiveWidth + colIndex];
+          const cellValue = gridData[rowIndex * effectiveWidth + colIndex];
           if (cellValue === 0) { // Grey cell
             return false;
           }
@@ -1572,6 +1802,10 @@ Devvit.addCustomPostType({
                 } else {
                   setData(newData);
                 }
+                // Update hints if they're enabled, using the new grid state
+                if (hintsEnabled) {
+                  updateHints(newData);
+                }
               }}
               height="22px"
               width="22px"
@@ -1594,7 +1828,7 @@ Devvit.addCustomPostType({
                 alignment="center"
                 color="#000000"
               >
-                {hintResults && rowIndex >= clueRowsToUse ? (hintResults.rows[rowIndex] ? "☑️" : "❌") : ""}
+                {hintsEnabled && rowIndex >= clueRowsToUse ? (hintResults?.rows[rowIndex] ? "☑️" : "❌") : ""}
               </text>
             </hstack>
             {renderedRow}
@@ -1636,7 +1870,7 @@ Devvit.addCustomPostType({
                     alignment="center"
                     color="#000000"
                   >
-                    {hintResults && colIndex >= clueColsToUse ? (hintResults.cols[colIndex] ? "☑️" : "❌") : ""}
+                    {hintsEnabled && colIndex >= clueColsToUse ? (hintResults?.cols[colIndex] ? "☑️" : "❌") : ""}
                   </text>
                 </hstack>
               ))}
@@ -1730,6 +1964,7 @@ Devvit.addCustomPostType({
                 onPress={calculateHints} 
                 size="small"
                 width="50px"
+                appearance={hintsEnabled ? "primary" : "secondary"}
               >
                 HINT
               </button>
