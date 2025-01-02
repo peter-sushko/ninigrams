@@ -89,7 +89,7 @@ def main():
     puzzle = generate_nonogram_data(grid, png_name.capitalize())
 
     # Save JSON to the specified directory
-    output_dir = "/Users/petrsushko/Desktop/ninigrams/puzzles"
+    output_dir = "../puzzles"
     os.makedirs(output_dir, exist_ok=True)
     json_path = os.path.join(output_dir, f"{png_name}.json")
 
