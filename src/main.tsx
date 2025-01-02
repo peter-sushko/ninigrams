@@ -640,26 +640,28 @@ Devvit.addMenuItem({
   },
 });
 
-Devvit.addMenuItem({
-  label: `Ninigram #22: Two Wheels Good (Hard)`,
-  location: 'subreddit',
-  onPress: async (_event, context) => {
-    const { reddit, ui, kvStore } = context;
-    const subreddit = await reddit.getCurrentSubreddit();
-    try {
-      const post = await reddit.submitPost({
-        title: `Ninigram #22: Two Wheels Good (Hard)`,
-        subredditName: subreddit.name,
-        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #22...</text></vstack>)
-      });
-      await kvStore.put(`puzzle_${post.id}`, String(22));
-      ui.showToast({ text: `Created Ninigram #22!` });
-      ui.navigateTo(post);
-    } catch (error) {
-      ui.showToast({ text: `Failed to create Ninigram #22: ${error}` });
-    }
-  },
-});
+
+// #22 is not solvable yet!
+// Devvit.addMenuItem({
+//   label: `Ninigram #22: Two Wheels Good (Hard)`,
+//   location: 'subreddit',
+//   onPress: async (_event, context) => {
+//     const { reddit, ui, kvStore } = context;
+//     const subreddit = await reddit.getCurrentSubreddit();
+//     try {
+//       const post = await reddit.submitPost({
+//         title: `Ninigram #22: Two Wheels Good (Hard)`,
+//         subredditName: subreddit.name,
+//         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #22...</text></vstack>)
+//       });
+//       await kvStore.put(`puzzle_${post.id}`, String(22));
+//       ui.showToast({ text: `Created Ninigram #22!` });
+//       ui.navigateTo(post);
+//     } catch (error) {
+//       ui.showToast({ text: `Failed to create Ninigram #22: ${error}` });
+//     }
+//   },
+// });
 
 Devvit.addMenuItem({
   label: `Ninigram #23: Purrfect Puzzle (Medium)`,
@@ -725,14 +727,14 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #26: Slay Bear (Medium)`,
+  label: `Ninigram #26: Disco Time! (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #26: Slay Bear (Medium)`,
+        title: `Ninigram #26: Disco Time! (Medium)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #26...</text></vstack>)
       });
