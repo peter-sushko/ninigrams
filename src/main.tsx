@@ -856,14 +856,14 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #28: Thunder Struck! (Medium)`,
+  label: `Ninigram #28: Cats and Dogs (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #28: Thunder Struck! (Medium)`,
+        title: `Ninigram #28: Cats and Dogs (Medium)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #28...</text></vstack>)
       });
