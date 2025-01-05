@@ -877,7 +877,7 @@ Devvit.addMenuItem({
 });
 
 const colors = [
-  "#E0E0E0", // light grey
+  "#d9d9d9", // light grey
   "#333333", // dark grey (black)
   "#FFFFFF"  // white
 ];
@@ -1127,7 +1127,7 @@ const calculateVerticalGridLines = (clueCols: number, playableCols: number, effe
   // Lines every 5 cells in playable area
   const numberOfDividers = Math.floor((playableCols - 1) / 5);
   for (let i = 0; i < numberOfDividers; i++) {
-    // If you want the same “-2 px on subsequent lines” logic:
+    // If you want the same "-2 px on subsequent lines" logic:
     const spacerWidth = i === 0
       ? (5 * 22 - 2) + "px" // first line
       : (5 * 22 - i * 2) + "px"; // subsequent lines
@@ -1751,6 +1751,7 @@ Devvit.addCustomPostType({
       const { useState } = context;
       // Add state for tracking if hints are enabled
       const [hintsEnabled, setHintsEnabled] = useState(false);
+      const [showClearConfirm, setShowClearConfirm] = useState(false);
       
       // Calculate dimensions based on whether we're in tutorial mode or main puzzle
       const isTutorial = Boolean(gridState);
@@ -1762,6 +1763,10 @@ Devvit.addCustomPostType({
       const puzzleToUse = isTutorial ? umbrellaPuzzle : puzzle;
 
       const clearGrid = () => {
+        setShowClearConfirm(true);
+      }
+
+      const confirmClear = () => {
         const newData = isTutorial ? new Array(tutorialWidth * tutorialHeight).fill(0) : blankCanvas;
         if (gridState) {
           onGridUpdate(newData);
@@ -1771,6 +1776,7 @@ Devvit.addCustomPostType({
         setSubmissionResult('');
         setHintResults(null);
         setHintsEnabled(false);
+        setShowClearConfirm(false);
       }
 
       const calculateHints = () => {
@@ -2106,6 +2112,61 @@ Devvit.addCustomPostType({
               </hstack>
             </zstack>
           )} 
+
+          {showClearConfirm && (
+            <zstack
+              width="100%"
+              height="100%"
+              alignment="middle center"
+            >
+              <vstack
+                alignment="middle center"
+                width="320px"
+                height="120px"
+                cornerRadius="medium"
+                backgroundColor="rgba(220, 220, 220, 1)"
+              >
+                <vstack
+                  backgroundColor="rgba(220, 220, 220, 1)"
+                  padding="medium"
+                  cornerRadius="medium"
+                  gap="medium"
+                  width="320px"
+                  height="120px"
+                  alignment="middle center"
+                  border="thick"
+                  borderColor="rgba(180, 180, 180, 1)"
+                >
+                  <text 
+                    color="LightBlue-950" 
+                    size="large" 
+                    wrap
+                    width="288px"
+                    maxWidth="350px"
+                    alignment="top center"
+                  >
+                    Reset the grid?
+                  </text>
+                  <hstack gap="medium">
+                    <button
+                      onPress={confirmClear}
+                      size="medium"
+                      appearance="success"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      onPress={() => setShowClearConfirm(false)}
+                      size="medium"
+                      appearance="destructive"
+                    >
+                      No
+                    </button>
+                  </hstack>
+                </vstack>
+              </vstack>
+            </zstack>
+          )}
         </zstack>
       );
     };
