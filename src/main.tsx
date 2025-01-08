@@ -794,14 +794,14 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #21: Keeps the Doctor Away (Hard)`,
+  label: `Ninigram #21: Forbidden Bite (Medium) [Read comment]`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #21: Keeps the Doctor Away (Hard)`,
+        title: `Ninigram #21: Forbidden Bite (Medium) [Read comment]`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #21...</text></vstack>)
       });
