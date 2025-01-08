@@ -416,7 +416,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #2: Man’s Best Friend`,
+  label: `Ninigram #2: Man's Best Friend`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -424,7 +424,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #2: Man’s Best Friend`,
+        title: `Ninigram #2: Man's Best Friend`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
@@ -794,14 +794,14 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #21: Keeps the Doctor Away (Medium)`,
+  label: `Ninigram #21: Keeps the Doctor Away (Hard)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #21: Keeps the Doctor Away (Medium)`,
+        title: `Ninigram #21: Keeps the Doctor Away (Hard)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #21...</text></vstack>)
       });
@@ -968,6 +968,10 @@ const colors = [
   "#333333", // dark grey (black)
   "#FFFFFF"  // white
 ];
+
+// Add this constant to control autofill behavior
+const AUTOFILL_ENABLED = true;  // Set to false to disable autofill for all puzzles
+const AUTOFILL_PUZZLE_NUMBER = 21;  // Only puzzle #30 will have autofill when enabled
 
 // Load puzzle data from JSON file
 const loadPuzzle = (data: any) => {
@@ -2022,11 +2026,14 @@ Devvit.addCustomPostType({
                 let newData = [...data]; // Change variable from constant to dynamic
                 newData[index] = (newData[index] + 1) % colors.length;
 
-                if (isRowComplete(rowIndex, newData)) {
-                  newData = autofillRow(rowIndex, newData); // autofill row if complete
-                }
-                if (isColComplete(colIndex, newData)) {
-                  newData = autofillCol(colIndex, newData); // autofill col if complete
+                // Only apply autofill for puzzle #30 when enabled
+                if (AUTOFILL_ENABLED && puzzleNumber === AUTOFILL_PUZZLE_NUMBER) {
+                  if (isRowComplete(rowIndex, newData)) {
+                    newData = autofillRow(rowIndex, newData); // autofill row if complete
+                  }
+                  if (isColComplete(colIndex, newData)) {
+                    newData = autofillCol(colIndex, newData); // autofill col if complete
+                  }
                 }
 
                 if (gridState) {
