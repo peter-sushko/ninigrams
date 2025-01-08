@@ -1921,6 +1921,48 @@ Devvit.addCustomPostType({
         return true;
       };
 
+      const isRowComplete = (rowIndex: number, currentData: number[]): boolean => {
+        for (let col = clueCols; col < effectiveWidth; col++) {
+          const userTile = currentData[rowIndex * effectiveWidth + col];
+          const solutionTile = puzzle.solution[rowIndex - clueRows][col - clueCols];
+          // Check for mismatch of black tiles between solution & user
+          if (solutionTile === 1 && userTile !== 1) return false; 
+        }
+        return true; // All black tiles match
+      };
+
+      const isColComplete = (colIndex: number, currentData: number[]): boolean => {
+        for (let row = clueRows; row < effectiveHeight; row++) {
+          const userTile = currentData[row * effectiveWidth + colIndex];
+          const solutionTile = puzzle.solution[row - clueRows][colIndex - clueCols];
+          // Check for mismatch of black tiles between solution & user
+          if (solutionTile === 1 && userTile !== 1) return false; 
+        }
+        return true; // All black tiles match
+      };
+
+      const autofillRow = (rowIndex: number, currentData: number[]): number[] => {  
+        const newData = [...currentData]; // Clone the data array
+        for (let col = clueCols; col < effectiveWidth; col++) {
+          const index = rowIndex * effectiveWidth + col;
+          if (newData[index] === 0) {
+            newData[index] = 2; // Change grey tiles to white (according to colors)
+          }
+        }
+        return newData; // Return the updated array
+      };
+
+      const autofillCol = (colIndex: number, currentData: number[]): number[] => {  
+        const newData = [...currentData]; // Clone the data array
+        for (let row = clueRows; row < effectiveHeight; row++) {
+          const index = row * effectiveWidth + colIndex;
+          if (newData[index] === 0) {
+            newData[index] = 2; // Change grey tiles to white
+          }
+        }
+        return newData; // Return the updated array
+      };
+      
       const grid = splitArray(currentData, effectiveWidth).map((row: number[], rowIndex: number) => {
         const renderedRow = row.map((_: number, colIndex: number) => {
           const isClueRow = rowIndex < clueRowsToUse;
@@ -1977,8 +2019,16 @@ Devvit.addCustomPostType({
             <hstack
               key={`pixel-${rowIndex}-${colIndex}`}
               onPress={() => {
-                const newData = [...currentData];
+                let newData = [...data]; // Change variable from constant to dynamic
                 newData[index] = (newData[index] + 1) % colors.length;
+
+                if (isRowComplete(rowIndex, newData)) {
+                  newData = autofillRow(rowIndex, newData); // autofill row if complete
+                }
+                if (isColComplete(colIndex, newData)) {
+                  newData = autofillCol(colIndex, newData); // autofill col if complete
+                }
+
                 if (gridState) {
                   onGridUpdate(newData);
                 } else {
