@@ -1931,6 +1931,7 @@ Devvit.addCustomPostType({
           const solutionTile = puzzle.solution[rowIndex - clueRows][col - clueCols];
           // Check for mismatch of black tiles between solution & user
           if (solutionTile === 1 && userTile !== 1) return false; 
+          if (solutionTile !== 1 && userTile === 1) return false; 
         }
         return true; // All black tiles match
       };
@@ -1941,6 +1942,7 @@ Devvit.addCustomPostType({
           const solutionTile = puzzle.solution[row - clueRows][colIndex - clueCols];
           // Check for mismatch of black tiles between solution & user
           if (solutionTile === 1 && userTile !== 1) return false; 
+          if (solutionTile !== 1 && userTile === 1) return false; 
         }
         return true; // All black tiles match
       };
