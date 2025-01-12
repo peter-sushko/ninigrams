@@ -36,6 +36,7 @@ import mooseData from "../puzzles/moose.json"
 import miffyData from "../puzzles/miffy.json"
 import fishData from "../puzzles/fish.json"
 import cactusData from "../puzzles/cactus.json"
+import icecreamData from "../puzzles/icecream.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -87,7 +88,8 @@ const puzzleMap = {
   31: mooseData, 
   32: miffyData,
   33: fishData,
-  34: cactusData
+  34: cactusData,
+  35: icecreamData
 } as const;
 
 Devvit.addMenuItem({
@@ -252,6 +254,32 @@ Devvit.addMenuItem({
   },
 });
 
+Devvit.addMenuItem({
+  label: `Ninigram #35: Cone Appetit (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #35: Cone Appetit (Hard)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #35...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(35));
+      ui.showToast({ text: `Created Ninigram #35!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #35: ${error}` });
+    }
+  },
+});
 
 Devvit.addMenuItem({
   label: `Ninigram #13: Cluck Norris (Medium)`,
