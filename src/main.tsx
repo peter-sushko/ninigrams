@@ -37,6 +37,9 @@ import miffyData from "../puzzles/miffy.json"
 import fishData from "../puzzles/fish.json"
 import cactusData from "../puzzles/cactus.json"
 import icecreamData from "../puzzles/icecream.json"
+import lemonadeData from "../puzzles/lemonade.json"
+import flowerData from "../puzzles/flower.json"
+import moonData from "../puzzles/moon.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -89,7 +92,10 @@ const puzzleMap = {
   32: miffyData,
   33: fishData,
   34: cactusData,
-  35: icecreamData
+  35: icecreamData,
+  36: lemonadeData,
+  37: flowerData,
+  38: moonData
 } as const;
 
 Devvit.addMenuItem({
@@ -277,6 +283,87 @@ Devvit.addMenuItem({
       ui.navigateTo(post);
     } catch (error) {
       ui.showToast({ text: `Failed to create Ninigram #35: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #36: When Life Gives You Lemons... (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #36: When Life Gives You Lemons... (Hard)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #36...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(36));
+      ui.showToast({ text: `Created Ninigram #36!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #36: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #37: My Best Bud (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #37: My Best Bud (Medium)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #37...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(37));
+      ui.showToast({ text: `Created Ninigram #37!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #37: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #38: Just a Phase (Easy)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #38: Just a Phase (Easy)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #38...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(38));
+      ui.showToast({ text: `Created Ninigram #38!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #38: ${error}` });
     }
   },
 });
