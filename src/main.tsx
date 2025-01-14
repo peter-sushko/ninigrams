@@ -288,7 +288,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #36: When Life Gives You Lemons... (Hard)`,
+  label: `Ninigram #36: Pulp Fiction (Hard)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -296,7 +296,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #36: When Life Gives You Lemons... (Hard)`,
+        title: `Ninigram #36: Pulp Fiction (Hard)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
