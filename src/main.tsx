@@ -2343,17 +2343,22 @@ Devvit.addCustomPostType({
             <zstack
               width="100%"
               height="100%"
-              alignment="top end"
+              alignment="middle center"
             >
-              <image url="sakura-leaves.gif" imageWidth={512} imageHeight={512} />
               <vstack
-                alignment="middle center"
+                width="100%"
+                height="100%"
+                backgroundColor="rgb(170, 230, 240)"
+              />
+              
+              <vstack 
                 width="100%" 
                 height="100%" 
-                backgroundColor="rgba(128, 128, 128, 0.66)"
+                alignment="top center"
               >
+                <spacer size="large" />
                 <text 
-                  color="White" 
+                  color="#333333"
                   size="xxlarge" 
                   weight="bold" 
                   alignment="center"
@@ -2361,11 +2366,60 @@ Devvit.addCustomPostType({
                   width="288px"
                   maxWidth="350px"
                 >
-                  🌸 Congratulations! You solved the puzzle 🌸 
+                  🌸 Congratulations 🌸
                 </text>
               </vstack>
-          
-              <hstack padding="medium">
+
+              <vstack alignment="middle center">
+                {splitArray(data, effectiveWidth)
+                  .slice(clueRowsToUse)
+                  .map((row, rowIndex) => (
+                    <hstack key={`row-${rowIndex}`}>
+                      {row.slice(clueColsToUse).map((cell, colIndex) => (
+                        <hstack
+                          key={`pixel-${rowIndex}-${colIndex}`}
+                          height="23px"
+                          width="23px"
+                          backgroundColor={colors[cell]}
+                          border="thin"
+                          borderColor="#CCCCCC"
+                        />
+                      ))}
+                    </hstack>
+                  ))
+                }
+              </vstack>
+
+              <vstack 
+                width="100%" 
+                height="100%" 
+                alignment="bottom center"
+              >
+                <text 
+                  color="#333333"
+                  size="xlarge"
+                  alignment="center"
+                  wrap
+                  width="288px"
+                  maxWidth="350px"
+                >
+                  You solved the puzzle!
+                </text>
+                <spacer size="large" />
+              </vstack>
+
+              <image 
+                url="sakura-leaves.gif" 
+                imageWidth={512} 
+                imageHeight={512} 
+              />
+
+              <hstack 
+                padding="medium" 
+                width="100%" 
+                height="100%" 
+                alignment="top end"
+              >
                 <button
                   icon="close"
                   onPress={toggleOverlay}
