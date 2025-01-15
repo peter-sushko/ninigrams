@@ -2345,7 +2345,7 @@ Devvit.addCustomPostType({
               height="100%"
               alignment="top end"
             >
-              <image url="sakura-leaves.gif" imageWidth={350} imageHeight={350} />
+              <image url="sakura-leaves.gif" imageWidth={512} imageHeight={512} />
               <vstack
                 alignment="middle center"
                 width="100%" 
