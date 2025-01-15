@@ -2108,11 +2108,11 @@ Devvit.addCustomPostType({
                 key={`clueRow-${rowIndex}-${colIndex}`}
                 height="22px"
                 width="22px"
-                alignment="center"
+                alignment="middle center"
                 border="thin"
                 backgroundColor="PureGray-350"
               >
-                <text alignment="center" color="#000000">{clueValue}</text>
+                <text alignment="center" color="#000000" grow>{clueValue}</text>
               </hstack>
             );
           }
@@ -2126,11 +2126,11 @@ Devvit.addCustomPostType({
                 key={`clueCol-${rowIndex}-${colIndex}`}
                 height="22px"
                 width="22px"
-                alignment="center"
+                alignment="middle center"
                 border="thin"
                 backgroundColor="PureGray-350"
               >
-                <text alignment="center" color="#000000">{clueValue}</text>
+                <text alignment="center" color="#000000" grow>{clueValue}</text>
               </hstack>
             );
           }
@@ -2345,11 +2345,12 @@ Devvit.addCustomPostType({
               height="100%"
               alignment="top end"
             >
+              <image url="sakura-leaves.gif" imageWidth={350} imageHeight={350} />
               <vstack
                 alignment="middle center"
                 width="100%" 
                 height="100%" 
-                backgroundColor="rgba(128, 128, 128, 0.8)"
+                backgroundColor="rgba(128, 128, 128, 0.66)"
               >
                 <text 
                   color="White" 
