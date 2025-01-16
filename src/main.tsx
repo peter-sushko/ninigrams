@@ -2357,17 +2357,27 @@ Devvit.addCustomPostType({
                 alignment="top center"
               >
                 <spacer size="large" />
-                <text 
-                  color="#333333"
-                  size="xxlarge" 
-                  weight="bold" 
-                  alignment="center"
-                  wrap
-                  width="288px"
-                  maxWidth="350px"
-                >
-                  🌸 Congratulations 🌸
-                </text>
+                <hstack alignment="middle center" gap="small">
+                  <image
+                    url="flower_logo_no_bg.png"
+                    imageWidth={40}
+                    imageHeight={40}
+                  />
+                  <text 
+                    color="#333333"
+                    size="xxlarge" 
+                    weight="bold" 
+                    alignment="center"
+                    wrap
+                  >
+                    Congratulations
+                  </text>
+                  <image
+                    url="flower_logo_no_bg.png"
+                    imageWidth={40}
+                    imageHeight={40}
+                  />
+                </hstack>
               </vstack>
 
               <vstack alignment="middle center">
