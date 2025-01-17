@@ -90,9 +90,9 @@ const puzzleMap = {
   30: squirrelData,
   31: mooseData, 
   32: miffyData,
-  33: fishData,
-  34: cactusData,
-  35: icecreamData,
+  33: icecreamData,
+  34: fishData,
+  35: cactusData,
   36: lemonadeData,
   37: flowerData,
   38: moonData
@@ -207,7 +207,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #33: Just Keep Swimming (Medium)`,
+  label: `Ninigram #33: Cone Appetit (Hard)`,  
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -215,7 +215,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #33: Just Keep Swimming (Medium)`,
+        title: `Ninigram #33: Cone Appetit (Hard)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
@@ -234,7 +234,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #34: Prick Me! Prick Me! (Easy)`,
+  label: `Ninigram #34: Just Keep Swimming (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -242,7 +242,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #34: Prick Me! Prick Me! (Easy)`,
+        title: `Ninigram #34: Just Keep Swimming (Medium)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
@@ -261,7 +261,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #35: Cone Appetit (Hard)`,
+  label: `Ninigram #35: Prick Me! Prick Me! (Easy)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -269,7 +269,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #35: Cone Appetit (Hard)`,
+        title: `Ninigram #35: Prick Me! Prick Me! (Easy)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
