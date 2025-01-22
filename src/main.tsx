@@ -43,6 +43,8 @@ import moonData from "../puzzles/moon.json"
 import friesData from "../puzzles/fries.json"
 import ghostData from "../puzzles/ghost.json"
 import pigData from "../puzzles/pig.json"
+import sheepData from "../puzzles/sheep.json"
+import wizardData from "../puzzles/wizard.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -100,36 +102,12 @@ const puzzleMap = {
   37: flowerData,
   38: moonData,
   39: friesData,
-  40: pigData,
-  41: ghostData
+  40: sheepData,
+  41: ghostData,
+  42: wizardData,
+  43: pigData
 } as const;
 
-Devvit.addMenuItem({
-  label: `Ninigram #36: Pulp Fiction (Hard)`,
-  location: 'subreddit',
-  onPress: async (_event, context) => {
-    const { reddit, ui, kvStore } = context;
-    const subreddit = await reddit.getCurrentSubreddit();
-    
-    try {
-      const post = await reddit.submitPost({
-        title: `Ninigram #36: Pulp Fiction (Hard)`,
-        subredditName: subreddit.name,
-        preview: (
-          <vstack height="100%" width="100%" alignment="middle center">
-            <text size="large">Loading Ninigram #36...</text>
-          </vstack>
-        )
-      });
-
-      await kvStore.put(`puzzle_${post.id}`, String(36));
-      ui.showToast({ text: `Created Ninigram #36!` });
-      ui.navigateTo(post);
-    } catch (error) {
-      ui.showToast({ text: `Failed to create Ninigram #36: ${error}` });
-    }
-  },
-});
 
 Devvit.addMenuItem({
   label: `Ninigram #37: My Best Bud (Medium)`,
@@ -213,7 +191,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #40: Muddy with a Chance of Meatballs (Easy)`,
+  label: `Ninigram #40: Ewe Got This! (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -221,7 +199,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #40: Muddy with a Chance of Meatballs (Easy)`,
+        title: `Ninigram #40: Ewe Got This! (Medium)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
@@ -262,6 +240,60 @@ Devvit.addMenuItem({
       ui.navigateTo(post);
     } catch (error) {
       ui.showToast({ text: `Failed to create Ninigram #41: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #42: You Shall Not Pass (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #42: You Shall Not Pass (Hard)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #42...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(42));
+      ui.showToast({ text: `Created Ninigram #42!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #42: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #43: Muddy with a Chance of Meatballs (Easy)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #43: Muddy with a Chance of Meatballs (Easy)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #43...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(43));
+      ui.showToast({ text: `Created Ninigram #43!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #43: ${error}` });
     }
   },
 });
@@ -1013,7 +1045,6 @@ Devvit.addCustomPostType({
                       onPress={() => {
                         if (!showSuccessMessage) {
                           setShowIntroText(false);
-                        }
                       }}
                       size="medium"
                     >
