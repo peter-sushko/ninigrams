@@ -43,26 +43,16 @@ import moonData from "../puzzles/moon.json"
 import friesData from "../puzzles/fries.json"
 import ghostData from "../puzzles/ghost.json"
 import pigData from "../puzzles/pig.json"
-import sheepData from "../puzzles/sheep.json"
-import wizardData from "../puzzles/wizard.json"
+import smallTestData from "./small_test.json"
 
 Devvit.configure({
   redditAPI: true,
   kvStore: true,
 });
 
-// // First, define a type for our puzzle data
-// type PuzzleData = {
-//   name: string;
-//   clueRowData: number[][];
-//   clueColData: number[][];
-//   maxClueRows: number;
-//   maxClueCols: number;
-//   solution: number[][];
-// };
-
 // First, create a mapping of puzzle numbers to their data
 const puzzleMap = {
+  0: smallTestData,  // Adding small_test as puzzle #0
   1: airplaneData,
   2: puppyData,
   3: tractorData,
@@ -102,12 +92,63 @@ const puzzleMap = {
   37: flowerData,
   38: moonData,
   39: friesData,
-  40: sheepData,
-  41: ghostData,
-  42: wizardData,
-  43: pigData
+  40: pigData,
+  41: ghostData
 } as const;
 
+Devvit.addMenuItem({
+  label: `Ninigram #0: Small Test`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #0: Small Test`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #0...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(0));
+      ui.showToast({ text: `Created Ninigram #0!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #0: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #36: Pulp Fiction (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #36: Pulp Fiction (Hard)`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #36...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(36));
+      ui.showToast({ text: `Created Ninigram #36!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #36: ${error}` });
+    }
+  },
+});
 
 Devvit.addMenuItem({
   label: `Ninigram #37: My Best Bud (Medium)`,
@@ -191,7 +232,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #40: Ewe Got This! (Medium)`,
+  label: `Ninigram #40: Muddy with a Chance of Meatballs (Easy)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
@@ -199,7 +240,7 @@ Devvit.addMenuItem({
     
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #40: Ewe Got This! (Medium)`,
+        title: `Ninigram #40: Muddy with a Chance of Meatballs (Easy)`,
         subredditName: subreddit.name,
         preview: (
           <vstack height="100%" width="100%" alignment="middle center">
@@ -244,60 +285,6 @@ Devvit.addMenuItem({
   },
 });
 
-Devvit.addMenuItem({
-  label: `Ninigram #42: You Shall Not Pass (Hard)`,
-  location: 'subreddit',
-  onPress: async (_event, context) => {
-    const { reddit, ui, kvStore } = context;
-    const subreddit = await reddit.getCurrentSubreddit();
-
-    try {
-      const post = await reddit.submitPost({
-        title: `Ninigram #42: You Shall Not Pass (Hard)`,
-        subredditName: subreddit.name,
-        preview: (
-          <vstack height="100%" width="100%" alignment="middle center">
-            <text size="large">Loading Ninigram #42...</text>
-          </vstack>
-        )
-      });
-
-      await kvStore.put(`puzzle_${post.id}`, String(42));
-      ui.showToast({ text: `Created Ninigram #42!` });
-      ui.navigateTo(post);
-    } catch (error) {
-      ui.showToast({ text: `Failed to create Ninigram #42: ${error}` });
-    }
-  },
-});
-
-Devvit.addMenuItem({
-  label: `Ninigram #43: Muddy with a Chance of Meatballs (Easy)`,
-  location: 'subreddit',
-  onPress: async (_event, context) => {
-    const { reddit, ui, kvStore } = context;
-    const subreddit = await reddit.getCurrentSubreddit();
-
-    try {
-      const post = await reddit.submitPost({
-        title: `Ninigram #43: Muddy with a Chance of Meatballs (Easy)`,
-        subredditName: subreddit.name,
-        preview: (
-          <vstack height="100%" width="100%" alignment="middle center">
-            <text size="large">Loading Ninigram #43...</text>
-          </vstack>
-        )
-      });
-
-      await kvStore.put(`puzzle_${post.id}`, String(43));
-      ui.showToast({ text: `Created Ninigram #43!` });
-      ui.navigateTo(post);
-    } catch (error) {
-      ui.showToast({ text: `Failed to create Ninigram #43: ${error}` });
-    }
-  },
-});
-
 const colors = [
   "#d9d9d9", // light grey
   "#333333", // dark grey (black)
@@ -306,7 +293,7 @@ const colors = [
 
 // Add this constant to control autofill behavior
 const AUTOFILL_ENABLED = true;  // Set to false to disable autofill for all puzzles
-const AUTOFILL_PUZZLE_NUMBER = 21;  // Only puzzle #30 will have autofill when enabled
+const AUTOFILL_PUZZLE_NUMBER = 21;  // Only puzzle #21 will have autofill when enabled
 
 // Load puzzle data from JSON file
 const loadPuzzle = (data: any) => {
@@ -1045,6 +1032,7 @@ Devvit.addCustomPostType({
                       onPress={() => {
                         if (!showSuccessMessage) {
                           setShowIntroText(false);
+                        }
                       }}
                       size="medium"
                     >
@@ -1116,34 +1104,38 @@ Devvit.addCustomPostType({
 
     const checkSolution = () => {
       const currentBoard = [];
-      let hasGreyCell = false;
-
+      
       for (let i = clueRows; i < height; i++) {
         const row = [];
         for (let j = clueCols; j < width; j++) {
           const cellValue = data[i * width + j];
-          if (cellValue === 0) { // Grey cell
-            hasGreyCell = true;
-          }
-          const mappedValue = cellValue === 0 ? -1 : cellValue === 1 ? 1 : 0;
+          // Only care about black cells (1) vs non-black cells (0 or 2)
+          const mappedValue = cellValue === 1 ? 1 : 0;
           row.push(mappedValue);
         }
         currentBoard.push(row);
       }
 
-      if (hasGreyCell) {
-        setSubmissionResult("No grey tiles should remain!");
-        return;
-      }
-
       const isCorrect = currentBoard.every((row, i) =>
         row.every((cell, j) => {
-          const solutionValue = puzzleData.solution[i][j] === 0 ? 0 : 1;
-          return cell === solutionValue;
+          // Only check if black cells in solution match black cells in answer
+          return (puzzleData.solution[i][j] === 1 && cell === 1) || 
+                 (puzzleData.solution[i][j] === 0 && cell === 0);
         })
       );
 
       if (isCorrect) {
+        // Convert all grey cells to white before showing overlay
+        const newData = [...data];
+        for (let i = clueRows; i < height; i++) {
+          for (let j = clueCols; j < width; j++) {
+            const index = i * width + j;
+            if (newData[index] === 0) { // if grey
+              newData[index] = 2; // make white
+            }
+          }
+        }
+        setData(newData);
         setShowOverlay(true); // Show overlay when solved
       } else {
         setSubmissionResult('Not quite there yet!');
@@ -1177,6 +1169,7 @@ Devvit.addCustomPostType({
       // Add state for tracking if hints are enabled
       const [hintsEnabled, setHintsEnabled] = useState(false);
       const [showClearConfirm, setShowClearConfirm] = useState(false);
+      const [autofillEnabled, setAutofillEnabled] = useState(false);
       
       // Calculate dimensions based on whether we're in tutorial mode or main puzzle
       const isTutorial = Boolean(gridState);
@@ -1186,6 +1179,137 @@ Devvit.addCustomPostType({
       const clueColsToUse = isTutorial ? tutorialClueCols : puzzle.maxClueCols;
       const currentData = gridState || data;
       const puzzleToUse = isTutorial ? umbrellaPuzzle : puzzle;
+
+      const toggleAutofill = () => {
+        const newEnabled = !autofillEnabled;
+        setAutofillEnabled(newEnabled);
+        
+        // If turning on autofill, check all rows and columns
+        if (newEnabled) {
+          let newData = [...currentData];
+          // Check all rows
+          for (let rowIndex = clueRowsToUse; rowIndex < effectiveHeight; rowIndex++) {
+            let rowCorrect = true;
+            // First verify if row is correct
+            for (let col = clueColsToUse; col < effectiveWidth; col++) {
+              const gridIndex = rowIndex * effectiveWidth + col;
+              const solutionValue = puzzle.solution[rowIndex - clueRowsToUse][col - clueColsToUse];
+              if (solutionValue === 1 && newData[gridIndex] !== 1) {
+                rowCorrect = false;
+                break;
+              }
+              if (solutionValue === 0 && newData[gridIndex] === 1) {
+                rowCorrect = false;
+                break;
+              }
+            }
+            // If row is correct, fill remaining grey cells with white
+            if (rowCorrect) {
+              for (let col = clueColsToUse; col < effectiveWidth; col++) {
+                const gridIndex = rowIndex * effectiveWidth + col;
+                if (newData[gridIndex] === 0) { // if grey
+                  newData[gridIndex] = 2; // make white
+                }
+              }
+            }
+          }
+          
+          // Check all columns
+          for (let colIndex = clueColsToUse; colIndex < effectiveWidth; colIndex++) {
+            let colCorrect = true;
+            // First verify if column is correct
+            for (let row = clueRowsToUse; row < effectiveHeight; row++) {
+              const gridIndex = row * effectiveWidth + colIndex;
+              const solutionValue = puzzle.solution[row - clueRowsToUse][colIndex - clueColsToUse];
+              if (solutionValue === 1 && newData[gridIndex] !== 1) {
+                colCorrect = false;
+                break;
+              }
+              if (solutionValue === 0 && newData[gridIndex] === 1) {
+                colCorrect = false;
+                break;
+              }
+            }
+            // If column is correct, fill remaining grey cells with white
+            if (colCorrect) {
+              for (let row = clueRowsToUse; row < effectiveHeight; row++) {
+                const gridIndex = row * effectiveWidth + colIndex;
+                if (newData[gridIndex] === 0) { // if grey
+                  newData[gridIndex] = 2; // make white
+                }
+              }
+            }
+          }
+          
+          // Update the grid if changes were made
+          if (gridState) {
+            onGridUpdate(newData);
+          } else {
+            setData(newData);
+          }
+          if (hintsEnabled) {
+            updateHints(newData);
+          }
+        }
+      }
+
+      const autofillIfCorrect = (newData: number[], rowIndex: number, colIndex: number): number[] => {
+        if (!autofillEnabled) return newData;
+
+        const updatedData = [...newData];
+        
+        // Check if black cells in row are correct
+        let rowCorrect = true;
+        for (let col = clueColsToUse; col < effectiveWidth; col++) {
+          const gridIndex = rowIndex * effectiveWidth + col;
+          const solutionValue = puzzle.solution[rowIndex - clueRowsToUse][col - clueColsToUse];
+          if (solutionValue === 1 && updatedData[gridIndex] !== 1) {
+            rowCorrect = false;
+            break;
+          }
+          if (solutionValue === 0 && updatedData[gridIndex] === 1) {
+            rowCorrect = false;
+            break;
+          }
+        }
+
+        // Check if black cells in column are correct
+        let colCorrect = true;
+        for (let row = clueRowsToUse; row < effectiveHeight; row++) {
+          const gridIndex = row * effectiveWidth + colIndex;
+          const solutionValue = puzzle.solution[row - clueRowsToUse][colIndex - clueColsToUse];
+          if (solutionValue === 1 && updatedData[gridIndex] !== 1) {
+            colCorrect = false;
+            break;
+          }
+          if (solutionValue === 0 && updatedData[gridIndex] === 1) {
+            colCorrect = false;
+            break;
+          }
+        }
+
+        // If row is correct, fill remaining grey cells with white
+        if (rowCorrect) {
+          for (let col = clueColsToUse; col < effectiveWidth; col++) {
+            const gridIndex = rowIndex * effectiveWidth + col;
+            if (updatedData[gridIndex] === 0) { // if grey
+              updatedData[gridIndex] = 2; // make white
+            }
+          }
+        }
+
+        // If column is correct, fill remaining grey cells with white
+        if (colCorrect) {
+          for (let row = clueRowsToUse; row < effectiveHeight; row++) {
+            const gridIndex = row * effectiveWidth + colIndex;
+            if (updatedData[gridIndex] === 0) { // if grey
+              updatedData[gridIndex] = 2; // make white
+            }
+          }
+        }
+
+        return updatedData;
+      }
 
       const clearGrid = () => {
         setShowClearConfirm(true);
@@ -1234,13 +1358,10 @@ Devvit.addCustomPostType({
       const checkRowMatch = (rowIndex: number, gridData = currentData): boolean => {
         for (let colIndex = clueColsToUse; colIndex < effectiveWidth; colIndex++) {
           const cellValue = gridData[rowIndex * effectiveWidth + colIndex];
-          if (cellValue === 0) { // Grey cell
-            return false;
-          }
           const solutionValue = puzzleToUse.solution[rowIndex - clueRowsToUse][colIndex - clueColsToUse];
-          if ((cellValue === 1 ? 1 : 0) !== solutionValue) {
-            return false;
-          }
+          // Only check if black cells match
+          if (solutionValue === 1 && cellValue !== 1) return false;
+          if (solutionValue === 0 && cellValue === 1) return false;
         }
         return true;
       };
@@ -1248,61 +1369,14 @@ Devvit.addCustomPostType({
       const checkColMatch = (colIndex: number, gridData = currentData): boolean => {
         for (let rowIndex = clueRowsToUse; rowIndex < effectiveHeight; rowIndex++) {
           const cellValue = gridData[rowIndex * effectiveWidth + colIndex];
-          if (cellValue === 0) { // Grey cell
-            return false;
-          }
           const solutionValue = puzzleToUse.solution[rowIndex - clueRowsToUse][colIndex - clueColsToUse];
-          if ((cellValue === 1 ? 1 : 0) !== solutionValue) {
-            return false;
-          }
+          // Only check if black cells match
+          if (solutionValue === 1 && cellValue !== 1) return false;
+          if (solutionValue === 0 && cellValue === 1) return false;
         }
         return true;
       };
 
-      const isRowComplete = (rowIndex: number, currentData: number[]): boolean => {
-        for (let col = clueCols; col < effectiveWidth; col++) {
-          const userTile = currentData[rowIndex * effectiveWidth + col];
-          const solutionTile = puzzle.solution[rowIndex - clueRows][col - clueCols];
-          // Check for mismatch of black tiles between solution & user
-          if (solutionTile === 1 && userTile !== 1) return false; 
-          if (solutionTile !== 1 && userTile === 1) return false; 
-        }
-        return true; // All black tiles match
-      };
-
-      const isColComplete = (colIndex: number, currentData: number[]): boolean => {
-        for (let row = clueRows; row < effectiveHeight; row++) {
-          const userTile = currentData[row * effectiveWidth + colIndex];
-          const solutionTile = puzzle.solution[row - clueRows][colIndex - clueCols];
-          // Check for mismatch of black tiles between solution & user
-          if (solutionTile === 1 && userTile !== 1) return false; 
-          if (solutionTile !== 1 && userTile === 1) return false; 
-        }
-        return true; // All black tiles match
-      };
-
-      const autofillRow = (rowIndex: number, currentData: number[]): number[] => {  
-        const newData = [...currentData]; // Clone the data array
-        for (let col = clueCols; col < effectiveWidth; col++) {
-          const index = rowIndex * effectiveWidth + col;
-          if (newData[index] === 0) {
-            newData[index] = 2; // Change grey tiles to white (according to colors)
-          }
-        }
-        return newData; // Return the updated array
-      };
-
-      const autofillCol = (colIndex: number, currentData: number[]): number[] => {  
-        const newData = [...currentData]; // Clone the data array
-        for (let row = clueRows; row < effectiveHeight; row++) {
-          const index = row * effectiveWidth + colIndex;
-          if (newData[index] === 0) {
-            newData[index] = 2; // Change grey tiles to white
-          }
-        }
-        return newData; // Return the updated array
-      };
-      
       const grid = splitArray(currentData, effectiveWidth).map((row: number[], rowIndex: number) => {
         const renderedRow = row.map((_: number, colIndex: number) => {
           const isClueRow = rowIndex < clueRowsToUse;
@@ -1331,7 +1405,7 @@ Devvit.addCustomPostType({
                 border="thin"
                 backgroundColor="PureGray-350"
               >
-                <text alignment="center" color="#000000" grow>{clueValue}</text>
+                <text alignment="center" color="#000000">{clueValue}</text>
               </hstack>
             );
           }
@@ -1349,7 +1423,7 @@ Devvit.addCustomPostType({
                 border="thin"
                 backgroundColor="PureGray-350"
               >
-                <text alignment="center" color="#000000" grow>{clueValue}</text>
+                <text alignment="center" color="#000000">{clueValue}</text>
               </hstack>
             );
           }
@@ -1359,25 +1433,18 @@ Devvit.addCustomPostType({
             <hstack
               key={`pixel-${rowIndex}-${colIndex}`}
               onPress={() => {
-                let newData = [...data]; // Change variable from constant to dynamic
+                let newData = [...currentData];
                 newData[index] = (newData[index] + 1) % colors.length;
-
-                // Only apply autofill for puzzle #30 when enabled
-                if (AUTOFILL_ENABLED && puzzleNumber === AUTOFILL_PUZZLE_NUMBER) {
-                  if (isRowComplete(rowIndex, newData)) {
-                    newData = autofillRow(rowIndex, newData); // autofill row if complete
-                  }
-                  if (isColComplete(colIndex, newData)) {
-                    newData = autofillCol(colIndex, newData); // autofill col if complete
-                  }
-                }
+                
+                // Apply autofill if enabled
+                newData = autofillIfCorrect(newData, rowIndex, colIndex);
 
                 if (gridState) {
                   onGridUpdate(newData);
                 } else {
                   setData(newData);
                 }
-                // Update hints if they're enabled, using the new grid state
+                // Update hints if they're enabled
                 if (hintsEnabled) {
                   updateHints(newData);
                 }
@@ -1521,11 +1588,12 @@ Devvit.addCustomPostType({
                 {/* HOME */}
               </button>
               <button 
+                icon="delete"
                 onPress={clearGrid} 
                 size="small"
-                width="60px"
+                width="35px"
               >
-                CLEAR
+                {/* CLEAR */}
               </button>
               <button 
                 onPress={checkSolution} 
@@ -1542,6 +1610,14 @@ Devvit.addCustomPostType({
                 appearance={hintsEnabled ? "primary" : "secondary"}
               >
                 HINT
+              </button>
+              <button 
+                onPress={toggleAutofill}
+                size="small"
+                width="80px"
+                appearance={autofillEnabled ? "primary" : "secondary"}
+              >
+                AUTOFILL
               </button>
             </hstack>
             <vstack height="30px" alignment="middle center">
