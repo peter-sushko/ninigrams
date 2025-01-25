@@ -41,9 +41,11 @@ import lemonadeData from "../puzzles/lemonade.json"
 import flowerData from "../puzzles/flower.json"
 import moonData from "../puzzles/moon.json"
 import friesData from "../puzzles/fries.json"
-import ghostData from "../puzzles/ghost.json"
 import pigData from "../puzzles/pig.json"
 import smallTestData from "./small_test.json"
+import sheepData from "../puzzles/sheep.json"
+import wizardData from "../puzzles/wizard.json"
+import ghostData from "../puzzles/ghost.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -93,7 +95,9 @@ const puzzleMap = {
   38: moonData,
   39: friesData,
   40: pigData,
-  41: ghostData
+  41: sheepData,
+  42: wizardData,
+  43: ghostData
 } as const;
 
 Devvit.addMenuItem({
@@ -259,28 +263,64 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #41: Hide and Shriek! (Easy)`,
+  label: `Ninigram #41: Ewe got this (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
-    
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #41: Hide and Shriek! (Easy)`,
+        title: `Ninigram #41 Ewe got this (Medium)`,
         subredditName: subreddit.name,
-        preview: (
-          <vstack height="100%" width="100%" alignment="middle center">
-            <text size="large">Loading Ninigram #41...</text>
-          </vstack>
-        )
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #41...</text></vstack>)
       });
-
       await kvStore.put(`puzzle_${post.id}`, String(41));
       ui.showToast({ text: `Created Ninigram #41!` });
       ui.navigateTo(post);
     } catch (error) {
       ui.showToast({ text: `Failed to create Ninigram #41: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #42: You Shall Not Pass (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #42: You Shall Not Pass (Hard)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #42...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(42));
+      ui.showToast({ text: `Created Ninigram #42!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #42: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #43: Hide and Shriek! (Easy)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #43: Hide and Shriek! (Easy)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #43...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(43));
+      ui.showToast({ text: `Created Ninigram #43!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #43: ${error}` });
     }
   },
 });
@@ -293,7 +333,6 @@ const colors = [
 
 // Add this constant to control autofill behavior
 const AUTOFILL_ENABLED = true;  // Set to false to disable autofill for all puzzles
-const AUTOFILL_PUZZLE_NUMBER = 21;  // Only puzzle #21 will have autofill when enabled
 
 // Load puzzle data from JSON file
 const loadPuzzle = (data: any) => {
