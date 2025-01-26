@@ -44,6 +44,8 @@ import friesData from "../puzzles/fries.json"
 import pigData from "../puzzles/pig.json"
 import smallTestData from "./small_test.json"
 import sheepData from "../puzzles/sheep.json"
+import yinyangData from "../puzzles/yinyang.json"
+
 import wizardData from "../puzzles/wizard.json"
 import ghostData from "../puzzles/ghost.json"
 
@@ -96,8 +98,15 @@ const puzzleMap = {
   39: friesData,
   40: pigData,
   41: sheepData,
-  42: wizardData,
-  43: ghostData
+  42: yinyangData, 
+  43: yinyangData,
+  44: yinyangData,
+  45: yinyangData,
+  46: yinyangData,
+  47: yinyangData,
+  48: yinyangData,
+  49: wizardData,
+  50: ghostData, 
 } as const;
 
 Devvit.addMenuItem({
@@ -284,16 +293,16 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #42: You Shall Not Pass (Hard)`,
+  label: `Ninigram #42: Yin Yang (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #42: You Shall Not Pass (Hard)`,
+        title: `Ninigram #42: Yin Yang (Medium)`,
         subredditName: subreddit.name,
-        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #42...</text></vstack>)
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #41...</text></vstack>)
       });
       await kvStore.put(`puzzle_${post.id}`, String(42));
       ui.showToast({ text: `Created Ninigram #42!` });
@@ -305,22 +314,43 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #43: Hide and Shriek! (Easy)`,
+  label: `Ninigram #49: You Shall Not Pass (Hard)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #43: Hide and Shriek! (Easy)`,
+        title: `Ninigram #49: You Shall Not Pass (Hard)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #42...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(49));
+      ui.showToast({ text: `Created Ninigram #49!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #49: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #50: Hide and Shriek! (Easy)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #50: Hide and Shriek! (Easy)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #43...</text></vstack>)
       });
-      await kvStore.put(`puzzle_${post.id}`, String(43));
-      ui.showToast({ text: `Created Ninigram #43!` });
+      await kvStore.put(`puzzle_${post.id}`, String(50));
+      ui.showToast({ text: `Created Ninigram #50!` });
       ui.navigateTo(post);
     } catch (error) {
-      ui.showToast({ text: `Failed to create Ninigram #43: ${error}` });
+      ui.showToast({ text: `Failed to create Ninigram #50: ${error}` });
     }
   },
 });
@@ -598,8 +628,43 @@ const calculateVerticalGridLines = (clueCols: number, playableCols: number, effe
   
   return lines;
 };
+type Theme = {
+  welcomeLogo: string;
+  welcomeBackground: string;
+  gameplayBackground: string;
+  congratsLogo: string;
+  congratsBackground: string;
+  congratsOverlay: string;
+  congratsTextColor: string;
+};
 
+const defaultTheme: Theme = {
+  welcomeLogo: "flower_logo_no_bg.png",
+  welcomeBackground: "sakura_river.jpg",
+  gameplayBackground: "sakura_river.gif",
+  congratsLogo: "flower_logo_no_bg.png",
+  congratsBackground: "rgb(170, 230, 240)",
+  congratsOverlay: "sakura-leaves.gif",
+  congratsTextColor: "#333333"
+};
 
+const cnyTheme: Theme = {
+  welcomeLogo: "red_flower.gif",
+  welcomeBackground: "cny_background.jpg",
+  gameplayBackground: "cny_background.gif",
+  congratsLogo: "red_flower.gif",
+  congratsBackground: "AlienBlue-700",
+  congratsOverlay: "lantern.gif",
+  congratsTextColor: "#d9d9d9"
+};
+
+// Add a function to get the appropriate theme based on puzzle number
+const getTheme = (puzzleNumber: number): Theme => {
+  if (puzzleNumber >= 42 && puzzleNumber <= 48) {
+    return cnyTheme;
+  }
+  return defaultTheme;
+};
 
 Devvit.addCustomPostType({
   name: 'Ninigram', 
@@ -643,84 +708,84 @@ Devvit.addCustomPostType({
 
     const toggleOverlay = () => setShowOverlay(!showOverlay);
 
-    const WelcomeScreen = ({ setPage }: PageProps) => (
-      <zstack
-        width="100%"
-        height="100%"
-      >
-        <image
-          url="sakura_river.jpg"
-          // url="test_background.webp" // for testing
-          imageWidth={350}
-          imageHeight={200}
-          height="100%"
-          width="100%"
-          resizeMode="cover"
-        />
-        <vstack
+    const WelcomeScreen = ({ setPage }: PageProps) => {
+      const theme = getTheme(puzzleNumber);
+      return (
+        <zstack
           width="100%"
           height="100%"
-          alignment="middle center"
-          gap="medium"
         >
+          <image
+            url={theme.welcomeBackground}
+            imageWidth={350}
+            imageHeight={200}
+            height="100%"
+            width="100%"
+            resizeMode="cover"
+          />
           <vstack
-            backgroundColor="rgba(220, 220, 220, 0.92)"
-            padding="large"
-            cornerRadius="medium"
+            width="100%"
+            height="100%"
+            alignment="middle center"
             gap="medium"
-            // borderWidth="thick"
-            borderColor="rgba(128, 128, 128, 1)"
-            height="180px"
           >
-            <hstack alignment="middle center" gap="small">
-              <image
-                url="flower_logo_no_bg.png"
-                imageWidth={40} // Adjust width as needed
-                imageHeight={40} // Adjust height as needed
-                // alignment="center"
-              />
-              <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Ninigrams</text>
-              <image
-                url="flower_logo_no_bg.png"
-                imageWidth={40} // Adjust width as needed
-                imageHeight={40} // Adjust height as needed
-                // alignment="center"
-              />
-            </hstack>
-            <text 
-              color="LightBlue-950" 
-              wrap 
-              width="100%" 
-              maxWidth="350px" 
-              alignment="center" 
-              size="large"
+            <vstack
+              backgroundColor="rgba(220, 220, 220, 0.92)"
+              padding="large"
+              cornerRadius="medium"
+              gap="medium"
+              borderColor="rgba(128, 128, 128, 1)"
+              height="180px"
             >
-              Fill the grid by following number clues!
-            </text>
-            <hstack gap="medium" alignment="middle center">
-              <button 
-                onPress={() => setPage('tutorial')}
-                size="medium"
+              <hstack alignment="middle center" gap="small">
+                <image
+                  url={theme.welcomeLogo}
+                  imageWidth={40}
+                  imageHeight={40}
+                />
+                <text color="LightBlue-950" size="xxlarge" weight="bold" alignment="center">Ninigrams</text>
+                <image
+                  url={theme.welcomeLogo}
+                  imageWidth={40}
+                  imageHeight={40}
+                />
+              </hstack>
+              <text 
+                color="LightBlue-950" 
+                wrap 
+                width="100%" 
+                maxWidth="350px" 
+                alignment="center" 
+                size="large"
               >
-                How to Play
-              </button>
-              <button 
-                onPress={() => setPage('game')}
-                size="medium"
-              >
-                Start Puzzle
-              </button>
-            </hstack>
+                Fill the grid by following number clues!
+              </text>
+              <hstack gap="medium" alignment="middle center">
+                <button 
+                  onPress={() => setPage('tutorial')}
+                  size="medium"
+                >
+                  How to Play
+                </button>
+                <button 
+                  onPress={() => setPage('game')}
+                  size="medium"
+                >
+                  Start Puzzle
+                </button>
+              </hstack>
+            </vstack>
           </vstack>
-        </vstack>
-      </zstack>
-    );
+        </zstack>
+      );
+    };
 
     const TutorialScreen = ({ setPage }: PageProps) => {
       const [showIntroText, setShowIntroText] = useState(true);
       const [tutorialStep, setTutorialStep] = useState(0);
       const [showSuccessMessage, setShowSuccessMessage] = useState(false);
       const [successText, setSuccessText] = useState("");
+      const theme = getTheme(puzzleNumber);
       
       // Create a simplified grid component just for the tutorial
       const TutorialGrid = () => {
@@ -969,7 +1034,6 @@ Devvit.addCustomPostType({
                 backgroundColor={colors[tutorialGridState[index]]}
                 border={isHighlighted ? "thick" : "thin"}
                 borderColor={isHighlighted ? "#FFFF00" : "#CCCCCC"}
-                // style={{ opacity: isDisabled || showSuccessMessage ? 0.5 : 1 }} // this one game the error.
               ></hstack>
             );
           });
@@ -1018,11 +1082,11 @@ Devvit.addCustomPostType({
           </vstack>
         );
       };
-
+      
       return (
         <zstack width="100%" height="100%">
           <image
-            url="sakura_river.jpg"
+            url={theme.welcomeBackground}
             imageWidth={350}
             imageHeight={200}
             height="100%"
@@ -1108,7 +1172,6 @@ Devvit.addCustomPostType({
                   border="thick"
                   borderColor="rgba(180, 180, 180, 1)"
                 >
-                  {/* <spacer size="xsmall" /> */}
                   <text 
                     color="LightBlue-950" 
                     size="large" 
@@ -1218,6 +1281,7 @@ Devvit.addCustomPostType({
       const clueColsToUse = isTutorial ? tutorialClueCols : puzzle.maxClueCols;
       const currentData = gridState || data;
       const puzzleToUse = isTutorial ? umbrellaPuzzle : puzzle;
+      const theme = getTheme(puzzleNumber);
 
       const toggleAutofill = () => {
         const newEnabled = !autofillEnabled;
@@ -1520,8 +1584,7 @@ Devvit.addCustomPostType({
       return (
         <zstack width="100%" height="100%">
           <image
-            // url="test_background.webp"
-            url="sakura_river.gif"
+            url={theme.gameplayBackground}
             imageWidth={350}
             imageHeight={200}
             height="100%"
@@ -1682,7 +1745,7 @@ Devvit.addCustomPostType({
               <vstack
                 width="100%"
                 height="100%"
-                backgroundColor="rgb(170, 230, 240)"
+                backgroundColor={theme.congratsBackground}
               />
               
               <vstack 
@@ -1693,12 +1756,12 @@ Devvit.addCustomPostType({
                 <spacer size="large" />
                 <hstack alignment="middle center" gap="small">
                   <image
-                    url="flower_logo_no_bg.png"
+                    url={theme.congratsLogo}
                     imageWidth={40}
                     imageHeight={40}
                   />
                   <text 
-                    color="#333333"
+                    color={theme.congratsTextColor}
                     size="xxlarge" 
                     weight="bold" 
                     alignment="center"
@@ -1707,7 +1770,7 @@ Devvit.addCustomPostType({
                     Congratulations
                   </text>
                   <image
-                    url="flower_logo_no_bg.png"
+                    url={theme.congratsLogo}
                     imageWidth={40}
                     imageHeight={40}
                   />
@@ -1740,7 +1803,7 @@ Devvit.addCustomPostType({
                 alignment="bottom center"
               >
                 <text 
-                  color="#333333"
+                  color={theme.congratsTextColor}
                   size="xlarge"
                   alignment="center"
                   wrap
@@ -1753,7 +1816,7 @@ Devvit.addCustomPostType({
               </vstack>
 
               <image 
-                url="sakura-leaves.gif" 
+                url={theme.congratsOverlay}
                 imageWidth={512} 
                 imageHeight={512} 
               />
