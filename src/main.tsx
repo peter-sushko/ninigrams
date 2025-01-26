@@ -1624,29 +1624,58 @@ Devvit.addCustomPostType({
                 <vstack maxHeight="100%" maxWidth="100%" alignment="center">
                   {grid}
                 </vstack>
-                <hstack
-                    width={`${effectiveWidth * 22}px`}
-                    height={`${effectiveHeight * 22}px`}
-                  >
-                    {calculateVerticalGridLines(clueCols, playableCols, effectiveHeight).map((line, index) => (
-                      <>
-                        {line.spacerWidth !== "grow" ? (
-                          <spacer width={line.spacerWidth as any} 
-                          height="1px"
-                          />
-                        ) : (
-                          <spacer grow 
-                          height="1px"/>
-                        )}
-                        <vstack
-                          width="2px"
-                          height={`${effectiveHeight * 22}px`}
-                          backgroundColor="rgba(178, 178, 178, 1)"
-                        >
-                        </vstack>
-                      </>
-                    ))}
-                  </hstack>
+                <hstack alignment="center">
+                  <spacer width="22px" minWidth="22px"/>
+                  <zstack>
+                    <vstack 
+                      width={`${effectiveWidth * 22}px`}
+                      height={`${effectiveHeight * 22}px`}
+                      alignment="center"
+                    >
+                      {calculateGridLines(clueRows, playableRows, effectiveWidth).map((line, index) => (
+                        <>
+                          {line.spacerHeight !== "grow" ? (
+                            <spacer height={line.spacerHeight as any} />
+                          ) : (
+                            <spacer grow />
+                          )}
+                          <hstack alignment="center">
+                            <hstack 
+                              width={`${effectiveWidth * 22}px`}
+                              height="2px"
+                              backgroundColor="rgba(178, 178, 178, 1)"
+                            >
+                              <spacer />
+                            </hstack>
+                          </hstack>
+                        </>
+                      ))}
+                    </vstack>
+                    <hstack
+                        width={`${effectiveWidth * 22}px`}
+                        height={`${effectiveHeight * 22}px`}
+                      >
+                        {calculateVerticalGridLines(clueCols, playableCols, effectiveHeight).map((line, index) => (
+                          <>
+                            {line.spacerWidth !== "grow" ? (
+                              <spacer width={line.spacerWidth as any} 
+                              height="1px"
+                              />
+                            ) : (
+                              <spacer grow 
+                              height="1px"/>
+                            )}
+                            <vstack
+                              width="2px"
+                              height={`${effectiveHeight * 22}px`}
+                              backgroundColor="rgba(178, 178, 178, 1)"
+                            >
+                            </vstack>
+                          </>
+                        ))}
+                      </hstack>
+                  </zstack>
+                </hstack>
               </zstack>
             </hstack>
 
@@ -1719,42 +1748,12 @@ Devvit.addCustomPostType({
                 backgroundColor={theme.congratsBackground}
               />
               
-              {/* Center the lantern/overlay image */}
-              <vstack width="100%" height="100%" alignment="middle center">
-                <image 
-                  url={theme.congratsOverlay}
-                  imageWidth={512} 
-                  imageHeight={512} 
-                />
-              </vstack>
-
-              {/* Move completed puzzle to center */}
-              <vstack alignment="middle center">
-                {splitArray(data, effectiveWidth)
-                  .slice(clueRowsToUse)
-                  .map((row, rowIndex) => (
-                    <hstack key={`row-${rowIndex}`}>
-                      {row.slice(clueColsToUse).map((cell, colIndex) => (
-                        <hstack
-                          key={`pixel-${rowIndex}-${colIndex}`}
-                          height="23px"
-                          width="23px"
-                          backgroundColor={colors[cell]}
-                          border="thin"
-                          borderColor="#CCCCCC"
-                        />
-                      ))}
-                    </hstack>
-                  ))
-                }
-              </vstack>
-
-              {/* Move congratulations text and logos to bottom */}
               <vstack 
                 width="100%" 
                 height="100%" 
-                alignment="bottom center"
+                alignment="top center"
               >
+                <spacer size="large" />
                 <hstack alignment="middle center" gap="small">
                   <image
                     url={theme.congratsLogo}
@@ -1776,8 +1775,51 @@ Devvit.addCustomPostType({
                     imageHeight={40}
                   />
                 </hstack>
+              </vstack>
+
+              <vstack alignment="middle center">
+                {splitArray(data, effectiveWidth)
+                  .slice(clueRowsToUse)
+                  .map((row, rowIndex) => (
+                    <hstack key={`row-${rowIndex}`}>
+                      {row.slice(clueColsToUse).map((cell, colIndex) => (
+                        <hstack
+                          key={`pixel-${rowIndex}-${colIndex}`}
+                          height="23px"
+                          width="23px"
+                          backgroundColor={colors[cell]}
+                          border="thin"
+                          borderColor="#CCCCCC"
+                        />
+                      ))}
+                    </hstack>
+                  ))
+                }
+              </vstack>
+
+              <vstack 
+                width="100%" 
+                height="100%" 
+                alignment="bottom center"
+              >
+                <text 
+                  color={theme.congratsTextColor}
+                  size="xlarge"
+                  alignment="center"
+                  wrap
+                  width="288px"
+                  maxWidth="350px"
+                >
+                  You solved the puzzle!
+                </text>
                 <spacer size="large" />
               </vstack>
+
+              <image 
+                url={theme.congratsOverlay}
+                imageWidth={512} 
+                imageHeight={512} 
+              />
 
               <hstack 
                 padding="medium" 
