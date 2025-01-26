@@ -510,6 +510,234 @@ const tutorialSteps: TutorialStep[] = [
   }
 ];
 
+// Precomputed grid states for each tutorial step
+const tutorialGridStates = [
+  new Array(tutorialWidth * tutorialHeight).fill(0), // Step 0: Empty grid
+  new Array(tutorialWidth * tutorialHeight).fill(0), // Step 1: Empty grid (before filling column 5)
+  (() => {
+    // Step 2: Column 5 filled with black cells
+    const grid = new Array(tutorialWidth * tutorialHeight).fill(0);
+    for (let row = 0; row < tutorialPlayableRows; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (4 + tutorialClueCols);
+      grid[index] = 1; // Black cells in column 5
+    }
+    return grid;
+  })(),
+  (() => {
+    // Step 3: Column 3 filled with 4-2 pattern
+    const grid = new Array(tutorialWidth * tutorialHeight).fill(0);
+    // Keep previous step's progress
+    for (let row = 0; row < tutorialPlayableRows; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (4 + tutorialClueCols);
+      grid[index] = 1; // Black cells in column 5
+    }
+    // Add column 3's pattern (4 black, 1 white, 2 black)
+    for (let row = 0; row < 4; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    const whiteIndex = (4 + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+    grid[whiteIndex] = 2;
+    for (let row = 5; row < 7; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    return grid;
+  })(),
+  (() => {
+    // Step 4: First row filled with 1-1 pattern
+    const grid = new Array(tutorialWidth * tutorialHeight).fill(0);
+    // Keep previous steps' progress
+    for (let row = 0; row < tutorialPlayableRows; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (4 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    for (let row = 0; row < 4; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    grid[(4 + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols)] = 2;
+    for (let row = 5; row < 7; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    // Add first row pattern (white-white-black-white-black-white-white-white-white)
+    for (let col = 0; col < tutorialPlayableCols; col++) {
+      const index = tutorialClueRows * tutorialWidth + (col + tutorialClueCols);
+      grid[index] = 2; // Set all to white first
+    }
+    grid[tutorialClueRows * tutorialWidth + (2 + tutorialClueCols)] = 1; // Third cell black
+    grid[tutorialClueRows * tutorialWidth + (4 + tutorialClueCols)] = 1; // Fifth cell black
+    return grid;
+  })(),
+  (() => {
+    // Step 5: Second row filled with middle 7 black cells
+    const grid = new Array(tutorialWidth * tutorialHeight).fill(0);
+    // Keep previous steps' progress
+    for (let row = 0; row < tutorialPlayableRows; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (4 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    for (let row = 0; row < 4; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    grid[(4 + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols)] = 2;
+    for (let row = 5; row < 7; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    for (let col = 0; col < tutorialPlayableCols; col++) {
+      const index = tutorialClueRows * tutorialWidth + (col + tutorialClueCols);
+      grid[index] = 2;
+    }
+    grid[tutorialClueRows * tutorialWidth + (2 + tutorialClueCols)] = 1;
+    grid[tutorialClueRows * tutorialWidth + (4 + tutorialClueCols)] = 1;
+    // Add second row pattern (white-black-black-black-black-black-black-black-white)
+    for (let col = 1; col < 8; col++) {
+      const index = (tutorialClueRows + 1) * tutorialWidth + (col + tutorialClueCols);
+      grid[index] = 1;
+    }
+    grid[(tutorialClueRows + 1) * tutorialWidth + tutorialClueCols] = 2; // First cell white
+    grid[(tutorialClueRows + 1) * tutorialWidth + (8 + tutorialClueCols)] = 2; // Last cell white
+    return grid;
+  })(),
+  (() => {
+    // Step 6: Rows 4 and 6 filled with all black
+    const grid = new Array(tutorialWidth * tutorialHeight).fill(0);
+    // Keep previous steps' progress
+    for (let row = 0; row < tutorialPlayableRows; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (4 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    for (let row = 0; row < 4; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    grid[(4 + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols)] = 2;
+    for (let row = 5; row < 7; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    for (let col = 0; col < tutorialPlayableCols; col++) {
+      const index = tutorialClueRows * tutorialWidth + (col + tutorialClueCols);
+      grid[index] = 2;
+    }
+    grid[tutorialClueRows * tutorialWidth + (2 + tutorialClueCols)] = 1;
+    grid[tutorialClueRows * tutorialWidth + (4 + tutorialClueCols)] = 1;
+    for (let col = 1; col < 8; col++) {
+      const index = (tutorialClueRows + 1) * tutorialWidth + (col + tutorialClueCols);
+      grid[index] = 1;
+    }
+    grid[(tutorialClueRows + 1) * tutorialWidth + tutorialClueCols] = 2;
+    grid[(tutorialClueRows + 1) * tutorialWidth + (8 + tutorialClueCols)] = 2;
+    // Fill rows 4 and 6 with black
+    for (let col = 0; col < tutorialPlayableCols; col++) {
+      grid[(tutorialClueRows + 3) * tutorialWidth + (col + tutorialClueCols)] = 1;
+      grid[(tutorialClueRows + 5) * tutorialWidth + (col + tutorialClueCols)] = 1;
+    }
+    return grid;
+  })(),
+  (() => {
+    // Step 7: Row 5 filled with pattern
+    const grid = new Array(tutorialWidth * tutorialHeight).fill(0);
+    // Keep all previous progress
+    for (let row = 0; row < tutorialPlayableRows; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (4 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    for (let row = 0; row < 4; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    grid[(4 + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols)] = 2;
+    for (let row = 5; row < 7; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    for (let col = 0; col < tutorialPlayableCols; col++) {
+      const index = tutorialClueRows * tutorialWidth + (col + tutorialClueCols);
+      grid[index] = 2;
+    }
+    grid[tutorialClueRows * tutorialWidth + (2 + tutorialClueCols)] = 1;
+    grid[tutorialClueRows * tutorialWidth + (4 + tutorialClueCols)] = 1;
+    for (let col = 1; col < 8; col++) {
+      const index = (tutorialClueRows + 1) * tutorialWidth + (col + tutorialClueCols);
+      grid[index] = 1;
+    }
+    grid[(tutorialClueRows + 1) * tutorialWidth + tutorialClueCols] = 2;
+    grid[(tutorialClueRows + 1) * tutorialWidth + (8 + tutorialClueCols)] = 2;
+    for (let col = 0; col < tutorialPlayableCols; col++) {
+      grid[(tutorialClueRows + 3) * tutorialWidth + (col + tutorialClueCols)] = 1;
+      grid[(tutorialClueRows + 5) * tutorialWidth + (col + tutorialClueCols)] = 1;
+    }
+    // Add row 5 pattern (grey-grey-white-black-black-black-black-black-black)
+    grid[(tutorialClueRows + 4) * tutorialWidth + (2 + tutorialClueCols)] = 2; // Third cell white
+    for (let col = 3; col < tutorialPlayableCols; col++) {
+      grid[(tutorialClueRows + 4) * tutorialWidth + (col + tutorialClueCols)] = 1;
+    }
+    return grid;
+  })(),
+  (() => {
+    // Step 8: Columns 7 and 9 filled
+    const grid = new Array(tutorialWidth * tutorialHeight).fill(0);
+    // Keep all previous progress
+    for (let row = 0; row < tutorialPlayableRows; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (4 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    for (let row = 0; row < 4; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    grid[(4 + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols)] = 2;
+    for (let row = 5; row < 7; row++) {
+      const index = (row + tutorialClueRows) * tutorialWidth + (2 + tutorialClueCols);
+      grid[index] = 1;
+    }
+    for (let col = 0; col < tutorialPlayableCols; col++) {
+      const index = tutorialClueRows * tutorialWidth + (col + tutorialClueCols);
+      grid[index] = 2;
+    }
+    grid[tutorialClueRows * tutorialWidth + (2 + tutorialClueCols)] = 1;
+    grid[tutorialClueRows * tutorialWidth + (4 + tutorialClueCols)] = 1;
+    for (let col = 1; col < 8; col++) {
+      const index = (tutorialClueRows + 1) * tutorialWidth + (col + tutorialClueCols);
+      grid[index] = 1;
+    }
+    grid[(tutorialClueRows + 1) * tutorialWidth + tutorialClueCols] = 2;
+    grid[(tutorialClueRows + 1) * tutorialWidth + (8 + tutorialClueCols)] = 2;
+    for (let col = 0; col < tutorialPlayableCols; col++) {
+      grid[(tutorialClueRows + 3) * tutorialWidth + (col + tutorialClueCols)] = 1;
+      grid[(tutorialClueRows + 5) * tutorialWidth + (col + tutorialClueCols)] = 1;
+    }
+    grid[(tutorialClueRows + 4) * tutorialWidth + (2 + tutorialClueCols)] = 2;
+    for (let col = 3; col < tutorialPlayableCols; col++) {
+      grid[(tutorialClueRows + 4) * tutorialWidth + (col + tutorialClueCols)] = 1;
+    }
+    // Add columns 7 and 9 pattern (first white, rest black)
+    for (let col of [6, 8]) { // Columns 7 and 9
+      grid[tutorialClueRows * tutorialWidth + (col + tutorialClueCols)] = 2; // First cell white
+      for (let row = 1; row < tutorialPlayableRows; row++) {
+        grid[(row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols)] = 1;
+      }
+    }
+    return grid;
+  })(),
+  (() => {
+    // Step 9: Final state before submission
+    const grid = new Array(tutorialWidth * tutorialHeight).fill(0);
+    // Fill in the complete solution
+    for (let row = 0; row < tutorialPlayableRows; row++) {
+      for (let col = 0; col < tutorialPlayableCols; col++) {
+        const index = (row + tutorialClueRows) * tutorialWidth + (col + tutorialClueCols);
+        grid[index] = tutorialPuzzle.solution[row][col] === 1 ? 1 : 2;
+      }
+    }
+    return grid;
+  })(),
+];
+
 // Add these type definitions at the top of the file
 type PageProps = {
   setPage: (page: 'welcome' | 'game' | 'tutorial') => void;
@@ -542,14 +770,13 @@ const getPuzzleNumber = async (context: CustomPostRenderContext) => {
 };
 
 
-const calculateGridLines = (clueRows: number, playableRows: number, effectiveWidth: number, isTutorial: boolean = false) => {
-  const offset = isTutorial ? 0 : 11;  // Add 11px offset for main game
+const calculateGridLines = (clueRows: number, playableRows: number, effectiveWidth: number) => {
   const lines = [];
 
   // Border after clue rows
   lines.push({
     spacerHeight: (clueRows * 22 - 1) + "px",
-    width: (effectiveWidth * 22 + offset) + "px"
+    width: effectiveWidth * 22 + "px"
   });
   
   // Lines every 5 cells in playable area
@@ -561,35 +788,35 @@ const calculateGridLines = (clueRows: number, playableRows: number, effectiveWid
       
     lines.push({
       spacerHeight,
-      width: (effectiveWidth * 22 + offset) + "px"
+      width: effectiveWidth * 22 + "px"
     });
   }
   
   // Bottom border (using grow spacer, so no height needed)
   lines.push({
     spacerHeight: "grow",
-    width: (effectiveWidth * 22 + offset) + "px"
+    width: effectiveWidth * 22 + "px"
   });
   
   return lines;
 };
 
-const calculateVerticalGridLines = (clueCols: number, playableCols: number, effectiveHeight: number, isTutorial: boolean = false) => {
-  const offset = isTutorial ? 0 : 11;  // Add 11px offset for main game
+const calculateVerticalGridLines = (clueCols: number, playableCols: number, effectiveHeight: number) => {
   const lines = [];
   
   // Border after clue columns
   lines.push({
-    spacerWidth: (clueCols * 22 - 1 + offset) + "px",
+    spacerWidth: (clueCols * 22 - 1) + "px",
     height: effectiveHeight * 22 + "px"
   });
   
   // Lines every 5 cells in playable area
   const numberOfDividers = Math.floor((playableCols - 1) / 5);
   for (let i = 0; i < numberOfDividers; i++) {
+    // If you want the same "-2 px on subsequent lines" logic:
     const spacerWidth = i === 0
-      ? (5 * 22 - 2 + offset) + "px" // first line
-      : (5 * 22 - i * 2 + offset) + "px"; // subsequent lines
+      ? (5 * 22 - 2) + "px" // first line
+      : (5 * 22 - i * 2) + "px"; // subsequent lines
 
     lines.push({
       spacerWidth,
@@ -731,7 +958,7 @@ Devvit.addCustomPostType({
       
       // Create a simplified grid component just for the tutorial
       const TutorialGrid = () => {
-        const [tutorialGridState, setTutorialGridState] = useState(blankTutorialCanvas);
+        const [tutorialGridState, setTutorialGridState] = useState(tutorialGridStates[tutorialStep]);
 
         // Update checkStep1Completion to handle all steps
         const checkStep1Completion = (newState: number[]) => {
@@ -986,60 +1213,20 @@ Devvit.addCustomPostType({
                 <vstack maxHeight="100%" maxWidth="100%" alignment="center">
                   {grid}
                 </vstack>
-                <hstack alignment="center">
-                  <zstack>
-                    <vstack 
-                      width={`${tutorialWidth * 22}px`}
-                      height={`${tutorialHeight * 22}px`}
-                      alignment="center"
-                    >
-                      {calculateGridLines(tutorialClueRows, tutorialPlayableRows, tutorialWidth, true).map((line, index) => (
-                        <>
-                          {line.spacerHeight !== "grow" ? (
-                            <spacer height={line.spacerHeight as any} />
-                          ) : (
-                            <spacer grow />
-                          )}
-                          <hstack alignment="center">
-                            <hstack 
-                              width={`${tutorialWidth * 22}px`}
-                              height="2px"
-                              backgroundColor="rgba(178, 178, 178, 1)"
-                            >
-                              <spacer />
-                            </hstack>
-                          </hstack>
-                        </>
-                      ))}
-                    </vstack>
-                    <hstack
-                      width={`${tutorialWidth * 22}px`}
-                      height={`${tutorialHeight * 22}px`}
-                    >
-                      {calculateVerticalGridLines(tutorialClueCols, tutorialPlayableCols, tutorialHeight, true).map((line, index) => (
-                        <>
-                          {line.spacerWidth !== "grow" ? (
-                            <spacer width={line.spacerWidth as any} 
-                            height="1px"
-                            />
-                          ) : (
-                            <spacer grow 
-                            height="1px"/>
-                          )}
-                          <vstack
-                            width="2px"
-                            height={`${tutorialHeight * 22}px`}
-                            backgroundColor="rgba(178, 178, 178, 1)"
-                          >
-                          </vstack>
-                        </>
-                      ))}
-                    </hstack>
-                  </zstack>
-                </hstack>
               </zstack>
             </hstack>
             <hstack gap="small" alignment="middle center">
+              {tutorialStep > 0 && tutorialStep <= 8 && (
+                <button 
+                  onPress={() => {
+                    setTutorialStep(tutorialStep - 1);
+                    setTutorialGridState(tutorialGridStates[tutorialStep - 1]);
+                  }}
+                  size="medium"
+                  icon="reverse"
+                  width="35px"
+                />
+              )}
               {tutorialStep === 0 && (
                 <button 
                   onPress={() => setTutorialStep(tutorialStep + 1)}
@@ -1048,12 +1235,14 @@ Devvit.addCustomPostType({
                   Continue
                 </button>
               )}
-              <button 
-                onPress={() => setPage('welcome')}
-                size="medium"
-              >
-                Back to Menu
-              </button>
+              {tutorialStep <= 8 && (
+                <button 
+                  onPress={() => setPage('welcome')}
+                  size="medium"
+                >
+                  Back to Menu
+                </button>
+              )}
               {tutorialStep === 8 && (
                 <button
                   onPress={() => {
@@ -1081,43 +1270,83 @@ Devvit.addCustomPostType({
                   Autofill
                 </button>
               )}
-              {tutorialStep === 9 && (
-                <button
-                  onPress={() => {
-                    // Convert grid state to solution format (only checking playable area)
-                    const currentBoard = [];
-                    for (let i = tutorialClueRows; i < tutorialHeight; i++) {
-                      const row = [];
-                      for (let j = tutorialClueCols; j < tutorialWidth; j++) {
-                        const cellValue = tutorialGridState[i * tutorialWidth + j];
-                        // Only care about black cells (1) vs non-black cells (0 or 2)
-                        row.push(cellValue === 1 ? 1 : 0);
-                      }
-                      currentBoard.push(row);
-                    }
-
-                    // Compare with tutorial puzzle solution
-                    const isCorrect = currentBoard.every((row, i) =>
-                      row.every((cell, j) => {
-                        return (tutorialPuzzle.solution[i][j] === 1 && cell === 1) || 
-                               (tutorialPuzzle.solution[i][j] === 0 && cell === 0);
-                      })
-                    );
-
-                    if (isCorrect) {
-                      setSuccessText("Congratulations on finishing the tutorial!");
-                      setShowSuccessMessage(true);
-                    } else {
-                      setSubmissionResult("Not quite there yet! Keep trying!");
-                    }
-                  }}
-                  size="medium"
-                  appearance="success"
-                >
-                  Submit
-                </button>
-              )}
             </hstack>
+            {tutorialStep === 9 && (
+              <vstack gap="small" alignment="middle center">
+                <hstack gap="medium" alignment="middle center">
+                  <button 
+                    onPress={() => {
+                      setTutorialStep(tutorialStep - 1);
+                      setTutorialGridState(tutorialGridStates[tutorialStep - 1]);
+                    }}
+                    size="medium"
+                    icon="reverse"
+                    width="35px"
+                  />
+                  <button 
+                    onPress={() => setPage('welcome')}
+                    size="medium"
+                  >
+                    Back to Menu
+                  </button>
+                  <button
+                    onPress={() => {
+                      // Convert grid state to solution format (only checking playable area)
+                      const currentBoard = [];
+                      for (let i = tutorialClueRows; i < tutorialHeight; i++) {
+                        const row = [];
+                        for (let j = tutorialClueCols; j < tutorialWidth; j++) {
+                          const cellValue = tutorialGridState[i * tutorialWidth + j];
+                          // Only care about black cells (1) vs non-black cells (0 or 2)
+                          row.push(cellValue === 1 ? 1 : 0);
+                        }
+                        currentBoard.push(row);
+                      }
+
+                      // Compare with tutorial puzzle solution
+                      const isCorrect = currentBoard.every((row, i) =>
+                        row.every((cell, j) => {
+                          return (tutorialPuzzle.solution[i][j] === 1 && cell === 1) || 
+                                 (tutorialPuzzle.solution[i][j] === 0 && cell === 0);
+                        })
+                      );
+
+                      if (isCorrect) {
+                        setSubmissionResult("It's a hippo!");
+                        setSuccessText("Congratulations on finishing the tutorial!");
+                        setShowSuccessMessage(true);
+                      } else {
+                        setSubmissionResult("Not quite there yet!");
+                      }
+                    }}
+                    size="medium"
+                    appearance="success"
+                  >
+                    Submit
+                  </button>
+                </hstack>
+                {submissionResult && (
+                  <vstack 
+                    height="40px" 
+                    alignment="middle center"
+                    backgroundColor="rgba(220, 220, 220, 0.8)"
+                    cornerRadius="small"
+                    padding="small"
+                  >
+                    <text 
+                      color="LightBlue-950" 
+                      size="large" 
+                      wrap
+                      width="288px"
+                      maxWidth="350px"
+                      alignment="center"
+                    >
+                      {submissionResult}
+                    </text>
+                  </vstack>
+                )}
+              </vstack>
+            )}
           </vstack>
         );
       };
@@ -1143,7 +1372,7 @@ Devvit.addCustomPostType({
               padding="small"
               cornerRadius="medium"
               gap="small"
-              height="75%"
+              height="80%"
               width="100%"
               maxWidth="350px"
             >
@@ -1294,17 +1523,15 @@ Devvit.addCustomPostType({
       highlightCells?: number[];
       onGridUpdate?: (newData: number[]) => void;
       gridState?: number[] | null;
-      isTutorial?: boolean;
     };
 
     const Canvas = ({ 
       puzzle,
-      width = 0,
-      height = 0,
+      width,
+      height,
       highlightCells = [], 
       onGridUpdate = () => {}, 
-      gridState = null,
-      isTutorial = false
+      gridState = null
     }: CanvasProps) => {
       const { useState } = context;
       // Add state for tracking if hints are enabled
@@ -1313,6 +1540,7 @@ Devvit.addCustomPostType({
       const [autofillEnabled, setAutofillEnabled] = useState(false);
       
       // Calculate dimensions based on whether we're in tutorial mode or main puzzle
+      const isTutorial = Boolean(gridState);
       const effectiveWidth = isTutorial ? tutorialWidth : (width || puzzle.maxClueCols + puzzle.clueColData.length);
       const effectiveHeight = isTutorial ? tutorialHeight : (height || puzzle.maxClueRows + puzzle.clueRowData.length);
       const clueRowsToUse = isTutorial ? tutorialClueRows : puzzle.maxClueRows;
@@ -1324,9 +1552,9 @@ Devvit.addCustomPostType({
         const newEnabled = !autofillEnabled;
         setAutofillEnabled(newEnabled);
         
+        // If turning on autofill, check all rows and columns
         if (newEnabled) {
           let newData = [...currentData];
-          
           // Check all rows
           for (let rowIndex = clueRowsToUse; rowIndex < effectiveHeight; rowIndex++) {
             let rowCorrect = true;
@@ -1621,7 +1849,6 @@ Devvit.addCustomPostType({
       return (
         <zstack width="100%" height="100%">
           <image
-            // url="test_background.webp"
             url="sakura_river.gif"
             imageWidth={350}
             imageHeight={200}
@@ -1663,18 +1890,14 @@ Devvit.addCustomPostType({
                   {grid}
                 </vstack>
                 <hstack alignment="center">
+                  <spacer width="22px" minWidth="22px"/>
                   <zstack>
                     <vstack 
-                      width={`${isTutorial ? tutorialWidth : width * 22}px`}
-                      height={`${isTutorial ? tutorialHeight : height * 22}px`}
+                      width={`${effectiveWidth * 22}px`}
+                      height={`${effectiveHeight * 22}px`}
                       alignment="center"
                     >
-                      {calculateGridLines(
-                        isTutorial ? tutorialClueRows : clueRows, 
-                        isTutorial ? tutorialPlayableRows : playableRows, 
-                        isTutorial ? tutorialWidth : width,
-                        isTutorial
-                      ).map((line, index) => (
+                      {calculateGridLines(clueRows, playableRows, effectiveWidth).map((line, index) => (
                         <>
                           {line.spacerHeight !== "grow" ? (
                             <spacer height={line.spacerHeight as any} />
@@ -1682,9 +1905,8 @@ Devvit.addCustomPostType({
                             <spacer grow />
                           )}
                           <hstack alignment="center">
-                            {!isTutorial && <spacer width="11px" />}
                             <hstack 
-                              width={`${(isTutorial ? tutorialWidth : width) * 22}px`}
+                              width={`${effectiveWidth * 22}px`}
                               height="2px"
                               backgroundColor="rgba(178, 178, 178, 1)"
                             >
@@ -1695,15 +1917,10 @@ Devvit.addCustomPostType({
                       ))}
                     </vstack>
                     <hstack
-                      width={`${(isTutorial ? tutorialWidth : width) * 22}px`}
-                      height={`${(isTutorial ? tutorialHeight : height) * 22}px`}
+                      width={`${effectiveWidth * 22}px`}
+                      height={`${effectiveHeight * 22}px`}
                     >
-                      {calculateVerticalGridLines(
-                        isTutorial ? tutorialClueCols : clueCols, 
-                        isTutorial ? tutorialPlayableCols : playableCols, 
-                        isTutorial ? tutorialHeight : height,
-                        isTutorial
-                      ).map((line, index) => (
+                      {calculateVerticalGridLines(clueCols, playableCols, effectiveHeight).map((line, index) => (
                         <>
                           {line.spacerWidth !== "grow" ? (
                             <spacer width={line.spacerWidth as any} 
@@ -1713,10 +1930,9 @@ Devvit.addCustomPostType({
                             <spacer grow 
                             height="1px"/>
                           )}
-                          {!isTutorial && <spacer width="11px" />}
                           <vstack
                             width="2px"
-                            height={`${(isTutorial ? tutorialHeight : height) * 22}px`}
+                            height={`${effectiveHeight * 22}px`}
                             backgroundColor="rgba(178, 178, 178, 1)"
                           >
                           </vstack>
@@ -1742,26 +1958,30 @@ Devvit.addCustomPostType({
                 size="small"
                 width="35px"
               />
-              {!isTutorial && (
-                <button 
-                  onPress={checkSolution} 
-                  size="small"
-                  width="69px"
-                  appearance="success"
-                >
-                  SUBMIT
-                </button>
-              )}
-              {!isTutorial && (
-                <button 
-                  onPress={calculateHints} 
-                  size="small"
-                  width="50px"
-                  appearance={hintsEnabled ? "primary" : "secondary"}
-                >
-                  HINT
-                </button>
-              )}
+              <button 
+                onPress={checkSolution} 
+                size="small"
+                width="69px"
+                appearance="success"
+              >
+                SUBMIT
+              </button>
+              <button 
+                onPress={calculateHints} 
+                size="small"
+                width="50px"
+                appearance={hintsEnabled ? "primary" : "secondary"}
+              >
+                HINT
+              </button>
+              <button 
+                onPress={toggleAutofill}
+                size="small"
+                width="80px"
+                appearance={autofillEnabled ? "primary" : "secondary"}
+              >
+                AUTOFILL
+              </button>
             </hstack>
             <vstack height="30px" alignment="middle center">
               {submissionResult && <text 
@@ -1834,8 +2054,7 @@ Devvit.addCustomPostType({
                         />
                       ))}
                     </hstack>
-                  ))
-                }
+                  ))}
               </vstack>
 
               <vstack 
@@ -1946,7 +2165,6 @@ Devvit.addCustomPostType({
                 puzzle={puzzleData}
                 width={width}
                 height={height}
-                isTutorial={false}
               />
           }
         </vstack>
