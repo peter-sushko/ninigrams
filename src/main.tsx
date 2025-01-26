@@ -1819,6 +1819,7 @@ Devvit.addCustomPostType({
                 url={theme.congratsOverlay}
                 imageWidth={512} 
                 imageHeight={512} 
+                resizeMode="fit"
               />
 
               <hstack 
