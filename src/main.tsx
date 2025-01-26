@@ -542,13 +542,14 @@ const getPuzzleNumber = async (context: CustomPostRenderContext) => {
 };
 
 
-const calculateGridLines = (clueRows: number, playableRows: number, effectiveWidth: number) => {
+const calculateGridLines = (clueRows: number, playableRows: number, effectiveWidth: number, isTutorial: boolean = false) => {
+  const offset = isTutorial ? 0 : 11;  // Add 11px offset for main game
   const lines = [];
 
   // Border after clue rows
   lines.push({
     spacerHeight: (clueRows * 22 - 1) + "px",
-    width: effectiveWidth * 22 + "px"
+    width: (effectiveWidth * 22 + offset) + "px"
   });
   
   // Lines every 5 cells in playable area
@@ -560,35 +561,35 @@ const calculateGridLines = (clueRows: number, playableRows: number, effectiveWid
       
     lines.push({
       spacerHeight,
-      width: effectiveWidth * 22 + "px"
+      width: (effectiveWidth * 22 + offset) + "px"
     });
   }
   
   // Bottom border (using grow spacer, so no height needed)
   lines.push({
     spacerHeight: "grow",
-    width: effectiveWidth * 22 + "px"
+    width: (effectiveWidth * 22 + offset) + "px"
   });
   
   return lines;
 };
 
-const calculateVerticalGridLines = (clueCols: number, playableCols: number, effectiveHeight: number) => {
+const calculateVerticalGridLines = (clueCols: number, playableCols: number, effectiveHeight: number, isTutorial: boolean = false) => {
+  const offset = isTutorial ? 0 : 11;  // Add 11px offset for main game
   const lines = [];
   
   // Border after clue columns
   lines.push({
-    spacerWidth: (clueCols * 22 - 1) + "px",
+    spacerWidth: (clueCols * 22 - 1 + offset) + "px",
     height: effectiveHeight * 22 + "px"
   });
   
   // Lines every 5 cells in playable area
   const numberOfDividers = Math.floor((playableCols - 1) / 5);
   for (let i = 0; i < numberOfDividers; i++) {
-    // If you want the same "-2 px on subsequent lines" logic:
     const spacerWidth = i === 0
-      ? (5 * 22 - 2) + "px" // first line
-      : (5 * 22 - i * 2) + "px"; // subsequent lines
+      ? (5 * 22 - 2 + offset) + "px" // first line
+      : (5 * 22 - i * 2 + offset) + "px"; // subsequent lines
 
     lines.push({
       spacerWidth,
@@ -992,7 +993,7 @@ Devvit.addCustomPostType({
                       height={`${tutorialHeight * 22}px`}
                       alignment="center"
                     >
-                      {calculateGridLines(tutorialClueRows, tutorialPlayableRows, tutorialWidth).map((line, index) => (
+                      {calculateGridLines(tutorialClueRows, tutorialPlayableRows, tutorialWidth, true).map((line, index) => (
                         <>
                           {line.spacerHeight !== "grow" ? (
                             <spacer height={line.spacerHeight as any} />
@@ -1015,7 +1016,7 @@ Devvit.addCustomPostType({
                       width={`${tutorialWidth * 22}px`}
                       height={`${tutorialHeight * 22}px`}
                     >
-                      {calculateVerticalGridLines(tutorialClueCols, tutorialPlayableCols, tutorialHeight).map((line, index) => (
+                      {calculateVerticalGridLines(tutorialClueCols, tutorialPlayableCols, tutorialHeight, true).map((line, index) => (
                         <>
                           {line.spacerWidth !== "grow" ? (
                             <spacer width={line.spacerWidth as any} 
@@ -1671,7 +1672,8 @@ Devvit.addCustomPostType({
                       {calculateGridLines(
                         isTutorial ? tutorialClueRows : clueRows, 
                         isTutorial ? tutorialPlayableRows : playableRows, 
-                        isTutorial ? tutorialWidth : width
+                        isTutorial ? tutorialWidth : width,
+                        isTutorial
                       ).map((line, index) => (
                         <>
                           {line.spacerHeight !== "grow" ? (
@@ -1680,6 +1682,7 @@ Devvit.addCustomPostType({
                             <spacer grow />
                           )}
                           <hstack alignment="center">
+                            {!isTutorial && <spacer width="11px" />}
                             <hstack 
                               width={`${(isTutorial ? tutorialWidth : width) * 22}px`}
                               height="2px"
@@ -1698,7 +1701,8 @@ Devvit.addCustomPostType({
                       {calculateVerticalGridLines(
                         isTutorial ? tutorialClueCols : clueCols, 
                         isTutorial ? tutorialPlayableCols : playableCols, 
-                        isTutorial ? tutorialHeight : height
+                        isTutorial ? tutorialHeight : height,
+                        isTutorial
                       ).map((line, index) => (
                         <>
                           {line.spacerWidth !== "grow" ? (
@@ -1709,6 +1713,7 @@ Devvit.addCustomPostType({
                             <spacer grow 
                             height="1px"/>
                           )}
+                          {!isTutorial && <spacer width="11px" />}
                           <vstack
                             width="2px"
                             height={`${(isTutorial ? tutorialHeight : height) * 22}px`}
