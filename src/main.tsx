@@ -48,6 +48,7 @@ import sheepData from "../puzzles/sheep.json"
 import fortuneData from "../puzzles/fortune.json"
 import yinyangData from "../puzzles/yinyang.json"
 import bottleData from "../puzzles/bottle.json"
+import snakeData from "../puzzles/snek.json"
 
 import mouseData from "../puzzles/mouse.json"
 import incenseData from "../puzzles/incense.json"
@@ -108,7 +109,7 @@ const puzzleMap = {
   42: fortuneData, 
   43: yinyangData,
   44: bottleData,
-  45: yinyangData,
+  45: snakeData,
   46: mouseData,
   47: incenseData,
   48: yinyangData,
@@ -358,6 +359,27 @@ Devvit.addMenuItem({
       ui.navigateTo(post);
     } catch (error) {
       ui.showToast({ text: `Failed to create Ninigram #44: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #45: Danger Noodle (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #45: Slithering Surprise (Medium)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #45...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(45));
+      ui.showToast({ text: `Created Ninigram #45!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #45: ${error}` });
     }
   },
 });
