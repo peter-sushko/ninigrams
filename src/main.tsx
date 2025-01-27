@@ -1797,7 +1797,7 @@ Devvit.addCustomPostType({
                 }
               </vstack>
 
-              <vstack 
+              {/* <vstack 
                 width="100%" 
                 height="100%" 
                 alignment="bottom center"
@@ -1813,13 +1813,15 @@ Devvit.addCustomPostType({
                   You solved the puzzle!
                 </text>
                 <spacer size="large" />
-              </vstack>
+              </vstack> */}
 
               <image 
                 url={theme.congratsOverlay}
                 imageWidth={512} 
-                imageHeight={512} 
-                resizeMode="fit"
+                imageHeight={512}
+                width="100%"
+                height="100%"
+                resizeMode="scale-down"
               />
 
               <hstack 
