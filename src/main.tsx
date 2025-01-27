@@ -364,14 +364,14 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #45: Danger Noodle (Medium)`,
+  label: `Ninigram #45: Dangerous Noodle (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #45: Slithering Surprise (Medium)`,
+        title: `Ninigram #45: Dangerous Noodle (Medium)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #45...</text></vstack>)
       });
@@ -939,6 +939,7 @@ type Theme = {
   congratsBackground: string;
   congratsOverlay: string;
   congratsTextColor: string;
+  gameplayTextColor: string;
 };
 
 const defaultTheme: Theme = {
@@ -948,7 +949,8 @@ const defaultTheme: Theme = {
   congratsLogo: "flower_logo_no_bg.png",
   congratsBackground: "rgb(170, 230, 240)",
   congratsOverlay: "sakura-leaves.gif",
-  congratsTextColor: "#333333"
+  congratsTextColor: "#333333",
+  gameplayTextColor: "#333333"
 };
 
 const cnyTheme: Theme = {
@@ -958,7 +960,8 @@ const cnyTheme: Theme = {
   congratsLogo: "red_flower.gif",
   congratsBackground: "AlienBlue-700",
   congratsOverlay: "lantern.gif",
-  congratsTextColor: "#d9d9d9"
+  congratsTextColor: "#d9d9d9",
+  gameplayTextColor: "#d9d9d9"
 };
 
 // Add a function to get the appropriate theme based on puzzle number
@@ -2129,7 +2132,7 @@ Devvit.addCustomPostType({
             </hstack>
             <vstack height="30px" alignment="middle center">
               {submissionResult && <text 
-                color="LightBlue-950" 
+                color={theme.gameplayTextColor}
                 size="large" 
                 wrap
                 width="288px"
