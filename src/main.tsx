@@ -407,7 +407,7 @@ type TutorialStep = {
 
 const tutorialSteps: TutorialStep[] = [
   {
-    instruction: "Let's solve this puzzle together. Hit Continue!\n",
+    instruction: "This tutorial will take you through this puzzle step by step. Hit Continue!\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => 
       (Math.floor(i / tutorialPlayableCols) + tutorialClueRows) * tutorialWidth + 
       (i % tutorialPlayableCols) + tutorialClueCols
@@ -415,7 +415,7 @@ const tutorialSteps: TutorialStep[] = [
     highlightCells: [],
   },
   {
-    instruction: "This column has 7 black cells. Click the cells to fill them in!\n",
+    instruction: "According to the clue, this column should have 7 black cells. Click each cell once to make it black. Fill the column.\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => {
       const row = Math.floor(i / tutorialPlayableCols);
       const col = i % tutorialPlayableCols;
@@ -428,7 +428,7 @@ const tutorialSteps: TutorialStep[] = [
     ),
   },
   {
-    instruction: "This column shows a 4 and a 2, which means there must be one white cell between them. Place them correctly!\n",
+    instruction: "A 4,2 clue means 4 black cells, then at least one white cell (double-click), followed by 2 black cells, in that order.\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => {
       const row = Math.floor(i / tutorialPlayableCols);
       const col = i % tutorialPlayableCols;
@@ -441,7 +441,7 @@ const tutorialSteps: TutorialStep[] = [
     ),
   },
   {
-    instruction: "Now let's fill some rows. Start with the first one - it shows 1 and 1, meaning all the rest must be white. Fill them!\n",
+    instruction: "Take a look at the first row. Since we've already fulfilled the clue, fill the remaining tiles white.\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => {
       const row = Math.floor(i / tutorialPlayableCols);
       const col = i % tutorialPlayableCols;
@@ -454,7 +454,7 @@ const tutorialSteps: TutorialStep[] = [
     ),
   },
   {
-    instruction: "This clue shows 8 and the puzzle is 9 wide. This guarantees that the middle 7 cells will be black. Place them!\n",
+    instruction: "The clue is 8 and the puzzle is 9 wide. This guarantees that the middle 7 cells must be black. Place them!\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => {
       const row = Math.floor(i / tutorialPlayableCols);
       const col = i % tutorialPlayableCols;
@@ -467,7 +467,7 @@ const tutorialSteps: TutorialStep[] = [
     ),
   },
   {
-    instruction: "Rows 4 and 6 both show 9, which means all cells must be black. Fill them in!\n",
+    instruction: "These rows both show 9, which means all their cells must be black. Fill them in!\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => {
       const row = Math.floor(i / tutorialPlayableCols);
       const col = i % tutorialPlayableCols;
@@ -485,7 +485,7 @@ const tutorialSteps: TutorialStep[] = [
     ],
   },
   {
-    instruction: "The 6 clue in row 5 can only fit in one way. Place that clue!\n",
+    instruction: "The 6 black cells in this row could only go to the right of the white tile.\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => {
       const row = Math.floor(i / tutorialPlayableCols);
       const col = i % tutorialPlayableCols;
@@ -498,7 +498,7 @@ const tutorialSteps: TutorialStep[] = [
     ),
   },
   {
-    instruction: "Now let's fill out columns 7 and 9. The first cell in each column should be white, and the rest black!\n",
+    instruction: "The top row is already white, and each column clue shows 6, so the rest must be black.\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => {
       const row = Math.floor(i / tutorialPlayableCols);
       const col = i % tutorialPlayableCols;
@@ -516,7 +516,7 @@ const tutorialSteps: TutorialStep[] = [
     ],
   },
   {
-    instruction: "This column and row are only missing the white cells. You can place them using the autofill feature!\n",
+    instruction: "Use autofill to turn grey cells white since all black cells are already correctly placed!\n",
     disabledList: Array.from({ length: tutorialPlayableRows * tutorialPlayableCols }, (_, i) => {
       const row = Math.floor(i / tutorialPlayableCols);
       const col = i % tutorialPlayableCols;
@@ -534,7 +534,7 @@ const tutorialSteps: TutorialStep[] = [
     ],
   },
   {
-    instruction: "Now finish the puzzle on your own and click submit when you are done.\n",
+    instruction: "Now finish the puzzle on your own, then hit submit!\n",
     disabledList: [],  // Enable all cells
     highlightCells: [] // No highlights
   }
@@ -1055,7 +1055,7 @@ Devvit.addCustomPostType({
               col3Values.slice(5, 7).every(v => v === 1); // Last 2 black
 
             if (isCorrect) {
-              setSuccessText("Excellent! You've learned how to handle separated numbers.");
+              setSuccessText("Excellent! You've learned how to place separated sequences.");
               setShowSuccessMessage(true);
             }
           } else if (tutorialStep === 3) {
@@ -1150,7 +1150,7 @@ Devvit.addCustomPostType({
               col9Values.slice(1).every(v => v === 1); // Rest black
             
             if (isCol7Correct && isCol9Correct) {
-              setSuccessText("Great! Now let's learn about the autofill feature.");
+              setSuccessText("Next you'll learn how to use autofill to speed things up.");
               setShowSuccessMessage(true);
             }
           } else if (tutorialStep === 8) {
@@ -1311,7 +1311,7 @@ Devvit.addCustomPostType({
                   }}
                   size="medium"
                 >
-                  Back to Menu
+                  Main Menu
                 </button>
               )}
               {tutorialStep === 8 && (
@@ -1358,7 +1358,7 @@ Devvit.addCustomPostType({
                     onPress={() => setPage('welcome')}
                     size="medium"
                   >
-                    Back to Menu
+                    Main Menu
                   </button>
                   <button
                     onPress={() => {
@@ -1386,7 +1386,7 @@ Devvit.addCustomPostType({
                       );
 
                       if (isCorrect) {
-                        setSubmissionResult("It's a hippo!");
+                        setSubmissionResult("You've revealed a hippo!");
                         setSuccessText("Congratulations on finishing the tutorial!");
                         setShowSuccessMessage(true);
                       } else {
@@ -1465,11 +1465,11 @@ Devvit.addCustomPostType({
                       alignment="start middle" 
                       size="medium"
                     >
-                      1. Solve the puzzle to reveal the hidden pattern!{"\n"}
-                      2. The solution contains only black and white cells.{"\n"}
-                      3. Click a cell to change its color.{"\n"}
-                      4. Number clues show how many consecutive black tiles go in each row and column.{"\n"}
-                      5. Separate black tile sequences with at least one white cell.
+                      1. Solve the puzzle to reveal the hidden image!{"\n"}
+                      2. The puzzle is a grid of squares, which can be filled (black) or empty (white/grey).{"\n"}
+                      3. Number clues show how many consecutive black tiles go in each row or column.{"\n"}
+                      4. Click a cell to cycle its color.{"\n"}
+                      5. Leave at least one white cell between separate black tile groups.
                     </text>
                   </hstack>
                   <hstack gap="medium" alignment="middle center">
