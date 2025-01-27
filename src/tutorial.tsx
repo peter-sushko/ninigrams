@@ -76,8 +76,8 @@ export const getTheme = (puzzleNumber: number): Theme => {
 };
 
 // Constants for tutorial dimensions
-export const tutorialClueRows = 3;
-export const tutorialClueCols = 3;
+export const tutorialClueRows = 2;
+export const tutorialClueCols = 4;
 export const tutorialPlayableRows = 7; 
 export const tutorialPlayableCols = 9;
 export const tutorialWidth = tutorialClueCols + tutorialPlayableCols;
