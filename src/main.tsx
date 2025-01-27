@@ -628,8 +628,8 @@ const tutorialGridStates = [
       const index = (tutorialClueRows + 1) * tutorialWidth + (col + tutorialClueCols);
       grid[index] = 1;
     }
-    grid[(tutorialClueRows + 1) * tutorialWidth + tutorialClueCols] = 2; // First cell white
-    grid[(tutorialClueRows + 1) * tutorialWidth + (8 + tutorialClueCols)] = 2; // Last cell white
+    grid[(tutorialClueRows + 1) * tutorialWidth + tutorialClueCols] = 0; // First cell GREY
+    grid[(tutorialClueRows + 1) * tutorialWidth + (8 + tutorialClueCols)] = 0; // Last cell GREY
     return grid;
   })(),
   (() => {
@@ -1002,7 +1002,10 @@ Devvit.addCustomPostType({
                   How to Play
                 </button>
                 <button 
-                  onPress={() => setPage('game')}
+                  onPress={() => {
+                    setSubmissionResult('');
+                    setPage('game');
+                  }}
                   size="medium"
                 >
                   Start Puzzle
@@ -1302,7 +1305,10 @@ Devvit.addCustomPostType({
               )}
               {tutorialStep <= 8 && (
                 <button 
-                  onPress={() => setPage('welcome')}
+                  onPress={() => {
+                    setSubmissionResult('');
+                    setPage('welcome');
+                  }}
                   size="medium"
                 >
                   Back to Menu
@@ -1356,6 +1362,9 @@ Devvit.addCustomPostType({
                   </button>
                   <button
                     onPress={() => {
+                      // Clear previous submission result
+                      setSubmissionResult('');
+                      
                       // Convert grid state to solution format (only checking playable area)
                       const currentBoard = [];
                       for (let i = tutorialClueRows; i < tutorialHeight; i++) {
