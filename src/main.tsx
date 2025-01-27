@@ -45,6 +45,7 @@ import friesData from "../puzzles/fries.json"
 import pigData from "../puzzles/pig.json"
 import smallTestData from "./small_test.json"
 import sheepData from "../puzzles/sheep.json"
+import fortuneData from "../puzzles/fortune.json"
 import yinyangData from "../puzzles/yinyang.json"
 
 import wizardData from "../puzzles/wizard.json"
@@ -100,7 +101,7 @@ const puzzleMap = {
   39: friesData,
   40: pigData,
   41: sheepData,
-  42: yinyangData, 
+  42: fortuneData, 
   43: yinyangData,
   44: yinyangData,
   45: yinyangData,
@@ -295,14 +296,14 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #42: Yin Yang (Medium)`,
+  label: `Ninigram #42: Good Fortune Awaits (Easy)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #42: Yin Yang (Medium)`,
+        title: `Ninigram #42: Good Fortune Awaits (Easy)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #41...</text></vstack>)
       });
@@ -311,6 +312,27 @@ Devvit.addMenuItem({
       ui.navigateTo(post);
     } catch (error) {
       ui.showToast({ text: `Failed to create Ninigram #42: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #43: Balanced Harmony (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #43: Balanced Harmony (Medium)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #41...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(43));
+      ui.showToast({ text: `Created Ninigram #43!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #43: ${error}` });
     }
   },
 });
