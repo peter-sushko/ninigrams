@@ -898,7 +898,7 @@ export const TutorialScreen = ({ setPage, context }: PageProps) => {
           padding="small"
           cornerRadius="medium"
           gap="small"
-          height="80%"
+          height="85%"
           width="100%"
           maxWidth="350px"
         >
