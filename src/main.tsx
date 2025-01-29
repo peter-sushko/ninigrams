@@ -56,6 +56,7 @@ import incenseData from "../puzzles/incense.json"
 
 import wizardData from "../puzzles/wizard.json"
 import ghostData from "../puzzles/ghost.json"
+import umbrellaData from "../puzzles/umbrella.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -116,7 +117,36 @@ const puzzleMap = {
   48: yinyangData,
   49: wizardData,
   50: ghostData, 
+  51: umbrellaData
 } as const;
+
+
+Devvit.addMenuItem({
+  label: `Ninigram #51: Rain or Shine`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #51: Rain or Shine`,
+        subredditName: subreddit.name,
+        preview: (
+          <vstack height="100%" width="100%" alignment="middle center">
+            <text size="large">Loading Ninigram #51...</text>
+          </vstack>
+        )
+      });
+
+      await kvStore.put(`puzzle_${post.id}`, String(51));
+      ui.showToast({ text: `Created Ninigram #51!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #51: ${error}` });
+    }
+  },
+});
 
 Devvit.addMenuItem({
   label: `Ninigram #0: Small Test`,
