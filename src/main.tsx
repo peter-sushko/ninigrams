@@ -56,7 +56,6 @@ import incenseData from "../puzzles/incense.json"
 
 import wizardData from "../puzzles/wizard.json"
 import ghostData from "../puzzles/ghost.json"
-import umbrellaData from "../puzzles/umbrella.json"
 
 Devvit.configure({
   redditAPI: true,
@@ -117,7 +116,6 @@ const puzzleMap = {
   48: yinyangData,
   49: wizardData,
   50: ghostData, 
-  51: umbrellaData
 } as const;
 
 
