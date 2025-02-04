@@ -178,19 +178,19 @@ Devvit.addMenuItem({
     for (const puzzleNumber in puzzleMap) {
       // Get unique completions count for this puzzle
       const uniqueCompletions = await redis.zCard(`puzzle:${puzzleNumber}:completions`);
-      
-      // Get recent completers (last 5)
-      const recentCompleters = await redis.zRange(`puzzle:${puzzleNumber}:completions`, -5, -1);
-      
-      message += `\nPuzzle #${puzzleNumber}: ${uniqueCompletions || 0} unique completions\n`;
-      if (recentCompleters.length > 0) {
-        message += `Recent completions by: ${recentCompleters.join(', ')}\n`;
-      }
+      message += `Puzzle #${puzzleNumber}: ${uniqueCompletions || 0} unique completions`
+      message += `\n\n`;
     }
     
-    // Send DM to yourself
+    // Send DM
     await reddit.sendPrivateMessage({
       to: 'sleepsloop42',
+      subject: 'Ninigrams Completion Data',
+      text: message
+    });
+
+    await reddit.sendPrivateMessage({
+      to: 'Nina_gram',
       subject: 'Ninigrams Completion Data',
       text: message
     });
@@ -208,9 +208,9 @@ Devvit.addMenuItem({
     
     // Send a simple "Hello" message to yourself
     await reddit.sendPrivateMessage({
-      to: 'Nini_gram',  // Change this to your Reddit username
-      subject: 'Test Message',
-      text: 'Girl Piss Off!'
+      to: 'Nini_gram',
+      subject: 'Sup gurl',
+      text: 'Im a beeper im a booper im a peter pooter'
     });
     
     // Notify the user
