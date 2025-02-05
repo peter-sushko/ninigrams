@@ -79,7 +79,8 @@ import snailData from '../puzzles/snail.json' assert { type: "json" };
 import keyData from '../puzzles/key.json' assert { type: "json" };
 import spiderData from '../puzzles/spider.json' assert { type: "json" };
 import snowmanData from '../puzzles/snowman.json' assert { type: "json" };
-
+import ribbonData from '../puzzles/ribbon.json' assert { type: "json" };
+import strawberryData from '../puzzles/ribbon.json' assert { type: "json" };
 
 Devvit.configure({
   redditAPI: true,
@@ -160,10 +161,14 @@ const puzzleMap = {
   67: terrierData,
   68: sparrowData,
   69: keyData,
-  70: cobraData,
+  70: ribbonData,
   71: unicornData,
-  72: hareData, // save for easter theme
-  73: spookyGhostData, // did similar one recently
+  // 72: , // easy puzzle here
+  73: cobraData,
+  74: strawberryData,
+  // add puzzles here
+  92: hareData, // save for easter theme
+  93: spookyGhostData, // did similar one recently
 } as const;
 
 Devvit.addMenuItem({
@@ -834,14 +839,14 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #70: New Year, New Skin (Medium)`,
+  label: `Ninigram #70: Let's Wrap it Up! (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #70: New Year, New Skin (Medium)`,
+        title: `Ninigram #70: Let's Wrap it Up! (Medium)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #50...</text></vstack>)
       });
@@ -876,43 +881,85 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #72: Hop Through the Squares! (Easy)`,
+  label: `Ninigram #73: New Year, New Skin (Medium)`,
   location: 'subreddit',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #72: Hop Through the Squares! (Easy)`,
+        title: `Ninigram #73: New Year, New Skin (Medium)`,
         subredditName: subreddit.name,
-        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #64...</text></vstack>)
-      });
-      await kvStore.put(`puzzle_${post.id}`, String(72));
-      ui.showToast({ text: `Created Ninigram #72!` });
-      ui.navigateTo(post);
-    } catch (error) {
-      ui.showToast({ text: `Failed to create Ninigram #72: ${error}` });
-    }
-  },
-});
-
-Devvit.addMenuItem({
-  label: `Ninigram #73: Working the Graveyard Shift (Medium)`,
-  location: 'subreddit',
-  onPress: async (_event, context) => {
-    const { reddit, ui, kvStore } = context;
-    const subreddit = await reddit.getCurrentSubreddit();
-    try {
-      const post = await reddit.submitPost({
-        title: `Ninigram #73: Working the Graveyard Shift (Medium)`,
-        subredditName: subreddit.name,
-        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #68...</text></vstack>)
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #50...</text></vstack>)
       });
       await kvStore.put(`puzzle_${post.id}`, String(73));
       ui.showToast({ text: `Created Ninigram #73!` });
       ui.navigateTo(post);
     } catch (error) {
       ui.showToast({ text: `Failed to create Ninigram #73: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #74: In a Jam (Hard)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #74: In a Jam (Hard)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #50...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(74));
+      ui.showToast({ text: `Created Ninigram #74!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #74: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #92: Hop Through the Squares! (Easy)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #92: Hop Through the Squares! (Easy)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #64...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(92));
+      ui.showToast({ text: `Created Ninigram #92!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #92: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #93: Working the Graveyard Shift (Medium)`,
+  location: 'subreddit',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #93: Working the Graveyard Shift (Medium)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #68...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(93));
+      ui.showToast({ text: `Created Ninigram #93!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #93: ${error}` });
     }
   },
 });
