@@ -112,10 +112,24 @@ export const cnyTheme: Theme = {
   congratsTextColor: "#d9d9d9"
 };
 
+// Valentine's theme configuration
+export const valentinesTheme: Theme = {
+  welcomeLogo: "heart_logo.gif",
+  welcomeBackground: "valentines_background.jpg",
+  gameplayBackground: "valentines_background.gif",
+  congratsLogo: "heart_logo.gif",
+  congratsBackground: "rgb(220,155,175)",
+  congratsOverlay: "falling_hearts.gif",
+  congratsTextColor: "#d9d9d9"
+};
+
 // Helper function to get theme based on puzzle number
 export const getTheme = (puzzleNumber: number): Theme => {
   if (puzzleNumber == 0 || (puzzleNumber >= 42 && puzzleNumber <= 48)) {
     return cnyTheme;
+  }
+  else if (puzzleNumber >= 52 && puzzleNumber <= 58) {
+    return valentinesTheme;
   }
   return defaultTheme;
 }; 
