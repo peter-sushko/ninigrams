@@ -174,6 +174,7 @@ const puzzleMap = {
 Devvit.addMenuItem({
   location: 'subreddit',
   label: 'DM Redis Data',
+  forUserType: 'moderator',
   onPress: async (event, context) => {
     const { redis, reddit } = context;
     
@@ -208,6 +209,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   location: 'subreddit',
   label: 'Send dm to nini',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit } = context;
     
@@ -226,6 +228,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #0: Small Test`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -253,6 +256,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #42: Good Fortune Awaits (Easy)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -274,6 +278,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #43: Balanced Harmony (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -295,6 +300,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #44: Festive Pour (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -316,6 +322,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #45: Dangerous Noodle (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -337,6 +344,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #46: Burning Bright (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -358,6 +366,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #47: Tiny but Mighty (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -379,6 +388,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #48: May the Scales be Tipped in Your Favor (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -400,6 +410,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #49: Hide and Shriek! (Easy)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -421,6 +432,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #50: On the Prowl (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -442,6 +454,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #51: You Shall Not Pass (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -463,6 +476,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #52: Wrapped Around my Finger (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -484,6 +498,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #53: You Make Me Melt (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -505,6 +520,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #54: Tied up with a Bow (Easy)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -524,14 +540,15 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #55: Hold Me Tight, Don’t Let Go! (Medium)`,
+  label: `Ninigram #55: Hold Me Tight, Don't Let Go! (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #55: Hold Me Tight, Don’t Let Go! (Medium)`,
+        title: `Ninigram #55: Hold Me Tight, Don't Let Go! (Medium)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #42...</text></vstack>)
       });
@@ -545,14 +562,15 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #56: You’re Beary Special (Hard)`,
+  label: `Ninigram #56: You're Beary Special (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #56: You’re Beary Special (Hard)`,
+        title: `Ninigram #56: You're Beary Special (Hard)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #42...</text></vstack>)
       });
@@ -566,14 +584,15 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #57: It’s a Date! (Easy)`,
+  label: `Ninigram #57: It's a Date! (Easy)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #57: It’s a Date! (Easy)`,
+        title: `Ninigram #57: It's a Date! (Easy)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #42...</text></vstack>)
       });
@@ -589,6 +608,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #58: My First Pick (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -610,6 +630,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #59: Tricks of the Trade (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -631,6 +652,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #60: Safety First (Easy)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -652,6 +674,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #61: Noot! Noot! (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -673,6 +696,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #62: May Your Troubles Melt Away (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -694,6 +718,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #63: Shell-abrate Good Times, Come On! (Easy)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -715,6 +740,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #64: Crack the Code! (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -736,6 +762,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #65: Web Designer (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -757,6 +784,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #66: Sting Operation (Easy)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -778,6 +806,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #67: Barking Up the Right Tree (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -799,6 +828,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #68: Just Wing It (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -820,6 +850,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #69: Unlock Your Dor-key Side (Easy)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -841,6 +872,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #70: Let's Wrap it Up! (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -862,6 +894,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #71: A Little Bit of Pixel Dust (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -883,6 +916,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #73: New Year, New Skin (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -904,6 +938,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #74: In a Jam (Hard)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -925,6 +960,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #92: Hop Through the Squares! (Easy)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -946,6 +982,7 @@ Devvit.addMenuItem({
 Devvit.addMenuItem({
   label: `Ninigram #93: Working the Graveyard Shift (Medium)`,
   location: 'subreddit',
+  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui, kvStore } = context;
     const subreddit = await reddit.getCurrentSubreddit();
