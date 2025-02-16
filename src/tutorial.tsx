@@ -1,5 +1,5 @@
 import { Devvit } from '@devvit/public-api';
-import tutorial_pig from "../puzzles/tutorial_pig.json";
+import tutorial_pig from "../puzzles/tutorial_pig.json" assert { type: "json" };
 
 // Load puzzle data from JSON file
 const loadPuzzle = (data: any) => {
