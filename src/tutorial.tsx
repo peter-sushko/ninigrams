@@ -880,7 +880,7 @@ export const TutorialScreen = ({ setPage, context }: PageProps) => {
   return (
     <zstack width="100%" height="100%" alignment="middle center">
       <image
-        url={theme.welcomeBackground}
+        url={theme.gameplayBackground}
         imageWidth={350}
         imageHeight={200}
         height="100%"
