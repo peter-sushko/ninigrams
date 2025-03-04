@@ -90,6 +90,16 @@ import mametchiData from '../puzzles/mametchi.json' assert { type: "json" };
 import elephantData from '../puzzles/elephant.json' assert { type: "json" };
 import dandelionData from '../puzzles/dandelion.json' assert { type: "json" };
 import lionData from '../puzzles/lion.json' assert { type: "json" };
+import poundData from '../puzzles/pound.json' assert { type: "json" };
+import shibaData from '../puzzles/shiba.json' assert { type: "json" };
+import applesliceData from '../puzzles/apple_slice.json' assert { type: "json" };
+import teapotData from '../puzzles/teapot.json' assert { type: "json" };
+import rainyData from '../puzzles/rainy.json' assert { type: "json" };
+import branchesData from '../puzzles/branches.json' assert { type: "json" };
+import turnipData from '../puzzles/turnip.json' assert { type: "json" };
+import froggyData from '../puzzles/froggy.json' assert { type: "json" };
+import totoroData from '../puzzles/totoro.json' assert { type: "json" };
+
 
 Devvit.configure({
   redditAPI: true,
