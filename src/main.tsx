@@ -80,7 +80,7 @@ import keyData from '../puzzles/key.json' assert { type: "json" };
 import spiderData from '../puzzles/spider.json' assert { type: "json" };
 import snowmanData from '../puzzles/snowman.json' assert { type: "json" };
 import ribbonData from '../puzzles/ribbon.json' assert { type: "json" };
-import strawberryData from '../puzzles/ribbon.json' assert { type: "json" };
+import strawberryData from '../puzzles/strawberry.json' assert { type: "json" };
 import whaleData from '../puzzles/whale.json' assert { type: "json" };
 import rockonData from '../puzzles/rock_on.json' assert { type: "json" };
 import planktonData from '../puzzles/plankton.json' assert { type: "json" };
