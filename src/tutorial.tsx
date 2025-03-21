@@ -69,7 +69,7 @@ export const cnyTheme: Theme = {
 
 // Add a function to get the appropriate theme based on puzzle number
 export const getTheme = (puzzleNumber: number): Theme => {
-  if (puzzleNumber == 0 || (puzzleNumber >= 42 && puzzleNumber <= 48)) {
+  if (puzzleNumber >= 42 && puzzleNumber <= 48) {
     return cnyTheme;
   }
   return defaultTheme;
