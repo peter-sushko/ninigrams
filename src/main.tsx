@@ -109,6 +109,8 @@ import alienData from '../puzzles/alien.json' assert { type: "json" };
 import gameboyData from '../puzzles/gameboy.json' assert { type: "json" };
 import cowData from '../puzzles/cow.json' assert { type: "json" };
 import helicopterData from '../puzzles/helicopter.json' assert { type: "json" };
+import earthData from '../puzzles/earth.json' assert { type: "json" };
+import pineappleData from '../puzzles/pineapple.json' assert { type: "json" };
 
 Devvit.configure({
   redditAPI: true,
@@ -221,8 +223,9 @@ const puzzleMap = {
   99: gameboyData, 
   100: squirrel2Data, 
   101: cowData,
-  //102: ,
-  103: helicopterData
+  102: earthData,
+  103: helicopterData, 
+  104: pineappleData
 } as const;
 
 Devvit.addMenuItem({
@@ -594,7 +597,7 @@ Devvit.addMenuItem({
 });
 
 Devvit.addMenuItem({
-  label: `Ninigram #102:  (Easy)`,
+  label: `Ninigram #102: The World is Your Oyster (Medium)`,
   location: 'subreddit',
   forUserType: 'moderator',
   onPress: async (_event, context) => {
@@ -602,7 +605,7 @@ Devvit.addMenuItem({
     const subreddit = await reddit.getCurrentSubreddit();
     try {
       const post = await reddit.submitPost({
-        title: `Ninigram #102:  (Easy)`,
+        title: `Ninigram #102: The World is Your Oyster (Medium)`,
         subredditName: subreddit.name,
         preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #102...</text></vstack>)
       });
@@ -633,6 +636,28 @@ Devvit.addMenuItem({
       ui.navigateTo(post);
     } catch (error) {
       ui.showToast({ text: `Failed to create Ninigram #103: ${error}` });
+    }
+  },
+});
+
+Devvit.addMenuItem({
+  label: `Ninigram #104: Tropic Like it's Hot (Hard)`,
+  location: 'subreddit',
+  forUserType: 'moderator',
+  onPress: async (_event, context) => {
+    const { reddit, ui, kvStore } = context;
+    const subreddit = await reddit.getCurrentSubreddit();
+    try {
+      const post = await reddit.submitPost({
+        title: `Ninigram #104: Tropic Like it's Hot (Hard)`,
+        subredditName: subreddit.name,
+        preview: (<vstack height="100%" width="100%" alignment="middle center"><text size="large">Loading Ninigram #104...</text></vstack>)
+      });
+      await kvStore.put(`puzzle_${post.id}`, String(104));
+      ui.showToast({ text: `Created Ninigram #104!` });
+      ui.navigateTo(post);
+    } catch (error) {
+      ui.showToast({ text: `Failed to create Ninigram #104: ${error}` });
     }
   },
 });
