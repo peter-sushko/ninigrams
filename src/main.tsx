@@ -119,7 +119,19 @@ import beetleData from '../puzzles/beetle.json' assert { type: "json" };
 import alligatorData from '../puzzles/alligator.json' assert { type: "json" };
 import pearData from '../puzzles/pear.json' assert { type: "json" };
 import anchorData from '../puzzles/anchor.json' assert { type: "json" };
-
+import fireData from '../puzzles/fire.json' assert { type: "json" };
+import spiritData from '../puzzles/spirit.json' assert { type: "json" };
+import sootData from '../puzzles/soot.json' assert { type: "json" };
+import baymaxData from '../puzzles/baymax.json' assert { type: "json" };
+import tvData from '../puzzles/tv.json' assert { type: "json" };
+import mikeData from '../puzzles/mike.json' assert { type: "json" };
+import bearcostumeData from '../puzzles/bear_costume.json' assert { type: "json" };
+import deerData from '../puzzles/deer.json' assert { type: "json" };
+import duckieData from '../puzzles/duckie.json' assert { type: "json" };
+import dinoeggData from '../puzzles/dino_egg.json' assert { type: "json" };
+import treasureData from '../puzzles/treasure.json' assert { type: "json" };
+import shipData from '../puzzles/ship.json' assert { type: "json" };
+import pirateData from '../puzzles/pirate.json' assert { type: "json" };
 
 Devvit.configure({
   redditAPI: true,
@@ -242,7 +254,20 @@ const puzzleMap = {
   109: beetleData, 
   110: alligatorData, 
   111: pearData, 
-  112: anchorData
+  112: anchorData, 
+  113: fireData, 
+  114: spiritData, 
+  115: sootData, 
+  116: baymaxData, 
+  117: tvData,
+  118: mikeData,
+  119: bearcostumeData,
+  120: deerData,
+  121: duckieData,
+  122: dinoeggData,
+  123: treasureData,
+  124: shipData,
+  125: pirateData
 } as const;
 
 Devvit.addMenuItem({
